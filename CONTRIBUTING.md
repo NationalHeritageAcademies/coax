@@ -55,6 +55,10 @@ is the renderer (Melodic web components).
   `npm run typecheck` must pass.
 - Match the existing code style (Prettier + ESLint are configured; run
   `npm run lint`).
+- Caution with `eslint --fix`: the `no-unnecessary-type-assertion` fixer can
+  strip assertions that drive generic inference (e.g. on `querySelector`/
+  `closest` calls) and silently break the type check — always run
+  `npm run typecheck` after auto-fixing.
 - Describe *why* in the PR body, not just what.
 
 ## Reporting bugs
