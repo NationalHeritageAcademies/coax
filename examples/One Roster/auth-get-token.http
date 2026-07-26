@@ -1,0 +1,10 @@
+### Auth: Get Token
+# @id 5d8ba41c-4a85-4563-895d-6273b32c4292
+# @name getToken
+POST {{baseUrl}}/token
+Content-Type: application/json
+
+{
+  "clientCode": "{{clientCode}}",
+  "scope": "OneRoster"
+}

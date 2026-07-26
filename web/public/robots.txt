@@ -1,0 +1,5 @@
+# Coax marketing site
+User-agent: *
+Allow: /
+
+Sitemap: https://coax.melodic.dev/sitemap.xml

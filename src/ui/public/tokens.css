@@ -1,0 +1,441 @@
+/* =============================================================================
+   Coax Design Tokens
+   -----------------------------------------------------------------------------
+   Layered on top of @melodicdev/components tokens (`--ml-*`). This file:
+
+     1. Loads the Coax brand fonts (Inter + JetBrains Mono).
+     2. Overrides a small set of Melodic semantic tokens to express the Coax
+        brand identity (primary, focus ring, shadows).
+     3. Defines the Coax-specific surface vocabulary (`--hu-*`) that powers
+        the request panel, sidebar tree, status bar, and method badges.
+        These map onto Melodic primitives whenever possible so the system
+        stays consistent.
+
+   Anything you change here propagates everywhere via `<link melodic-styles>`
+   adoption into every component's Shadow DOM. Avoid raw hex values in
+   component CSS — always reach for a token.
+   ============================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* -----------------------------------------------------------------------------
+   1. Brand overlay on Melodic semantic tokens
+   ----------------------------------------------------------------------------- */
+
+:root,
+[data-theme='light'] {
+	/* Coax brand primary — a confident blue that distinguishes us from
+	   Postman (orange), Insomnia (purple), Bruno (red), Hoppscotch (teal-green).
+	   Slightly more saturated than Melodic's default blue-600. */
+	--ml-color-primary: #2563eb;
+	--ml-color-primary-hover: #1d4ed8;
+	--ml-color-primary-active: #1e40af;
+	--ml-color-primary-subtle: #dbe7ff;
+
+	--ml-color-border-focus: #2563eb;
+	--ml-color-focus-ring: #2563eb;
+	--ml-shadow-ring-color: rgb(37 99 235 / 0.18);
+
+	/* Refined brand-tinted elevation. Subtle blue undertone is what makes
+	   the UI feel premium rather than flat-gray. */
+	--ml-shadow-xs: 0 1px 2px 0 rgb(15 23 42 / 0.05);
+	--ml-shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.06);
+	--ml-shadow-md: 0 2px 4px -2px rgb(15 23 42 / 0.05), 0 4px 10px -2px rgb(15 23 42 / 0.08);
+	--ml-shadow-lg: 0 4px 6px -2px rgb(15 23 42 / 0.04), 0 12px 20px -4px rgb(15 23 42 / 0.10);
+	--ml-shadow-xl: 0 8px 12px -4px rgb(15 23 42 / 0.04), 0 20px 30px -6px rgb(15 23 42 / 0.12);
+}
+
+[data-theme='dark'] {
+	--ml-color-primary: #60a5fa;
+	--ml-color-primary-hover: #93c5fd;
+	--ml-color-primary-active: #bfdbfe;
+	--ml-color-primary-subtle: #1e2e55;
+
+	--ml-color-border-focus: #60a5fa;
+	--ml-color-focus-ring: #60a5fa;
+	--ml-shadow-ring-color: rgb(96 165 250 / 0.28);
+
+	--ml-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+	--ml-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.35), 0 1px 3px 0 rgb(0 0 0 / 0.45);
+	--ml-shadow-md: 0 2px 4px -2px rgb(0 0 0 / 0.35), 0 4px 12px -2px rgb(0 0 0 / 0.5);
+	--ml-shadow-lg: 0 4px 6px -2px rgb(0 0 0 / 0.3), 0 14px 28px -6px rgb(0 0 0 / 0.55);
+	--ml-shadow-xl: 0 8px 12px -4px rgb(0 0 0 / 0.3), 0 22px 36px -8px rgb(0 0 0 / 0.6);
+}
+
+/* -----------------------------------------------------------------------------
+   2. Coax surface vocabulary  (--hu-*)
+   These power the request panel, sidebar tree, tab strip, and status bar.
+   ----------------------------------------------------------------------------- */
+
+:root,
+[data-theme='light'] {
+	/* Surface */
+	--hu-bg-base: #ffffff;
+	--hu-bg-elevated: #fafbfc;
+	--hu-bg-sunken: #f4f6f8;
+	--hu-bg-hover: #f0f3f7;
+	--hu-bg-active: #e4e9f0;
+	--hu-bg-selected: #e0ebff;
+
+	/* Border */
+	--hu-border: #e4e9f0;
+	--hu-border-strong: #c7d0dd;
+
+	/* Text */
+	--hu-text-primary: #0b1729;
+	--hu-text-secondary: #475569;
+	--hu-text-muted: #8a95a8;
+	--hu-text-disabled: #b0bac9;
+
+	/* Brand (aligned with the Melodic primary override above) */
+	--hu-accent: #2563eb;
+	--hu-accent-hover: #1d4ed8;
+	--hu-accent-pressed: #1e40af;
+	--hu-accent-subtle: #dbe7ff;
+	--hu-accent-glow: rgb(37 99 235 / 0.18);
+	--hu-accent-on: #ffffff;
+
+	/* Signature gradient — used sparingly on the brand mark + Send CTA */
+	--hu-gradient-brand: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+	--hu-gradient-brand-soft: linear-gradient(135deg, #3b82f6 0%, #22d3ee 100%);
+
+	/* Semantic */
+	--hu-success: #15803d;
+	--hu-success-subtle: #d1fae5;
+	--hu-danger: #dc2626;
+	--hu-danger-subtle: #fee2e2;
+	--hu-warning: #b45309;
+	--hu-warning-subtle: #fef3c7;
+	--hu-info: #2563eb;
+	--hu-info-subtle: #dbe7ff;
+
+	/* Inset highlight for subtle "raised" surfaces */
+	--hu-highlight-inset: inset 0 1px 0 rgb(255 255 255 / 0.6);
+}
+
+[data-theme='dark'] {
+	--hu-bg-base: #0a1020;
+	--hu-bg-elevated: #131a2d;
+	--hu-bg-sunken: #060a14;
+	--hu-bg-hover: #1a2238;
+	--hu-bg-active: #232d47;
+	--hu-bg-selected: #1a3463;
+
+	--hu-border: #232d47;
+	--hu-border-strong: #344261;
+
+	--hu-text-primary: #f1f5f9;
+	--hu-text-secondary: #9aa6bb;
+	--hu-text-muted: #5e6a82;
+	--hu-text-disabled: #3d475c;
+
+	--hu-accent: #60a5fa;
+	--hu-accent-hover: #93c5fd;
+	--hu-accent-pressed: #bfdbfe;
+	--hu-accent-subtle: #1e2e55;
+	--hu-accent-glow: rgb(96 165 250 / 0.28);
+	--hu-accent-on: #0a1020;
+
+	--hu-gradient-brand: linear-gradient(135deg, #60a5fa 0%, #22d3ee 100%);
+	--hu-gradient-brand-soft: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+
+	--hu-success: #4ade80;
+	--hu-success-subtle: #14352b;
+	--hu-danger: #f87171;
+	--hu-danger-subtle: #3f1a1a;
+	--hu-warning: #fbbf24;
+	--hu-warning-subtle: #3b2a0e;
+	--hu-info: #60a5fa;
+	--hu-info-subtle: #1e2e55;
+
+	--hu-highlight-inset: inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+/* -----------------------------------------------------------------------------
+   3. Theme-agnostic primitives
+   ----------------------------------------------------------------------------- */
+
+:root {
+	/* HTTP method colors — semantic muscle memory, preserved across themes. */
+	--hu-method-get: #3b82f6;
+	--hu-method-post: #22c55e;
+	--hu-method-put: #f59e0b;
+	--hu-method-patch: #a855f7;
+	--hu-method-delete: #ef4444;
+	--hu-method-head: #06b6d4;
+	--hu-method-options: #8b5cf6;
+
+	/* Radius (mirrors --ml-radius-* for ergonomic local use) */
+	--hu-radius-sm: 4px;
+	--hu-radius-md: 6px;
+	--hu-radius-lg: 8px;
+	--hu-radius-xl: 12px;
+	--hu-radius-pill: 9999px;
+
+	/* Motion — bespoke ease curves for snappy-but-not-mechanical feel */
+	--hu-motion-fast: 120ms;
+	--hu-motion-base: 180ms;
+	--hu-motion-slow: 260ms;
+	--hu-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+	--hu-ease-in: cubic-bezier(0.4, 0, 0.6, 1);
+	--hu-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+	/* Layered shadows for Coax surfaces — match Melodic depth scale but with
+	   a subtle blue undertone (rgb(15 23 42) vs pure black) for that
+	   "premium developer tool" feel. */
+	--hu-shadow-xs: 0 1px 2px 0 rgb(15 23 42 / 0.05);
+	--hu-shadow-sm: 0 1px 3px rgb(15 23 42 / 0.06), 0 1px 2px rgb(15 23 42 / 0.04);
+	--hu-shadow-md: 0 4px 12px -2px rgb(15 23 42 / 0.10), 0 2px 4px -2px rgb(15 23 42 / 0.06);
+	--hu-shadow-lg: 0 12px 28px -6px rgb(15 23 42 / 0.16), 0 4px 12px -4px rgb(15 23 42 / 0.08);
+	--hu-shadow-brand-glow: 0 0 0 4px var(--hu-accent-glow);
+
+	/* Fonts */
+	--hu-font-sans:
+		'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+	--hu-font-mono:
+		'JetBrains Mono', 'SF Mono', Monaco, Consolas, 'Courier New', monospace;
+
+	/* Override Melodic's font stack so all components inherit Inter. */
+	--ml-font-sans:
+		'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+	--ml-font-mono:
+		'JetBrains Mono', 'SF Mono', Monaco, Consolas, 'Courier New', monospace;
+}
+
+[data-theme='dark'] {
+	--hu-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+	--hu-shadow-sm: 0 1px 3px rgb(0 0 0 / 0.45), 0 1px 2px rgb(0 0 0 / 0.35);
+	--hu-shadow-md: 0 4px 14px -2px rgb(0 0 0 / 0.55), 0 2px 6px -2px rgb(0 0 0 / 0.4);
+	--hu-shadow-lg: 0 16px 36px -8px rgb(0 0 0 / 0.65), 0 6px 14px -4px rgb(0 0 0 / 0.45);
+}
+
+/* -----------------------------------------------------------------------------
+   4. Document-level
+   ----------------------------------------------------------------------------- */
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	font-family: var(--hu-font-sans);
+	font-size: 13px;
+	font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01';
+	background: var(--hu-bg-base);
+	color: var(--hu-text-primary);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	letter-spacing: -0.005em;
+}
+
+::selection {
+	background: var(--hu-accent-subtle);
+	color: var(--hu-text-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+/* -----------------------------------------------------------------------------
+   5. Scrollbars (WebKit) — thin, calm, brand-aware on hover
+   ----------------------------------------------------------------------------- */
+
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+::-webkit-scrollbar-thumb {
+	background: var(--hu-border-strong);
+	border-radius: 5px;
+	border: 2px solid transparent;
+	background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: var(--hu-text-muted);
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+/* -----------------------------------------------------------------------------
+   6. Class-based affordances for components that opt into them
+   These remain global because they need to apply *across* shadow roots; the
+   `melodic-styles` attribute on the stylesheet link causes each component's
+   shadow root to adoptedStyleSheets these rules.
+   ----------------------------------------------------------------------------- */
+
+/* Sidebar tree rows ---------------------------------------------------------- */
+.hu-tree-row {
+	transition:
+		background var(--hu-motion-fast) var(--hu-ease-out),
+		color var(--hu-motion-fast) var(--hu-ease-out);
+}
+.hu-tree-row:hover {
+	background: var(--hu-bg-hover) !important;
+}
+.hu-tree-row[data-active='true'] {
+	background: var(--hu-accent-subtle) !important;
+	color: var(--hu-text-primary) !important;
+}
+.hu-tree-row[data-active='true']:hover {
+	background: var(--hu-accent-subtle) !important;
+	filter: brightness(0.97);
+}
+
+/* Header icon buttons -------------------------------------------------------- */
+.hu-icon-btn {
+	background: transparent;
+	border: none;
+	color: var(--hu-text-secondary);
+	width: 32px;
+	height: 32px;
+	border-radius: var(--hu-radius-md);
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	transition:
+		background var(--hu-motion-fast) var(--hu-ease-out),
+		color var(--hu-motion-fast) var(--hu-ease-out),
+		transform var(--hu-motion-fast) var(--hu-ease-out);
+	flex-shrink: 0;
+}
+.hu-icon-btn:hover {
+	background: var(--hu-bg-hover);
+	color: var(--hu-text-primary);
+}
+.hu-icon-btn:active {
+	background: var(--hu-bg-active);
+	transform: scale(0.96);
+}
+.hu-icon-btn:focus-visible {
+	outline: 2px solid var(--hu-accent);
+	outline-offset: 2px;
+}
+
+/* Tab strip ------------------------------------------------------------------ */
+.hu-tab {
+	transition: background var(--hu-motion-fast) var(--hu-ease-out);
+}
+.hu-tab:hover {
+	background: var(--hu-bg-hover) !important;
+}
+.hu-tab[data-active='true']:hover {
+	background: var(--hu-bg-base) !important;
+}
+.hu-tab-close {
+	transition:
+		background var(--hu-motion-fast) var(--hu-ease-out),
+		opacity var(--hu-motion-fast) var(--hu-ease-out);
+}
+.hu-tab-close:hover {
+	background: var(--hu-bg-active);
+	opacity: 1 !important;
+}
+
+/* Send button + URL/method focus -------------------------------------------- */
+.hu-send-btn {
+	transition:
+		background var(--hu-motion-fast) var(--hu-ease-out),
+		box-shadow var(--hu-motion-fast) var(--hu-ease-out),
+		transform var(--hu-motion-fast) var(--hu-ease-out);
+}
+.hu-send-btn:hover:not([disabled]) {
+	background: var(--hu-accent-hover);
+	box-shadow: var(--hu-shadow-md), var(--hu-shadow-brand-glow);
+}
+.hu-send-btn:active:not([disabled]) {
+	background: var(--hu-accent-pressed);
+	transform: scale(0.98);
+}
+.hu-send-btn:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
+.hu-method:focus,
+.hu-url:focus,
+.hu-method:focus-visible,
+.hu-url:focus-visible {
+	outline: 2px solid var(--hu-accent);
+	outline-offset: -1px;
+}
+
+/* Key/value inputs ----------------------------------------------------------- */
+.hu-kv-input {
+	width: 100%;
+	padding: 6px 10px;
+	background: var(--hu-bg-base);
+	border: 1px solid transparent;
+	border-radius: var(--hu-radius-sm);
+	color: var(--hu-text-primary);
+	font-family: var(--hu-font-mono);
+	font-size: 12px;
+	transition:
+		border-color var(--hu-motion-fast) var(--hu-ease-out),
+		box-shadow var(--hu-motion-fast) var(--hu-ease-out);
+	box-sizing: border-box;
+}
+.hu-kv-input:focus,
+.hu-kv-input:focus-visible {
+	outline: none;
+	border-color: var(--hu-accent);
+	box-shadow: 0 0 0 3px var(--hu-accent-glow);
+}
+.hu-kv-add {
+	padding: 6px 12px;
+	border: 1px dashed var(--hu-border-strong);
+	background: transparent;
+	color: var(--hu-text-secondary);
+	border-radius: var(--hu-radius-sm);
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: 500;
+	transition: all var(--hu-motion-base) var(--hu-ease-out);
+}
+.hu-kv-add:hover {
+	background: var(--hu-accent-subtle);
+	color: var(--hu-accent);
+	border-color: var(--hu-accent);
+	border-style: solid;
+}
+.hu-kv-remove {
+	background: none;
+	border: none;
+	color: var(--hu-text-muted);
+	cursor: pointer;
+	padding: 4px;
+	border-radius: var(--hu-radius-sm);
+	transition: all var(--hu-motion-fast) var(--hu-ease-out);
+}
+.hu-kv-remove:hover {
+	color: var(--hu-danger);
+	background: var(--hu-bg-hover);
+}
+
+/* Splitters ----------------------------------------------------------------- */
+#hu-splitter,
+#hu-sidebar-splitter {
+	transition: background var(--hu-motion-base) var(--hu-ease-out);
+}
+#hu-splitter:hover,
+#hu-sidebar-splitter:hover {
+	background: var(--hu-accent) !important;
+}
+
+/* Sub-tab panels (request + response) --------------------------------------- */
+.hu-req-panel,
+.hu-resp-panel {
+	flex: 1;
+	min-height: 0;
+	min-width: 0;
+}

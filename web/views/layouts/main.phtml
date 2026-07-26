@@ -1,0 +1,118 @@
+<?php
+/**
+ * @var \Melodic\View\ViewBag $viewBag
+ * @var array<string,mixed>   $config
+ */
+$canonical = $viewBag->canonical ?? 'https://coax.melodic.dev/';
+$description = $viewBag->description ?? 'Coax is a polished, file-based HTTP client.';
+$title = $viewBag->title ?? 'Coax';
+// Controllers can set this to 'noindex,follow' on pages that shouldn't be in
+// the search index.
+$robots = $viewBag->robots ?? 'index,follow';
+// Origin used to absolute-ify the og:image URL. Trailing slash stripped.
+$siteOrigin = rtrim('https://' . ($config['app']['domain'] ?? 'coax.melodic.dev'), '/');
+?>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#0a1020">
+	<title><?= htmlspecialchars($title) ?></title>
+	<meta name="description" content="<?= htmlspecialchars($description) ?>">
+	<meta name="robots" content="<?= htmlspecialchars($robots) ?>">
+	<link rel="canonical" href="<?= htmlspecialchars($canonical) ?>">
+
+	<!-- Open Graph / social -->
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Coax">
+	<meta property="og:title" content="<?= htmlspecialchars($title) ?>">
+	<meta property="og:description" content="<?= htmlspecialchars($description) ?>">
+	<meta property="og:url" content="<?= htmlspecialchars($canonical) ?>">
+	<meta property="og:image" content="<?= htmlspecialchars($siteOrigin) ?>/assets/img/og.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
+	<meta property="og:image:alt" content="Coax — a polished HTTP client for .http files">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="<?= htmlspecialchars($title) ?>">
+	<meta name="twitter:description" content="<?= htmlspecialchars($description) ?>">
+	<meta name="twitter:image" content="<?= htmlspecialchars($siteOrigin) ?>/assets/img/og.png">
+
+	<!-- Favicon -->
+	<link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml">
+	<link rel="icon" href="/favicon.ico" sizes="any">
+	<link rel="apple-touch-icon" href="/assets/img/icon-180.png">
+
+	<!-- Stylesheet -->
+	<link rel="stylesheet" href="/assets/css/styles.css">
+
+	<?php /* No FOUC: read stored theme + apply BEFORE the body paints. */ ?>
+	<script>
+		(function () {
+			try {
+				var stored = localStorage.getItem('coax-theme');
+				if (stored === 'light' || stored === 'dark') {
+					document.documentElement.setAttribute('data-theme', stored);
+				}
+			} catch (_) { /* no-op */ }
+		})();
+	</script>
+
+	<?= $this->renderSection('head') ?>
+</head>
+<body>
+	<header class="site-header">
+		<div class="site-header__inner">
+			<a class="site-header__brand" href="/">
+				<span class="brand-mark" aria-hidden="true">
+					<?= file_get_contents(__DIR__ . '/../partials/_brand-glyph.svg') ?>
+				</span>
+				<span>Coax</span>
+			</a>
+			<nav class="site-header__nav" aria-label="Primary">
+				<a href="/#features">Features</a>
+				<a href="/#compare">Compare</a>
+				<a href="/docs">Docs</a>
+				<a href="/#faq">FAQ</a>
+				<a href="<?= htmlspecialchars($config['links']['github'] ?? 'https://github.com/MelodicDevelopment/coax') ?>" target="_blank" rel="noreferrer">GitHub</a>
+			</nav>
+			<div class="site-header__actions">
+				<button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<path class="theme-icon theme-icon--moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+						<g class="theme-icon theme-icon--sun" style="display:none">
+							<circle cx="12" cy="12" r="4"/>
+							<path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+						</g>
+					</svg>
+				</button>
+				<a class="btn btn--primary" href="<?= htmlspecialchars($config['links']['releases'] ?? 'https://github.com/MelodicDevelopment/coax/releases') ?>">
+					Download
+				</a>
+			</div>
+		</div>
+	</header>
+
+	<main><?= $this->renderBody() ?></main>
+
+	<footer class="site-footer">
+		<div class="container site-footer__inner">
+			<div class="site-footer__brand">
+				<span class="brand-mark" aria-hidden="true">
+					<?= file_get_contents(__DIR__ . '/../partials/_brand-glyph.svg') ?>
+				</span>
+				<span>Coax © <?= date('Y') ?></span>
+			</div>
+			<nav class="site-footer__links" aria-label="Footer">
+				<a href="/docs">Docs</a>
+				<a href="/privacy">Privacy</a>
+				<a href="<?= htmlspecialchars($config['links']['github'] ?? 'https://github.com/MelodicDevelopment/coax') ?>" target="_blank" rel="noreferrer">GitHub</a>
+				<a href="mailto:<?= htmlspecialchars($config['links']['support_email'] ?? '') ?>">Support</a>
+			</nav>
+		</div>
+	</footer>
+
+	<script src="/assets/js/site.js" defer></script>
+	<?= $this->renderSection('scripts') ?>
+</body>
+</html>

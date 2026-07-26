@@ -1,0 +1,11 @@
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+	<defs>
+		<linearGradient id="hu-mark-grad" x1="0" y1="0" x2="1" y2="1">
+			<stop offset="0%" stop-color="#3b82f6"/>
+			<stop offset="100%" stop-color="#22d3ee"/>
+		</linearGradient>
+	</defs>
+	<circle cx="16" cy="16" r="12" fill="none" stroke="url(#hu-mark-grad)" stroke-width="3.5"/>
+	<circle cx="16" cy="16" r="7" fill="none" stroke="url(#hu-mark-grad)" stroke-width="1.4"/>
+	<circle cx="16" cy="16" r="2.2" fill="url(#hu-mark-grad)"/>
+</svg>

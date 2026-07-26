@@ -1,0 +1,16 @@
+<!doctype html>
+<html data-theme="system">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self'" />
+    <title>Coax</title>
+    <!-- Both Melodic-tagged stylesheets are injected from bootstrap-styles.ts
+         so Vite's HTML plugin doesn't bundle or rewrite them. See the comment
+         in that file for the production failure modes this avoids. -->
+  </head>
+  <body>
+    <hu-app-frame></hu-app-frame>
+    <script type="module" src="/main.ts"></script>
+  </body>
+</html>

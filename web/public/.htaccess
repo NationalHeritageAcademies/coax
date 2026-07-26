@@ -1,0 +1,21 @@
+RewriteEngine On
+
+# Pretty URLs — route everything that isn't a real file/dir to index.php.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+# Long-cache static assets. The CSS/JS filenames don't yet carry a hash,
+# so we keep this conservative — bump these when we wire a build step.
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/svg+xml "access plus 30 days"
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/webp "access plus 30 days"
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# Send a sensible Content-Type for .ico (older Apache versions don't).
+<IfModule mod_mime.c>
+    AddType image/x-icon .ico
+</IfModule>

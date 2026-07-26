@@ -1,0 +1,43 @@
+{
+  "name": "@melodicdev/coax-cli",
+  "version": "1.3.1",
+  "description": "Coax CLI — run .http files headlessly with inline assertions. Built for CI/CD, smoke tests, contract verification, and synthetic monitoring.",
+  "keywords": [
+    "http",
+    "rest",
+    "rest-client",
+    "api",
+    "api-testing",
+    "ci",
+    "cd",
+    "smoke-test",
+    "contract-testing",
+    "coax",
+    "dotenv-http"
+  ],
+  "homepage": "https://coax.melodic.dev",
+  "bugs": "https://github.com/MelodicDevelopment/coax/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MelodicDevelopment/coax.git"
+  },
+  "author": "Rick Hopkins <support@melodic.dev>",
+  "license": "MIT",
+  "bin": {
+    "coax": "coax.cjs"
+  },
+  "files": [
+    "coax.cjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "prepublishOnly": "node ../../scripts/build-cli.mjs && cp ../../LICENSE ./LICENSE"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

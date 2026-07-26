@@ -1,0 +1,70 @@
+appId: dev.melodic.coax
+productName: Coax
+directories:
+  output: dist
+  buildResources: build
+afterSign: scripts/notarize.cjs
+publish:
+  - provider: github
+    owner: MelodicDevelopment
+    repo: coax
+    # Uploads land on a DRAFT release so artifacts can be reviewed (and
+    # release notes written) before anything goes live to auto-updaters.
+    releaseType: draft
+files:
+  - out/**/*
+  - package.json
+  - "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}"
+  - "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}"
+  - "!**/node_modules/*.d.ts"
+  - "!**/node_modules/.bin"
+asarUnpack:
+  - "**/*.{node,dll}"
+mac:
+  # dmg for fresh installs; zip for electron-updater (the auto-updater
+  # fetches the .zip not the .dmg — without it the update step throws
+  # "ZIP file not provided").
+  target:
+    - target: dmg
+      arch: universal
+    - target: zip
+      arch: universal
+  category: public.app-category.developer-tools
+  icon: build/icon.png
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  notarize: false
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - arm64
+  icon: build/icon.ico
+  # Cross-platform Authenticode signing via Azure Trusted Signing.
+  # The hook shells out to `jsign` and is a no-op outside Windows targets.
+  # See scripts/sign-windows.cjs for required env vars + setup.
+  # (electron-builder 25 moved sign/signingHashAlgorithms under signtoolOptions.)
+  signtoolOptions:
+    sign: scripts/sign-windows.cjs
+    signingHashAlgorithms:
+      - sha256
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+        - arm64
+    - target: deb
+      arch:
+        - x64
+        - arm64
+  icon: build/icon.png
+  category: Development
+  maintainer: Rick Hopkins <support@melodic.dev>
+  vendor: Melodic Development
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true

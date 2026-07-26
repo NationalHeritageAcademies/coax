@@ -1,0 +1,32 @@
+name: API smoke tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Coax CLI
+        run: npm install --global @melodicdev/coax-cli
+
+      - name: Run API smoke tests
+        # Secrets declared in a .env.json file are looked up via env vars:
+        # env:
+        #   COAX_SECRET_<UPPERCASED_KEY>: ${{ secrets.SOMETHING }}
+        run: coax run examples/cli/api.http --output junit > coax-results.xml
+
+      - name: Upload JUnit results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coax-results
+          path: coax-results.xml

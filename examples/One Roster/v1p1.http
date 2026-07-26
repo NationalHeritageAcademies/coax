@@ -1,0 +1,284 @@
+### Get academic session by sourcedId
+# @id 8ed4290b-424f-4171-a547-f305b018256d
+GET {{baseUrl}}/ims/oneroster/v1p1/academicSessions/{{sourcedId}}
+Authorization: Bearer {{token}}
+
+### Get all academic sessions
+# @id b49751f7-7c52-4fa6-90fd-134efabfd941
+GET {{baseUrl}}/ims/oneroster/v1p1/academicSessions?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### Get all categories
+# @id 002a9136-f2a2-4f84-9a93-e174ebcdf0bc
+GET {{baseUrl}}/ims/oneroster/v1p1/categories?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### Get all classes
+# @id 9d344d13-ab99-45d4-9802-0fdcc45e6c78
+GET {{baseUrl}}/ims/oneroster/v1p1/classes?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### Get all courses
+# @id 8c57a34c-c3dd-4ea9-8c69-bda423565cb5
+GET {{baseUrl}}/ims/oneroster/v1p1/courses?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### Get all demographics
+# @id 8ef54fd2-11ec-4e97-821f-f2799a904d61
+GET {{baseUrl}}/ims/oneroster/v1p1/demographics?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### Get all enrollments
+# @id ec3d6d06-4701-407b-beea-f258a730941a
+GET {{baseUrl}}/ims/oneroster/v1p1/enrollments?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### Get all grading periods
+# @id 63be60a8-43ee-41f7-80d8-1b359778dfca
+GET {{baseUrl}}/ims/oneroster/v1p1/gradingPeriods?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### Get all line items
+# @id 8cfb36fc-fa09-4928-85e4-f5795114f650
+GET {{baseUrl}}/ims/oneroster/v1p1/lineItems?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### Get all orgs
+# @id c328a769-b683-4b7b-9e98-ee1db5542639
+GET {{baseUrl}}/ims/oneroster/v1p1/orgs?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### Get all resources
+# @id babff232-8cac-4195-baee-da88ff8b4a7d
+GET {{baseUrl}}/ims/oneroster/v1p1/resources?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### Get all results
+# @id b7076377-e716-42d6-bbf6-e63741721415
+GET {{baseUrl}}/ims/oneroster/v1p1/results?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### Get all schools
+# @id 285a9529-d986-42fd-9478-b5b198c023e1
+GET {{baseUrl}}/ims/oneroster/v1p1/schools?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### Get all students
+# @id 3d436d63-66d0-487b-a0a5-73b104b956de
+GET {{baseUrl}}/ims/oneroster/v1p1/students?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### Get all teachers
+# @id 6c5fc882-813f-4e2e-b844-0c79abdd9c38
+GET {{baseUrl}}/ims/oneroster/v1p1/teachers?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### Get all terms
+# @id bf773f1f-137b-4e75-94ed-644a405ea776
+GET {{baseUrl}}/ims/oneroster/v1p1/terms?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### Get all users — filtered by givenName
+# @id df2f582c-5502-49cb-a2a3-1fc17399bc3b
+GET {{baseUrl}}/ims/oneroster/v1p1/users?limit=10&offset=0&filter=givenName='Amanda'
+Authorization: Bearer {{token}}
+
+### Get all users — page 2
+# @id e94d5009-7442-4555-abb8-5eeaf86c95cd
+GET {{baseUrl}}/ims/oneroster/v1p1/users?limit=10&offset=10
+Authorization: Bearer {{token}}
+
+### Get all users — sorted by familyName desc
+# @id 45859ea2-8af2-42ce-bfe6-12bb37932138
+GET {{baseUrl}}/ims/oneroster/v1p1/users?limit=10&offset=0&sort=familyName&orderBy=desc
+Authorization: Bearer {{token}}
+
+### Get category by sourcedId
+# @id 39613d2d-2096-4625-98d7-abd8fc20569c
+GET {{baseUrl}}/ims/oneroster/v1p1/categories/{{sourcedId}}
+Authorization: Bearer {{token}}
+
+### Get class by sourcedId
+# @id 0a9117be-f4ae-4d23-8c9a-05e8fe21be23
+GET {{baseUrl}}/ims/oneroster/v1p1/classes/{{sourcedId}}
+Authorization: Bearer {{token}}
+
+### Get classes for a course
+# @id 5eda70a1-4058-467a-b6d1-294808009c2e
+GET {{baseUrl}}/ims/oneroster/v1p1/courses/{{sourcedId}}/classes
+Authorization: Bearer {{token}}
+
+### Get classes for a school
+# @id 328a8525-64fb-4987-98c5-41c2914a432f
+GET {{baseUrl}}/ims/oneroster/v1p1/schools/{{sourcedId}}/classes
+Authorization: Bearer {{token}}
+
+### Get classes for a student
+# @id b3c3edc2-ef2f-46b8-97a1-d51907862058
+GET {{baseUrl}}/ims/oneroster/v1p1/students/{{sourcedId}}/classes
+Authorization: Bearer {{token}}
+
+### Get classes for a teacher
+# @id 50c421af-b22a-4ce0-91ff-da1f183167b2
+GET {{baseUrl}}/ims/oneroster/v1p1/teachers/{{sourcedId}}/classes
+Authorization: Bearer {{token}}
+
+### Get classes for a term
+# @id ac5818fb-124b-4d68-9dd5-00d6dbdb2682
+GET {{baseUrl}}/ims/oneroster/v1p1/terms/{{sourcedId}}/classes
+Authorization: Bearer {{token}}
+
+### Get classes for a user
+# @id 8b75feb5-a4f6-4bb5-be1d-c0e13837d702
+GET {{baseUrl}}/ims/oneroster/v1p1/users/{{sourcedId}}/classes
+Authorization: Bearer {{token}}
+
+### Get course by sourcedId
+# @id 1cfbb6fe-5a6c-493b-aef3-a04f4ebfe60d
+GET {{baseUrl}}/ims/oneroster/v1p1/courses/{{sourcedId}}
+Authorization: Bearer {{token}}
+
+### Get courses for a school
+# @id 934073f9-f146-461f-83a8-b2d6c613132c
+GET {{baseUrl}}/ims/oneroster/v1p1/schools/{{sourcedId}}/courses
+Authorization: Bearer {{token}}
+
+### Get demographics by sourcedId
+# @id 5b1c141d-ea5e-4443-8998-bf77445dcbfb
+GET {{baseUrl}}/ims/oneroster/v1p1/demographics/{{sourcedId}}
+Authorization: Bearer {{token}}
+
+### Get enrollment by sourcedId
+# @id 3dc0b477-9b1a-4f36-826d-b7dc7714a6a6
+GET {{baseUrl}}/ims/oneroster/v1p1/enrollments/{{sourcedId}}
+Authorization: Bearer {{token}}
+
+### Get enrollments for a class in a school
+# @id 76394e3b-1f3d-49fc-bcdb-fba1c20c8234
+GET {{baseUrl}}/ims/oneroster/v1p1/schools/{{schoolId}}/classes/{{classId}}/enrollments
+Authorization: Bearer {{token}}
+
+### Get enrollments for a school
+# @id 389ce3f1-8e4d-49b2-b9a9-38cc4e5b7c5d
+GET {{baseUrl}}/ims/oneroster/v1p1/schools/{{sourcedId}}/enrollments
+Authorization: Bearer {{token}}
+
+### Get grading period by sourcedId
+# @id 2ac19c39-eb80-4527-853c-b06c407f37a0
+GET {{baseUrl}}/ims/oneroster/v1p1/gradingPeriods/{{sourcedId}}
+Authorization: Bearer {{token}}
+
+### Get grading periods for a term
+# @id f545df4f-323f-46e3-90a0-62b0ac4eeaf6
+GET {{baseUrl}}/ims/oneroster/v1p1/terms/{{sourcedId}}/gradingPeriods
+Authorization: Bearer {{token}}
+
+### Get line item by sourcedId
+# @id 59989c4b-ec03-4b1d-925b-2047fbc9641e
+GET {{baseUrl}}/ims/oneroster/v1p1/lineItems/{{sourcedId}}
+Authorization: Bearer {{token}}
+
+### Get line items for a class
+# @id e322689b-e23c-46f6-bdb5-2d26164f172f
+GET {{baseUrl}}/ims/oneroster/v1p1/classes/{{classSourcedId}}/lineItems
+Authorization: Bearer {{token}}
+
+### Get org by sourcedId
+# @id 2b22eea9-85a6-42f9-999c-d188d4c0b321
+GET {{baseUrl}}/ims/oneroster/v1p1/orgs/{{sourcedId}}
+Authorization: Bearer {{token}}
+
+### Get resource by sourcedId
+# @id 3b2eb54b-5e76-4ea4-ad55-81e21c1bda30
+GET {{baseUrl}}/ims/oneroster/v1p1/resources/{{sourcedId}}
+Authorization: Bearer {{token}}
+
+### Get resources for a class
+# @id c16e0e10-a5e1-42be-ad2f-29686de6ae81
+GET {{baseUrl}}/ims/oneroster/v1p1/classes/{{classSourcedId}}/resources
+Authorization: Bearer {{token}}
+
+### Get resources for a course
+# @id ed429294-9a6b-4cc4-970a-390fd1be3ce9
+GET {{baseUrl}}/ims/oneroster/v1p1/courses/{{courseSourcedId}}/resources
+Authorization: Bearer {{token}}
+
+### Get result by sourcedId
+# @id d195a82f-a405-40cf-a3bd-eb58ce0efb98
+GET {{baseUrl}}/ims/oneroster/v1p1/results/{{sourcedId}}
+Authorization: Bearer {{token}}
+
+### Get results for a class
+# @id eed07203-c8c9-4a81-b44f-97ac074c8a2c
+GET {{baseUrl}}/ims/oneroster/v1p1/classes/{{classSourcedId}}/results
+Authorization: Bearer {{token}}
+
+### Get results for a class & line item
+# @id fafc0c71-aba4-4b61-a7f1-6cf85be21a55
+GET {{baseUrl}}/ims/oneroster/v1p1/classes/{{classSourcedId}}/lineItems/{{lineItemSourcedId}}/results
+Authorization: Bearer {{token}}
+
+### Get results for a student in a class
+# @id a4bced4b-4944-4079-842e-362a8f560ca8
+GET {{baseUrl}}/ims/oneroster/v1p1/classes/{{classSourcedId}}/students/{{studentSourcedId}}/results
+Authorization: Bearer {{token}}
+
+### Get school by sourcedId
+# @id d66dcf45-dc9e-4441-aaa1-89cd48064594
+GET {{baseUrl}}/ims/oneroster/v1p1/schools/{{sourcedId}}
+Authorization: Bearer {{token}}
+
+### Get student by sourcedId
+# @id 3dca4aee-3a15-4568-8a08-a5ba3234fafc
+GET {{baseUrl}}/ims/oneroster/v1p1/students/{{sourcedId}}
+Authorization: Bearer {{token}}
+
+### Get students for a class
+# @id 577abd25-330d-4782-9a8f-cc058615aea1
+GET {{baseUrl}}/ims/oneroster/v1p1/classes/{{sourcedId}}/students
+Authorization: Bearer {{token}}
+
+### Get students for a class in a school
+# @id 4661db5f-339a-4436-8419-e27b531e606a
+GET {{baseUrl}}/ims/oneroster/v1p1/schools/{{schoolId}}/classes/{{classId}}/students
+Authorization: Bearer {{token}}
+
+### Get students for a school
+# @id 66a5a9a8-aefb-473d-ac30-a34e20cdbad2
+GET {{baseUrl}}/ims/oneroster/v1p1/schools/{{sourcedId}}/students
+Authorization: Bearer {{token}}
+
+### Get teacher by sourcedId
+# @id 9f517d89-abd6-468a-ba91-9df73f55f86f
+GET {{baseUrl}}/ims/oneroster/v1p1/teachers/{{sourcedId}}
+Authorization: Bearer {{token}}
+
+### Get teachers for a class
+# @id e48bceb0-a5fa-4fe0-84c0-611a068cf9e3
+GET {{baseUrl}}/ims/oneroster/v1p1/classes/{{sourcedId}}/teachers
+Authorization: Bearer {{token}}
+
+### Get teachers for a class in a school
+# @id 84f4a3b6-4287-4717-a718-7a2b1b3fd7ee
+GET {{baseUrl}}/ims/oneroster/v1p1/schools/{{schoolId}}/classes/{{classId}}/teachers
+Authorization: Bearer {{token}}
+
+### Get teachers for a school
+# @id ffb2cde4-60fb-48f0-a40c-e915ff9f7614
+GET {{baseUrl}}/ims/oneroster/v1p1/schools/{{sourcedId}}/teachers
+Authorization: Bearer {{token}}
+
+### Get term by sourcedId
+# @id d4ed8005-0e3d-4726-9818-044bc255fb7e
+GET {{baseUrl}}/ims/oneroster/v1p1/terms/{{sourcedId}}
+Authorization: Bearer {{token}}
+
+### Get terms for a school
+# @id 895e64ab-eeb3-41de-b17f-dd211589fa7a
+GET {{baseUrl}}/ims/oneroster/v1p1/schools/{{sourcedId}}/terms
+Authorization: Bearer {{token}}
+
+### Get user by sourcedId
+# @id da01a244-eb19-42f5-8e9e-3bac0426fe91
+GET {{baseUrl}}/ims/oneroster/v1p1/users/{{sourcedId}}
+Authorization: Bearer {{token}}

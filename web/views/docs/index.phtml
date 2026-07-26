@@ -1,0 +1,375 @@
+<?php
+/**
+ * @var \Melodic\View\ViewBag $viewBag
+ * @var array<string,mixed>   $config
+ */
+$support = $config['links']['support_email'] ?? '';
+$github = $config['links']['github'] ?? 'https://github.com/MelodicDevelopment/coax';
+$releases = $config['links']['releases'] ?? $github . '/releases';
+?>
+<div class="docs">
+	<aside class="docs__sidebar">
+		<nav class="docs-nav" aria-label="Documentation">
+			<p class="docs-nav__group">Desktop app</p>
+			<a href="#getting-started" class="docs-nav__link">Getting started</a>
+			<a href="#workspaces" class="docs-nav__link">Workspaces</a>
+			<a href="#importing" class="docs-nav__link">Importing</a>
+			<a href="#sidebar" class="docs-nav__link">Collections &amp; requests</a>
+			<a href="#editing" class="docs-nav__link">Editing a request</a>
+			<a href="#variables" class="docs-nav__link">Variables &amp; environments</a>
+			<a href="#secrets" class="docs-nav__link">Secrets</a>
+			<a href="#chaining" class="docs-nav__link">Response chaining</a>
+			<a href="#sending" class="docs-nav__link">Sending &amp; reading responses</a>
+			<a href="#exporting" class="docs-nav__link">Exporting</a>
+			<a href="#data" class="docs-nav__link">Where your data lives</a>
+
+			<p class="docs-nav__group">Command line</p>
+			<a href="#cli" class="docs-nav__link">Overview</a>
+			<a href="#cli-install" class="docs-nav__link">Install</a>
+			<a href="#cli-usage" class="docs-nav__link">Usage &amp; flags</a>
+			<a href="#cli-assertions" class="docs-nav__link">Assertions</a>
+			<a href="#cli-envs" class="docs-nav__link">Environments &amp; secrets</a>
+			<a href="#cli-chaining" class="docs-nav__link">Response chaining</a>
+			<a href="#cli-ci" class="docs-nav__link">CI integration</a>
+		</nav>
+	</aside>
+
+	<article class="prose docs__content">
+		<h1>Coax documentation</h1>
+		<p class="lede">
+			Coax is a polished, file-based HTTP client. Your workspace is just a folder of
+			<code>.http</code> files — edit them in the desktop app, then run the same files headlessly
+			in CI with the CLI. This guide covers both.
+		</p>
+
+		<!-- ===================================================================
+		     DESKTOP APP
+		     =================================================================== -->
+
+		<h2 id="getting-started">Getting started</h2>
+		<ol>
+			<li>
+				<strong>Install &amp; launch.</strong> Coax runs on macOS, Windows, and Linux.
+				<a href="<?= htmlspecialchars($releases) ?>">Download from GitHub Releases</a>, then install and
+				launch it.
+			</li>
+			<li>
+				<strong>Open a workspace.</strong> On first launch, pick <strong>Open a workspace folder</strong>
+				and choose any folder — Coax treats every <code>.http</code> file inside it as a collection.
+				New to Coax? Choose <strong>Try with examples</strong> to start from a ready-made sample workspace.
+			</li>
+			<li>
+				<strong>Open a request.</strong> Click any request in the sidebar; it opens in a new tab.
+			</li>
+			<li>
+				<strong>Set variable values.</strong> If your file has <code>@baseUrl = …</code> lines, those
+				become an environment that's activated automatically. Edit values on the request's
+				<strong>Vars</strong> tab or from the <strong>Settings → environments</strong> manager.
+			</li>
+			<li>
+				<strong>Send.</strong> Hit the green <strong>Send</strong> button. The response renders in the
+				lower pane.
+			</li>
+		</ol>
+
+		<h2 id="workspaces">Workspaces</h2>
+		<p>
+			A <strong>workspace is a folder on disk</strong> — nothing more. The <code>.http</code> files
+			inside it are the source of truth, so a workspace lives happily in a Git repo right next to the
+			code it tests, and your teammates get the exact same requests when they clone.
+		</p>
+		<ul>
+			<li>Sub-folders inside the workspace become folders in the sidebar tree.</li>
+			<li>Environment files (<code>*.env.json</code>) sit next to the <code>.http</code> file they belong to.</li>
+			<li>
+				Coax keeps a fast per-machine <em>cache</em> of the folder, but it never replaces your files —
+				move or rename the folder and Coax just rebuilds the cache from the files on disk.
+			</li>
+		</ul>
+		<p>Open another workspace any time from the application menu; the active workspace is shown in the status bar.</p>
+
+		<h2 id="importing">Importing</h2>
+		<p>Use the <strong>Import</strong> menu in the header. Coax can import from three sources:</p>
+		<table>
+			<thead><tr><th>Source</th><th>What you get</th></tr></thead>
+			<tbody>
+				<tr><td><strong>Import .http…</strong></td><td>A <code>.http</code> file (VS Code REST Client / JetBrains HTTP Client format) becomes a collection.</td></tr>
+				<tr><td><strong>Import Swagger from URL…</strong></td><td>Point at a live OpenAPI/Swagger document URL; each operation becomes a request.</td></tr>
+				<tr><td><strong>Import Swagger from file…</strong></td><td>Same, from a local OpenAPI/Swagger JSON or YAML file.</td></tr>
+			</tbody>
+		</table>
+		<p>When importing a <code>.http</code> file, Coax:</p>
+		<ul>
+			<li>Turns <code>@var = value</code> lines into an environment scoped to the new collection, and activates it so <code>{{var}}</code> references resolve immediately.</li>
+			<li>Creates one request per <code>### Title</code> block, preserving headers and body verbatim.</li>
+			<li>Treats <code>############</code>-style comment dividers as folder names.</li>
+			<li>Reads <code># @name foo</code> as a request's <a href="#chaining">chain name</a>.</li>
+		</ul>
+
+		<h2 id="sidebar">Collections &amp; requests</h2>
+		<p>The sidebar is a single tree:</p>
+		<ul>
+			<li><strong>Collection</strong> — one <code>.http</code> file (folder icon).</li>
+			<li><strong>Folder</strong> — a sub-grouping inside a collection.</li>
+			<li><strong>Request</strong> — method + URL + headers + body + optional auth + chain name, shown with a colored method badge.</li>
+		</ul>
+		<p>
+			<strong>Right-click</strong> any collection, folder, or request for a context menu — add a new request,
+			rename, or delete. Method badge colors: GET = blue, POST = green, PUT = orange, PATCH = purple,
+			DELETE = red, HEAD = cyan, OPTIONS = indigo.
+		</p>
+
+		<h2 id="editing">Editing a request</h2>
+		<p>Open a request to edit it. The tab is organized into sub-tabs:</p>
+		<table>
+			<thead><tr><th>Tab</th><th>What it edits</th></tr></thead>
+			<tbody>
+				<tr><td><strong>Method &amp; URL</strong></td><td>The top row. Method dropdown (GET/POST/PUT/PATCH/DELETE/HEAD/OPTIONS) + URL. The URL supports <code>{{var}}</code> references, resolved at send time.</td></tr>
+				<tr><td><strong>Params</strong></td><td>The <code>?key=value</code> query string, as a key/value editor that stays in sync with the URL.</td></tr>
+				<tr><td><strong>Headers</strong></td><td>Request headers, same key/value editor.</td></tr>
+				<tr><td><strong>Body</strong></td><td>Pick a kind — <code>none</code>, <code>text</code>, <code>json</code>, <code>form</code>, <code>multipart</code>, or <code>graphql</code> — and edit it in the Monaco editor with syntax highlighting.</td></tr>
+				<tr><td><strong>Auth</strong></td><td>Capture credentials for <code>None</code> / <code>Bearer</code> / <code>Basic</code> / <code>API Key</code>. See the note below.</td></tr>
+				<tr><td><strong>Vars</strong></td><td>Shows the resolved value of every <code>{{reference}}</code> in the request, so you can confirm a value (or a chain) before sending.</td></tr>
+				<tr><td><strong>cURL</strong></td><td>The equivalent <code>curl</code> command for the request.</td></tr>
+			</tbody>
+		</table>
+		<p>
+			Edits autosave shortly after you stop typing — there's no Save button. Above the method row is an
+			optional <strong>Chain name</strong> field; set it to make this request's response referenceable
+			from others (see <a href="#chaining">Response chaining</a>).
+		</p>
+		<p>
+			<strong>Note on Auth:</strong> the Auth tab stores credentials with the request, but Coax does not yet
+			auto-inject them into the outgoing request. For now, add an explicit header on the
+			<strong>Headers</strong> tab — e.g. <code>Authorization: Bearer {{token}}</code>.
+		</p>
+
+		<h2 id="variables">Variables &amp; environments</h2>
+		<ul>
+			<li>A <strong>variable</strong> is a <code>name → value</code> mapping. Reference it anywhere with <code>{{name}}</code>.</li>
+			<li>An <strong>environment</strong> is a named bag of variables, scoped either <strong>global</strong> (visible everywhere) or to a specific <strong>collection</strong>.</li>
+			<li>One environment per scope is active at a time. Switch the active environment from the header dropdown; create and edit environments from <strong>Settings → environments</strong>.</li>
+		</ul>
+		<p>Resolution order, highest precedence first:</p>
+		<ol>
+			<li>Request-local vars (<code>@name = value</code> inside the request)</li>
+			<li>Active <strong>collection</strong> environment</li>
+			<li>Active <strong>global</strong> environment</li>
+			<li>Built-ins: <code>{{$timestamp}}</code>, <code>{{$isoTimestamp}}</code>, <code>{{$guid}}</code>, <code>{{$randomInt min max}}</code></li>
+		</ol>
+
+		<h2 id="secrets">Secrets</h2>
+		<p>
+			Mark any variable as <strong>secret</strong> (in the environment manager, or via the lock icon on the
+			Vars tab). Secret values are <strong>encrypted at rest</strong> using your operating system's secure
+			storage and masked in the UI until you reveal them. When you <a href="#exporting">export</a> a
+			collection, secrets are written as placeholders rather than real values, so the file is safe to share.
+		</p>
+		<p>
+			In CI the CLI can't read your machine's secure storage, so it reads each secret from an environment
+			variable instead — see <a href="#cli-envs">Environments &amp; secrets</a> below.
+		</p>
+
+		<h2 id="chaining">Response chaining</h2>
+		<p>Thread one request's response into another:</p>
+		<ol>
+			<li>Set the source request's <strong>Chain name</strong> (e.g. <code>getToken</code>).</li>
+			<li>Send it — the response is saved.</li>
+			<li>Reference it elsewhere: <code>{{getToken.response.body.$.access_token}}</code>.</li>
+		</ol>
+		<p>
+			JSONPath is supported (<code>$.field</code>, <code>$.items[0]</code>, <code>$..nested</code>). For a
+			response header, use <code>{{getToken.response.headers.x-request-id}}</code> (header names lowercased).
+			The <strong>Vars</strong> tab shows the resolved value so you can confirm a chain works before sending.
+		</p>
+
+		<h2 id="sending">Sending &amp; reading responses</h2>
+		<p>
+			Click <strong>Send</strong>. While in flight the button shows a spinner; click it again to cancel.
+			When the response arrives you get a status pill colored by class (2xx green, 3xx blue, 4xx orange,
+			5xx / network error red) plus the time and size. Network, TLS, timeout, and invalid-URL failures
+			render with a labeled error pill and the underlying message.
+		</p>
+		<p>The response pane has three tabs:</p>
+		<ul>
+			<li><strong>Body</strong> — pretty-printed JSON / XML / HTML / text (read-only).</li>
+			<li><strong>Headers</strong> — the response headers.</li>
+			<li><strong>Raw</strong> — the full HTTP transcript: the request that was sent, then the response received.</li>
+		</ul>
+		<p>
+			Each open request is a tab in the strip at the top; tabs persist across restarts. Cycle the theme
+			(light → dark → system) with the <strong>☾</strong> button, and drag the dividers to resize the
+			sidebar and the request/response split — both are remembered.
+		</p>
+
+		<h2 id="exporting">Exporting</h2>
+		<p>
+			Click <strong>Export collection</strong> and choose where to save the <code>.http</code> file.
+			Variable definitions are written as <code>@name = value</code> at the top; <strong>secret</strong>
+			variables become placeholders instead of real values. If a request carries an <code>Authorization</code>
+			header with a literal token (not a <code>{{var}}</code>), Coax warns you so you can scrub it before
+			sharing. The result opens cleanly in VS Code REST Client and the JetBrains HTTP Client.
+		</p>
+
+		<h2 id="data">Where your data lives</h2>
+		<p>
+			Your <strong>workspace folder</strong> is the source of truth — the <code>.http</code> and
+			<code>*.env.json</code> files you can see, edit, and commit. Coax also keeps a per-machine cache to
+			make opening large workspaces fast:
+		</p>
+		<pre><code>macOS    ~/Library/Application Support/Coax/workspaces/&lt;hash&gt;/cache.sqlite
+Windows  %APPDATA%\Coax\workspaces\&lt;hash&gt;\cache.sqlite
+Linux    ~/.config/Coax/workspaces/&lt;hash&gt;/cache.sqlite</code></pre>
+		<p>
+			The cache is derived data — deleting it is safe; Coax rebuilds it from your files the next time you
+			open the workspace. Secret values are never written to disk in the clear; they live in your OS secure
+			storage.
+		</p>
+
+		<!-- ===================================================================
+		     CLI
+		     =================================================================== -->
+
+		<h2 id="cli">Command-line (CLI)</h2>
+		<p>
+			Run the same <code>.http</code> files headlessly, with inline assertions — built for CI/CD, smoke
+			tests, contract verification, and synthetic monitoring. The file your team edits in the desktop app
+			is the file CI runs, unchanged.
+		</p>
+
+		<h3 id="cli-install">Install</h3>
+		<p>The CLI ships alongside the desktop app and is free to use. Install from npm (requires Node 18+):</p>
+		<pre><code>npm install --global @melodicdev/coax-cli</code></pre>
+		<p>That's the whole setup — there's no key to configure and nothing to activate.</p>
+
+		<h3 id="cli-usage">Usage &amp; flags</h3>
+		<pre><code>coax run &lt;file...&gt; [options]</code></pre>
+		<table>
+			<thead><tr><th>Flag</th><th>Default</th><th>Purpose</th></tr></thead>
+			<tbody>
+				<tr><td><code>-e, --env &lt;name&gt;</code></td><td>none</td><td>Load vars from the <code>*.env.json</code> sibling whose <code>name</code> matches</td></tr>
+				<tr><td><code>-r, --request &lt;title&gt;</code></td><td>none</td><td>Only run requests whose title or <code># @name</code> matches</td></tr>
+				<tr><td><code>-v, --var &lt;key=value&gt;</code></td><td>none</td><td>Override a variable; repeatable</td></tr>
+				<tr><td><code>-o, --output &lt;reporter&gt;</code></td><td><code>pretty</code></td><td><code>pretty</code> (terminal) or <code>junit</code> (XML for CI dashboards)</td></tr>
+				<tr><td><code>-t, --timeout &lt;ms&gt;</code></td><td><code>30000</code></td><td>Per-request timeout in milliseconds</td></tr>
+				<tr><td><code>-k, --insecure</code></td><td>off</td><td>Skip TLS cert validation (for self-signed dev servers — like <code>curl -k</code>)</td></tr>
+				<tr><td><code>--fail-fast</code></td><td>off</td><td>Stop at the first failed request or assertion</td></tr>
+				<tr><td><code>--no-color</code></td><td>off</td><td>Disable ANSI colors (auto-disabled on non-TTY)</td></tr>
+			</tbody>
+		</table>
+		<h4>Exit codes</h4>
+		<table>
+			<thead><tr><th>Code</th><th>Meaning</th></tr></thead>
+			<tbody>
+				<tr><td><code>0</code></td><td>All requests succeeded, all assertions passed</td></tr>
+				<tr><td><code>1</code></td><td>At least one assertion failed</td></tr>
+				<tr><td><code>2</code></td><td>At least one request failed (network, timeout, invalid URL)</td></tr>
+				<tr><td><code>3</code></td><td>Parse error or CLI usage error</td></tr>
+			</tbody>
+		</table>
+
+		<h3 id="cli-assertions">Assertions</h3>
+		<p>Inline assertions live above the request line, alongside <code># @name</code>:</p>
+		<pre><code>### Get user
+# @name getUser
+# @test status == 200
+# @test $.user.email exists
+# @test $.user.id == 42
+# @test responseTime &lt; 500
+# @test headers.content-type contains "application/json"
+GET https://api.example.test/users/42</code></pre>
+		<p>Grammar: <code>&lt;left&gt; &lt;operator&gt; [&lt;right&gt;]</code></p>
+		<table>
+			<thead><tr><th>Left side</th><th>Meaning</th></tr></thead>
+			<tbody>
+				<tr><td><code>status</code></td><td>HTTP status code</td></tr>
+				<tr><td><code>responseTime</code></td><td>Response time in milliseconds</td></tr>
+				<tr><td><code>headers.&lt;name&gt;</code></td><td>Response header by name (case-insensitive)</td></tr>
+				<tr><td><code>$.path.to.value</code></td><td>JSONPath into the parsed JSON body</td></tr>
+			</tbody>
+		</table>
+		<table>
+			<thead><tr><th>Operator</th><th>Meaning</th><th>Notes</th></tr></thead>
+			<tbody>
+				<tr><td><code>==</code></td><td>Equal</td><td>Numeric coercion: <code>200 == "200"</code> is true</td></tr>
+				<tr><td><code>!=</code></td><td>Not equal</td><td></td></tr>
+				<tr><td><code>&lt;</code> <code>&lt;=</code> <code>&gt;</code> <code>&gt;=</code></td><td>Numeric comparison</td><td>Fails cleanly if either side is non-numeric</td></tr>
+				<tr><td><code>contains</code></td><td>String contains</td><td>Both sides must be strings</td></tr>
+				<tr><td><code>exists</code></td><td>Value is present and non-null</td><td>No right side</td></tr>
+			</tbody>
+		</table>
+		<p><strong>Right side:</strong> number, quoted string, <code>true</code>/<code>false</code>/<code>null</code>, bare string, or <code>{{var}}</code> reference (resolved before the assertion is parsed).</p>
+
+		<h3 id="cli-envs">Environments &amp; secrets</h3>
+		<p>
+			Drop <code>*.env.json</code> files next to your <code>.http</code> file and select one with
+			<code>--env &lt;name&gt;</code> — the same format the desktop app uses, so a workspace round-trips
+			between local editing and CI without changes.
+		</p>
+		<pre><code>my-workspace/
+  api.http
+  api.dev.env.json       ← { "name": "dev",     "vars": [...] }
+  api.staging.env.json   ← { "name": "staging", "vars": [...] }
+  api.prod.env.json      ← { "name": "prod",    "vars": [...] }</code></pre>
+		<pre><code>coax run api.http --env staging</code></pre>
+		<p>Variable precedence (highest wins):</p>
+		<ol>
+			<li><code>--var key=value</code> flags on the command line</li>
+			<li>Vars from the <code>--env &lt;name&gt;</code> file</li>
+			<li><code>@var = value</code> declarations at the top of the <code>.http</code> file</li>
+		</ol>
+		<p>
+			Secrets in an env file (<code>{ "key": "apiKey", "isSecret": true, … }</code>) live in your OS secure
+			storage when authored in the desktop. The CLI can't read that, so it looks for an environment variable
+			named <code>COAX_SECRET_&lt;KEY&gt;</code> (the key uppercased):
+		</p>
+		<pre><code>export COAX_SECRET_APIKEY=sk_live_xxx
+coax run api.http --env prod</code></pre>
+		<p>A missing secret becomes a warning, not an error — the run continues with the non-secret vars available.</p>
+
+		<h3 id="cli-chaining">Response chaining</h3>
+		<p>The CLI threads each response into the resolver, so chain references work end to end:</p>
+		<pre><code>### Login
+# @name login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{ "user": "rick" }
+
+### Get my profile
+# @test status == 200
+GET {{baseUrl}}/users/{{login.response.body.$.userId}}
+Authorization: Bearer {{login.response.body.$.token}}</code></pre>
+		<p>Requests run in file order — put dependencies above their consumers.</p>
+
+		<h3 id="cli-ci">CI integration</h3>
+		<p>GitHub Actions:</p>
+		<pre><code>jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+
+      - name: Install Coax CLI
+        run: npm install --global @melodicdev/coax-cli
+
+      - name: Run API smoke tests
+        run: coax run tests/smoke.http --output junit &gt; coax-results.xml
+
+      - name: Upload JUnit results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coax-results
+          path: coax-results.xml</code></pre>
+
+		<h2 id="support">Questions?</h2>
+		<p>
+			CLI package: <a href="https://www.npmjs.com/package/@melodicdev/coax-cli">@melodicdev/coax-cli</a>.
+			Source, issues, and releases live on <a href="<?= htmlspecialchars($github) ?>">GitHub</a> —
+			or email <a href="mailto:<?= htmlspecialchars($support) ?>"><?= htmlspecialchars($support) ?></a>.
+		</p>
+	</article>
+</div>

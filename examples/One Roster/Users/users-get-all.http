@@ -1,0 +1,4 @@
+### Get All
+# @id 6b91b8c1-1926-4548-9a09-8f69bfabb366
+GET {{baseUrl}}/ims/oneroster/v1p1/users?limit=10&offset=100
+Authorization: Bearer {{getToken.response.body.$.access_token}}

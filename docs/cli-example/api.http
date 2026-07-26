@@ -1,0 +1,31 @@
+# Example: a small API contract test suite for Coax CLI.
+# Run with:  coax run examples/cli/api.http
+# Every assertion below works against https://httpbin.org/, a public test API.
+
+@baseUrl = https://httpbin.org
+
+### Healthcheck
+# @test status == 200
+# @test responseTime < 5000
+GET {{baseUrl}}/get
+
+### Login (smoke)
+# @name login
+# @test status == 200
+# @test $.json.user == "coax"
+POST {{baseUrl}}/anything
+Content-Type: application/json
+
+{ "user": "coax" }
+
+### Chained — confirms the previous response is visible
+# @test status == 200
+# @test $.headers.X-Echo-User == "coax"
+GET {{baseUrl}}/headers
+X-Echo-User: {{login.response.body.$.json.user}}
+
+### Header + JSONPath checks
+# @test status == 200
+# @test headers.content-type contains "json"
+# @test $.slideshow.title exists
+GET {{baseUrl}}/json
