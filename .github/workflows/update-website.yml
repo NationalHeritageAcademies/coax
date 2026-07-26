@@ -1,0 +1,41 @@
+# When a release is PUBLISHED (drafts don't count), rewrite the version in the
+# marketing site's pinned download URLs and push. Railway watches main and
+# redeploys web/ automatically, so the site's download buttons follow the
+# latest release with no manual step.
+#
+# Note: the GITHUB_TOKEN push intentionally does not retrigger Actions
+# (GitHub's recursion guard), so CI does not run on this config-only commit —
+# but external webhooks (Railway) still fire.
+
+name: Update website downloads
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    if: ${{ !github.event.release.prerelease }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Point download links at the released version
+        run: |
+          ver="${{ github.event.release.tag_name }}"
+          ver="${ver#v}"
+          sed -E -i "s/[0-9]+\.[0-9]+\.[0-9]+/${ver}/g" web/config/config.json
+          if git diff --quiet; then
+            echo "config already at ${ver} — nothing to do"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add web/config/config.json
+          git commit -m "web: point download links at ${ver}"
+          git push
