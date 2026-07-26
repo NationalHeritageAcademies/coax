@@ -1,6 +1,6 @@
 {
   "name": "@melodicdev/coax-cli",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Coax CLI — run .http files headlessly with inline assertions. Built for CI/CD, smoke tests, contract verification, and synthetic monitoring.",
   "keywords": [
     "http",

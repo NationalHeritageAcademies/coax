@@ -7,7 +7,7 @@ import { createJUnitReporter } from './reporters/junit.js';
 import type { Reporter } from './reporters/types.js';
 import { ExitCode, type ExitCodeValue } from './exit-codes.js';
 
-const VERSION = '1.3.1';
+const VERSION = '1.3.2';
 
 export async function main(argv: string[]): Promise<ExitCodeValue> {
   const program = new Command();
