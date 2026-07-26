@@ -9,7 +9,13 @@ name: coax-web
 
 services:
   web:
-    build: .
+    build:
+      context: .
+      # Named Dockerfile.dev (not Dockerfile) on purpose: Railway auto-detects
+      # a file named "Dockerfile" and silently switches the production build
+      # away from Nixpacks, which breaks the shell-less startCommand ($PORT
+      # never expands). Local dev only.
+      dockerfile: Dockerfile.dev
     container_name: coax-web
     ports:
       - "8080:8080"

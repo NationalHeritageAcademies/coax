@@ -1,6 +1,11 @@
-# Local/container build of the Coax marketing site.
-# Mirrors the Railway deployment (nixpacks.toml + railway.toml): PHP 8.2,
-# composer install, PHP's built-in server pointed at public/.
+# LOCAL DEV ONLY — build of the Coax marketing site for `docker compose up`.
+# Named Dockerfile.dev (not Dockerfile) because Railway auto-detects a file
+# named "Dockerfile" and switches the production build away from Nixpacks,
+# which breaks the shell-less startCommand ($PORT never expands). Production
+# stays on nixpacks.toml + railway.toml.
+#
+# Mirrors the Railway deployment: PHP 8.2, composer install, PHP's built-in
+# server pointed at public/.
 #
 #   docker compose up --build        # from web/, then http://localhost:8080
 #

@@ -17,4 +17,6 @@ test-results/
 tmp/
 *.tsbuildinfo
 sentry.txt
-.claude/
+# Ignore local Claude state but ship the project skills (matches tapedeck)
+.claude/*
+!.claude/skills/
