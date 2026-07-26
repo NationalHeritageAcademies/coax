@@ -1,0 +1,17 @@
+# Local dev for the marketing site: `docker compose up --build` from web/,
+# then open http://localhost:8080. The bind mount means template/CSS edits
+# show up on refresh with no rebuild. (The mount shadows the image's vendor/
+# with your host copy — run `composer install` on the host once if you don't
+# have one; or comment out the volumes block to run purely from the image.)
+# Explicit project name — without it, compose uses the directory name ("web"),
+# which collides with every other product's web/ compose project.
+name: coax-web
+
+services:
+  web:
+    build: .
+    container_name: coax-web
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/app
