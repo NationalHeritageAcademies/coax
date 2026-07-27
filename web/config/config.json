@@ -7,12 +7,12 @@
     },
     "links": {
         "downloads": {
-            "macos": "https://github.com/MelodicDevelopment/coax/releases/latest/download/Coax-1.3.1-universal.dmg",
-            "windows": "https://github.com/MelodicDevelopment/coax/releases/latest/download/Coax-Setup-1.3.1.exe",
-            "linux_appimage": "https://github.com/MelodicDevelopment/coax/releases/latest/download/Coax-1.3.1.AppImage",
-            "linux_appimage_arm64": "https://github.com/MelodicDevelopment/coax/releases/latest/download/Coax-1.3.1-arm64.AppImage",
-            "linux_deb": "https://github.com/MelodicDevelopment/coax/releases/latest/download/coax_1.3.1_amd64.deb",
-            "linux_deb_arm64": "https://github.com/MelodicDevelopment/coax/releases/latest/download/coax_1.3.1_arm64.deb"
+            "macos": "https://github.com/MelodicDevelopment/coax/releases/latest/download/Coax-1.3.2-universal.dmg",
+            "windows": "https://github.com/MelodicDevelopment/coax/releases/latest/download/Coax-Setup-1.3.2.exe",
+            "linux_appimage": "https://github.com/MelodicDevelopment/coax/releases/latest/download/Coax-1.3.2.AppImage",
+            "linux_appimage_arm64": "https://github.com/MelodicDevelopment/coax/releases/latest/download/Coax-1.3.2-arm64.AppImage",
+            "linux_deb": "https://github.com/MelodicDevelopment/coax/releases/latest/download/coax_1.3.2_amd64.deb",
+            "linux_deb_arm64": "https://github.com/MelodicDevelopment/coax/releases/latest/download/coax_1.3.2_arm64.deb"
         },
         "github": "https://github.com/MelodicDevelopment/coax",
         "releases": "https://github.com/MelodicDevelopment/coax/releases",
