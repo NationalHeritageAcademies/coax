@@ -365,16 +365,10 @@ $hasAnyInAction = $hasChain || $hasEnvs || $hasSecrets;
 			<?php if (!empty($dl['linux_appimage_arm64'])): ?>
 				<a class="btn btn--secondary btn--lg" href="<?= htmlspecialchars($dl['linux_appimage_arm64']) ?>">Linux — AppImage (arm64)</a>
 			<?php endif; ?>
-			<?php if (!empty($dl['linux_deb'])): ?>
-				<a class="btn btn--secondary btn--lg" href="<?= htmlspecialchars($dl['linux_deb']) ?>">Linux — .deb (x64)</a>
-			<?php endif; ?>
-			<?php if (!empty($dl['linux_deb_arm64'])): ?>
-				<a class="btn btn--secondary btn--lg" href="<?= htmlspecialchars($dl['linux_deb_arm64']) ?>">Linux — .deb (arm64)</a>
-			<?php endif; ?>
 		</div>
 
 		<p class="download__note">
-			Apple Silicon &amp; Intel Macs · Windows 10/11 · Linux (AppImage &amp; .deb).
+			Apple Silicon &amp; Intel Macs · Windows 10/11 · Linux (AppImage).
 			Older versions, release notes, and checksums are on
 			<a href="<?= htmlspecialchars($releases) ?>">GitHub Releases</a>.
 		</p>
@@ -433,7 +427,7 @@ $hasAnyInAction = $hasChain || $hasEnvs || $hasSecrets;
 				<p>
 					<strong>macOS</strong> (a universal build covering Apple Silicon and
 					Intel), <strong>64-bit Windows</strong>, and <strong>Linux</strong> as
-					both AppImage and <code>.deb</code>, x64 and arm64. The Windows installer
+					AppImage, x64 and arm64. The Windows installer
 					isn't code-signed yet, so first-time launch will show a SmartScreen
 					warning — click <em>More info</em> → <em>Run anyway</em> to continue.
 				</p>

@@ -51,15 +51,17 @@ win:
     sign: scripts/sign-windows.cjs
     signingHashAlgorithms:
       - sha256
+# Linux ships AppImage only. The deb target is deliberately absent: debs
+# assembled on macOS (locally or on the macos-latest CI runner) are silently
+# empty — Apple's BSD `ar` writes a bare __.SYMDEF symbol table instead of the
+# debian-binary/control/data members, and the build still exits 0. Re-add deb
+# only if the release build moves to a Linux runner with GNU ar.
 linux:
   target:
     - target: AppImage
       arch:
         - x64
         - arm64
-    - target: deb
-      arch:
-        - x64
         - arm64
   icon: build/icon.png
   category: Development
