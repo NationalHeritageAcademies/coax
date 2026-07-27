@@ -554,15 +554,15 @@ describe('resolveBaseUrl', () => {
   });
   it('joins relative candidate to URL source origin', () => {
     expect(resolveBaseUrl({
-      candidates: ['/dyn-feature-68474/'],
-      source: { kind: 'url', origin: 'https://oneroster.sis.nhatest.com/dyn-feature-68474/swagger/v1/swagger.json', text: '' },
-    })).toBe('https://oneroster.sis.nhatest.com/dyn-feature-68474');
+      candidates: ['/'],
+      source: { kind: 'url', origin: 'https://oneroster.example.com/swagger/v1/swagger.json', text: '' },
+    })).toBe('https://oneroster.example.com');
   });
   it('returns relative candidate verbatim for file sources', () => {
     expect(resolveBaseUrl({
-      candidates: ['/dyn-feature-68474/'],
+      candidates: ['/'],
       source: { kind: 'file', origin: 'x.json', text: '' },
-    })).toBe('/dyn-feature-68474');
+    })).toBe('');
   });
   it('falls back to "/" when no candidates', () => {
     expect(resolveBaseUrl({
@@ -1049,7 +1049,7 @@ The dialog component listens for that event and calls `this._dialog()?.open()`.
 npm run dev
 ```
 
-In the running app: click the COLLECTIONS `+` menu → "Import from Swagger…" → paste `https://oneroster.sis.nhatest.com/dyn-feature-68474/swagger/v1/swagger.json` → click Import. Expect a new "OneRoster" (or whatever `info.title` is) collection with folders for each tag and ~144 requests.
+In the running app: click the COLLECTIONS `+` menu → "Import from Swagger…" → paste `https://oneroster.example.com/swagger/v1/swagger.json` → click Import. Expect a new "OneRoster" (or whatever `info.title` is) collection with folders for each tag and ~144 requests.
 
 - [ ] **Step 5: Playwright spec**
 
@@ -1076,9 +1076,9 @@ npx playwright test
 
 - [ ] **Step 2: Manual smoke against the live OneRoster spec**
 
-Import `https://oneroster.sis.nhatest.com/dyn-feature-68474/swagger/v1/swagger.json`. Confirm:
+Import `https://oneroster.example.com/swagger/v1/swagger.json`. Confirm:
 1. New collection appears with the expected number of folders (one per OneRoster tag).
-2. `From swagger` env is active and `baseUrl` = `https://oneroster.sis.nhatest.com/dyn-feature-68474`.
+2. `From swagger` env is active and `baseUrl` = `https://oneroster.example.com`.
 3. Pick one request (e.g. `GET /ims/oneroster/rostering/v1p2/academicSessions`). Send → 200 or whatever the server returns; no `Invalid URL` toast.
 
 - [ ] **Step 3: Commit any smoke-test fixes**

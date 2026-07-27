@@ -79,7 +79,7 @@ For OpenAPI 3.x: `servers[0].url`. For Swagger 2.0: `${(schemes[0] ?? 'https')}:
 Resolution rules (in order):
 
 1. If the candidate is **absolute** (has a scheme) → use it verbatim.
-2. If the candidate is **relative** AND the import source was a **URL** → resolve against the source URL's origin. (E.g. `servers[0].url = '/dyn-feature-68474/'` imported from `https://oneroster.sis.nhatest.com/dyn-feature-68474/swagger/v1/swagger.json` → `https://oneroster.sis.nhatest.com/dyn-feature-68474`.)
+2. If the candidate is **relative** AND the import source was a **URL** → resolve against the source URL's origin. (E.g. `servers[0].url = '/'` imported from `https://oneroster.example.com/swagger/v1/swagger.json` → `https://oneroster.example.com`.)
 3. If the candidate is **relative** AND the import source was a **file** → use it verbatim. The user edits it in the resulting env after import.
 4. If `servers` is missing entirely (3.x default) → use `/` per spec.
 
@@ -190,4 +190,4 @@ The import dialog is a new component `hu-swagger-import-dialog` mounted at body 
 - Import the same file twice — should create two collections (no dedupe in v1).
 
 **Manual smoke:**
-- Import the OneRoster swagger by URL: 72 paths, ~144 operations. Confirm `baseUrl` resolves to `https://oneroster.sis.nhatest.com/dyn-feature-68474`. Send one operation end-to-end after setting `Limit`/`Offset` etc.
+- Import the OneRoster swagger by URL: 72 paths, ~144 operations. Confirm `baseUrl` resolves to `https://oneroster.example.com`. Send one operation end-to-end after setting `Limit`/`Offset` etc.
