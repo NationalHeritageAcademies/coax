@@ -1,0 +1,42 @@
+.hu-dialog {
+	padding: 0;
+	border: 1px solid var(--hu-border-strong);
+	border-radius: var(--hu-radius-lg);
+	background: var(--hu-bg-elevated);
+	color: var(--hu-text-primary);
+	box-shadow: var(--hu-shadow-lg);
+	width: calc(100vw - 64px);
+	max-width: var(--hu-dialog-max-width, 560px);
+	max-height: calc(100vh - 96px);
+	overflow: hidden;
+}
+
+.hu-dialog::backdrop {
+	background: rgb(0 0 0 / 0.45);
+}
+
+.surface {
+	display: flex;
+	flex-direction: column;
+	max-height: calc(100vh - 96px);
+}
+
+.header {
+	flex-shrink: 0;
+	border-bottom: 1px solid var(--hu-border);
+	padding: 12px 16px;
+	font-size: 13px;
+}
+
+.header:empty {
+	display: none;
+}
+
+.body {
+	flex: 1;
+	min-height: 0;
+	overflow: auto;
+	padding: 16px;
+	font-size: 13px;
+	line-height: 1.5;
+}

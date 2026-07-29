@@ -20,5 +20,11 @@
       "@telemetry/*": ["src/telemetry/*"],
       "@workspace-fs/*": ["src/workspace-fs/*"]
     }
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": true,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "typeCheckHostBindings": true
   }
 }

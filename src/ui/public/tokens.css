@@ -422,6 +422,69 @@ body {
 	background: var(--hu-bg-hover);
 }
 
+/* Native form controls ------------------------------------------------------- */
+/* Plain classes rather than wrapper components: <input> and <select> carry all
+   the semantics we need already, and keeping them native means labels, focus
+   order, and form association keep working without re-plumbing. Composite
+   widgets (dialog, dropdown) are Angular components; these are not. */
+.hu-input,
+.hu-select {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 6px 10px;
+	background: var(--hu-bg-base);
+	border: 1px solid var(--hu-border);
+	border-radius: var(--hu-radius-md);
+	color: var(--hu-text-primary);
+	font-family: var(--hu-font-sans);
+	font-size: 13px;
+	line-height: 1.4;
+	transition:
+		border-color var(--hu-motion-fast) var(--hu-ease-out),
+		box-shadow var(--hu-motion-fast) var(--hu-ease-out);
+}
+.hu-input::placeholder {
+	color: var(--hu-text-muted);
+}
+.hu-input:focus,
+.hu-input:focus-visible,
+.hu-select:focus,
+.hu-select:focus-visible {
+	outline: none;
+	border-color: var(--hu-accent);
+	box-shadow: 0 0 0 3px var(--hu-accent-glow);
+}
+.hu-input:disabled,
+.hu-select:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
+.hu-input--sm,
+.hu-select--sm {
+	padding: 4px 8px;
+	font-size: 12px;
+}
+.hu-input--mono {
+	font-family: var(--hu-font-mono);
+}
+.hu-select {
+	cursor: pointer;
+	appearance: none;
+	padding-right: 26px;
+	/* Inline caret so the control doesn't depend on a loaded icon font. */
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' fill='%238a95a8'%3E%3Cpath d='M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 8px center;
+	background-size: 12px;
+}
+.hu-label {
+	display: block;
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--hu-text-secondary);
+	margin-bottom: 4px;
+}
+
 /* Splitters ----------------------------------------------------------------- */
 #hu-splitter,
 #hu-sidebar-splitter {

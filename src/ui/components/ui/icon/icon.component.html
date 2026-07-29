@@ -1,0 +1,5 @@
+@if (path(); as d) {
+	<svg [attr.viewBox]="viewBox" [attr.width]="pixels()" [attr.height]="pixels()" fill="currentColor" aria-hidden="true" focusable="false">
+		<path [attr.d]="d" />
+	</svg>
+}

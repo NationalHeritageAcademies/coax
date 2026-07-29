@@ -3,6 +3,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { loadEnv, type Plugin } from 'vite';
+import angular from '@analogjs/vite-plugin-angular';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -81,17 +82,11 @@ export default defineConfig({
   renderer: {
     resolve: { alias },
     root: resolve(__dirname, 'src/ui'),
-    plugins: [
-      viteStaticCopy({
-        targets: [
-          {
-            src: resolve(__dirname, 'node_modules/@melodicdev/components/assets/*'),
-            dest: '.',
-          },
-        ],
-      }),
-      stripCrossOriginPlugin,
-    ],
+    // The Angular renderer is compiled by Analog's Vite plugin — the same
+    // plugin NHA.Frontend uses — so JIT/AOT behavior matches what we run
+    // elsewhere. tokens.css is served straight out of src/ui/public (Vite's
+    // default publicDir for this root) and copied verbatim into the bundle.
+    plugins: [angular(), stripCrossOriginPlugin],
     // Same bake-in pattern as main: the renderer reads
     // `import.meta.env.VITE_SENTRY_DSN`. Vite normally resolves VITE_*
     // automatically from the renderer's `envDir`, but electron-vite's

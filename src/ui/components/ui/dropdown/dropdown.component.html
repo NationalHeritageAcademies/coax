@@ -1,0 +1,9 @@
+<div class="trigger" (click)="toggle()">
+	<ng-content select="[slot=trigger]" />
+</div>
+
+@if (isOpen()) {
+	<div class="menu" [attr.data-placement]="placement()" role="menu">
+		<ng-content />
+	</div>
+}

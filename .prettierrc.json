@@ -1,1 +1,20 @@
-{ "singleQuote": true, "semi": true, "printWidth": 100, "trailingComma": "all" }
+{
+  "singleQuote": true,
+  "semi": true,
+  "printWidth": 100,
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "comment": "The Angular renderer follows NHA.Frontend house style so the code reads the same as the rest of our Angular work.",
+      "files": ["src/ui/**/*.ts", "src/ui/**/*.html", "src/ui/**/*.scss", "src/ui/**/*.css"],
+      "options": {
+        "useTabs": true,
+        "tabWidth": 4,
+        "printWidth": 160,
+        "trailingComma": "none",
+        "bracketSpacing": true,
+        "quoteProps": "consistent"
+      }
+    }
+  ]
+}

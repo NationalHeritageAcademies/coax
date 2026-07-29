@@ -5,12 +5,12 @@
     <meta http-equiv="Content-Security-Policy"
           content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self'" />
     <title>Coax</title>
-    <!-- Both Melodic-tagged stylesheets are injected from bootstrap-styles.ts
-         so Vite's HTML plugin doesn't bundle or rewrite them. See the comment
-         in that file for the production failure modes this avoids. -->
+    <!-- tokens.css is injected from bootstrap-styles.ts so Vite's HTML plugin
+         doesn't rewrite its href. See the comment in that file for the
+         production failure mode this avoids. -->
   </head>
   <body>
-    <hu-app-frame></hu-app-frame>
+    <hu-root></hu-root>
     <script type="module" src="/main.ts"></script>
   </body>
 </html>

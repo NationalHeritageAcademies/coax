@@ -1,0 +1,6 @@
+<button class="item" type="button" role="menuitem" [disabled]="disabled()" [class.item--danger]="danger()" (click)="onClick()">
+	@if (icon()) {
+		<hu-icon class="item-icon" [name]="icon()" size="sm" />
+	}
+	<span class="item-label"><ng-content /></span>
+</button>

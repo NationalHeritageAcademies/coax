@@ -1,0 +1,10 @@
+<dialog #dlg class="hu-dialog" [style.--hu-dialog-max-width]="maxWidth()" (close)="onNativeClose()" (click)="onBackdropClick($event)">
+	<div class="surface">
+		<header class="header">
+			<ng-content select="[slot=dialog-header]" />
+		</header>
+		<div class="body">
+			<ng-content />
+		</div>
+	</div>
+</dialog>
