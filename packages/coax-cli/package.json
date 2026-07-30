@@ -1,5 +1,5 @@
 {
-  "name": "@melodicdev/coax-cli",
+  "name": "@nhaschools/coax-cli",
   "version": "1.3.2",
   "description": "Coax CLI — run .http files headlessly with inline assertions. Built for CI/CD, smoke tests, contract verification, and synthetic monitoring.",
   "keywords": [
@@ -15,13 +15,13 @@
     "coax",
     "dotenv-http"
   ],
-  "homepage": "https://coax.melodic.dev",
-  "bugs": "https://github.com/MelodicDevelopment/coax/issues",
+  "homepage": "https://github.com/NationalHeritageAcademies/coax#readme",
+  "bugs": "https://github.com/NationalHeritageAcademies/coax/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MelodicDevelopment/coax.git"
+    "url": "https://github.com/NationalHeritageAcademies/coax.git"
   },
-  "author": "Rick Hopkins <support@melodic.dev>",
+  "author": "Rick Hopkins <rhopkins@nhaschools.com>",
   "license": "MIT",
   "bin": {
     "coax": "coax.cjs"

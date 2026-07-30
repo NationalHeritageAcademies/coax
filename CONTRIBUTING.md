@@ -10,7 +10,7 @@ during install, so you'll need a working C++ toolchain (Xcode CLT on macOS,
 build-essential on Linux, VS Build Tools on Windows).
 
 ```bash
-git clone https://github.com/MelodicDevelopment/coax.git
+git clone https://github.com/NationalHeritageAcademies/coax.git
 cd coax
 npm install
 npm run dev        # launch the app with hot reload
@@ -44,7 +44,7 @@ See the [Project layout](README.md#project-layout) section of the README.
 The short version: `src/parser`, `src/resolver`, `src/assertions`, and
 `src/runner` are pure TypeScript with no Electron dependency and are the
 easiest places to start; `src/app` is the Electron main process; `src/ui`
-is the renderer (Melodic web components).
+is the renderer (Angular 21, zoneless + signals).
 
 ## Pull requests
 

@@ -1,9 +1,9 @@
-# @melodicdev/coax-cli
+# @nhaschools/coax-cli
 
-The headless runner for [Coax](https://coax.melodic.dev). Run `.http` files in CI, with inline assertions, JUnit output, and exit codes your build system actually understands.
+The headless runner for [Coax](https://github.com/NationalHeritageAcademies/coax). Run `.http` files in CI, with inline assertions, JUnit output, and exit codes your build system actually understands.
 
 ```sh
-npm install --global @melodicdev/coax-cli
+npm install --global @nhaschools/coax-cli
 ```
 
 ## Quick start
@@ -122,17 +122,16 @@ GitHub Actions:
 ```yaml
 - name: API smoke tests
   run: |
-    npx @melodicdev/coax-cli run tests/smoke.http \
+    npx @nhaschools/coax-cli run tests/smoke.http \
       --output junit > coax-results.xml
 ```
 
 ## Links
 
-- [coax.melodic.dev](https://coax.melodic.dev) — the Coax desktop app
-- [GitHub](https://github.com/MelodicDevelopment/coax) — source, issues, releases
-- [Full CLI reference](https://github.com/MelodicDevelopment/coax/blob/main/docs/cli.md)
-- [GitHub Actions example](https://github.com/MelodicDevelopment/coax/blob/main/docs/cli-example/.github/workflows/coax.yml)
+- [GitHub](https://github.com/NationalHeritageAcademies/coax) — source, issues, releases
+- [Full CLI reference](https://github.com/NationalHeritageAcademies/coax/blob/main/docs/cli.md)
+- [GitHub Actions example](https://github.com/NationalHeritageAcademies/coax/blob/main/docs/cli-example/.github/workflows/coax.yml)
 
 ## License
 
-MIT © Melodic Development. See LICENSE.
+MIT © Rick Hopkins (Melodic Development). See LICENSE.

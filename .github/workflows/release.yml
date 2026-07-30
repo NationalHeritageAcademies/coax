@@ -4,6 +4,12 @@
 # through jsign + Azure Trusted Signing, no Windows VM needed) and uploads them
 # to a DRAFT GitHub Release for review before publishing.
 #
+# NHA fork: none of these secrets are populated yet — they must be re-issued
+# from NHA's own Apple Developer account and Azure Trusted Signing tenant
+# (see docs/windows-signing-setup.md). Until then builds ship unsigned:
+# electron-builder skips mac signing when CSC_LINK is absent, and
+# scripts/sign-windows.cjs no-ops without the TRUSTED_SIGNING_* vars.
+#
 # Required repository secrets:
 #   CSC_LINK                      base64 of the Developer ID Application .p12
 #   CSC_KEY_PASSWORD              password for the .p12

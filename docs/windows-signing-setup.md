@@ -1,5 +1,17 @@
 # Windows code signing setup (in progress)
 
+> **NHA fork status (2026-07-30):** everything below documents the *upstream
+> Melodic Development* Azure Trusted Signing setup and is kept as a worked
+> example of the process. NHA releases need their own signing identity:
+> an Azure Trusted Signing account under NHA's tenant, identity validation
+> for National Heritage Academies, a cert profile, and the six env vars /
+> repo secrets re-issued from that account (see `.env.example` and
+> `scripts/sign-windows.cjs` — the code is identity-agnostic and needs no
+> changes). The same applies to macOS notarization: new `APPLE_ID` /
+> `APPLE_TEAM_ID` / app-specific password secrets from NHA's Apple
+> Developer account (`scripts/notarize.cjs`). Until those exist, CI builds
+> ship unsigned (`SKIP_WIN_SIGN=1`, `mac.notarize: false`).
+
 Coax's Windows installer is being wired up to Authenticode-sign via **Azure
 Trusted Signing** (Microsoft's cloud KMS signing service, ~$120/yr).
 

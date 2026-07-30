@@ -4,7 +4,7 @@
  * @var array<string,mixed>   $config
  */
 $support = $config['links']['support_email'] ?? '';
-$github = $config['links']['github'] ?? 'https://github.com/MelodicDevelopment/coax';
+$github = $config['links']['github'] ?? 'https://github.com/NationalHeritageAcademies/coax';
 $releases = $config['links']['releases'] ?? $github . '/releases';
 ?>
 <div class="docs">
@@ -239,7 +239,7 @@ Linux    ~/.config/Coax/workspaces/&lt;hash&gt;/cache.sqlite</code></pre>
 
 		<h3 id="cli-install">Install</h3>
 		<p>The CLI ships alongside the desktop app and is free to use. Install from npm (requires Node 18+):</p>
-		<pre><code>npm install --global @melodicdev/coax-cli</code></pre>
+		<pre><code>npm install --global @nhaschools/coax-cli</code></pre>
 		<p>That's the whole setup — there's no key to configure and nothing to activate.</p>
 
 		<h3 id="cli-usage">Usage &amp; flags</h3>
@@ -353,7 +353,7 @@ Authorization: Bearer {{login.response.body.$.token}}</code></pre>
         with: { node-version: '20' }
 
       - name: Install Coax CLI
-        run: npm install --global @melodicdev/coax-cli
+        run: npm install --global @nhaschools/coax-cli
 
       - name: Run API smoke tests
         run: coax run tests/smoke.http --output junit &gt; coax-results.xml
@@ -367,7 +367,7 @@ Authorization: Bearer {{login.response.body.$.token}}</code></pre>
 
 		<h2 id="support">Questions?</h2>
 		<p>
-			CLI package: <a href="https://www.npmjs.com/package/@melodicdev/coax-cli">@melodicdev/coax-cli</a>.
+			CLI package: <a href="https://www.npmjs.com/package/@nhaschools/coax-cli">@nhaschools/coax-cli</a>.
 			Source, issues, and releases live on <a href="<?= htmlspecialchars($github) ?>">GitHub</a> —
 			or email <a href="mailto:<?= htmlspecialchars($support) ?>"><?= htmlspecialchars($support) ?></a>.
 		</p>

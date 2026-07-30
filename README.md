@@ -2,18 +2,18 @@
 
 > The desktop app for your `.http` files.
 
-[![CI](https://github.com/MelodicDevelopment/coax/actions/workflows/ci.yml/badge.svg)](https://github.com/MelodicDevelopment/coax/actions/workflows/ci.yml)
+[![CI](https://github.com/NationalHeritageAcademies/coax/actions/workflows/ci.yml/badge.svg)](https://github.com/NationalHeritageAcademies/coax/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-8b7ff0.svg)](LICENSE)
 [![Electron](https://img.shields.io/badge/Electron-33-47848F?logo=electron&logoColor=white)](https://www.electronjs.org)
-[![Melodic JS](https://img.shields.io/badge/Melodic_JS-2-8b7ff0)](https://github.com/MelodicDevelopment/melodic)
+[![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular&logoColor=white)](https://angular.dev)
 
 A free, open-source (MIT), cross-platform desktop client for `.http` files — the format used by VS Code REST Client and JetBrains HTTP Client. Open existing `.http` files, edit them in a polished UI, manage environments and secrets, and execute requests against any HTTP endpoint.
 
 ![Coax with a collection sidebar, an HTTP request being edited, and a JSON response](web/public/assets/img/screenshot-hero.png)
 
-Built with Electron + TypeScript and the [Melodic](https://github.com/MelodicDevelopment/melodic) component library.
+Built with Electron + TypeScript and an [Angular](https://angular.dev) renderer.
 
-**Download:** grab the latest installer for macOS, Windows, or Linux from [GitHub Releases](https://github.com/MelodicDevelopment/coax/releases).
+**Download:** grab the latest installer for macOS, Windows, or Linux from [GitHub Releases](https://github.com/NationalHeritageAcademies/coax/releases).
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -35,10 +35,10 @@ Built with Electron + TypeScript and the [Melodic](https://github.com/MelodicDev
 
 ## Quick start
 
-Install from [GitHub Releases](https://github.com/MelodicDevelopment/coax/releases), or build from source:
+Install from [GitHub Releases](https://github.com/NationalHeritageAcademies/coax/releases), or build from source:
 
 ```bash
-git clone https://github.com/MelodicDevelopment/coax.git
+git clone https://github.com/NationalHeritageAcademies/coax.git
 cd coax
 npm install
 npm run dev          # launches the app in development mode
@@ -90,7 +90,7 @@ src/
   runner/      HTTP runner using undici (with cancel + timeout)
   ipc/         Typed IPC contract between renderer and main process
   app/         Electron main process glue (dispatcher, file dialogs, lifecycle)
-  ui/          Renderer — Melodic web components
+  ui/          Renderer — Angular 21 (zoneless, signals)
 docs/          User-facing documentation
 examples/      Sample .http files (OneRoster API spec)
 tests/         Vitest unit + integration tests
@@ -112,7 +112,7 @@ tests-e2e/     Playwright end-to-end test against the packaged Electron app
 
 - **Electron** 33 with strict context isolation, no Node integration in the renderer
 - **TypeScript** with `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`
-- **Melodic** (`@melodicdev/core` + `@melodicdev/components`) for the UI component library
+- **Angular** 21 (zoneless change detection, signals) for the renderer UI
 - **Monaco Editor** for body and response code editing
 - **better-sqlite3** for the workspace database
 - **undici** for HTTP execution in a dedicated Node worker
@@ -144,6 +144,8 @@ so they never phone home at all.
 
 ## License
 
-[MIT](LICENSE) © Melodic Development.
+[MIT](LICENSE) © Rick Hopkins (Melodic Development).
 
-The marketing site lives at [coax.melodic.dev](https://coax.melodic.dev).
+This repository is the National Heritage Academies fork of
+[MelodicDevelopment/coax](https://github.com/MelodicDevelopment/coax), maintained
+for NHA's internal tooling. Releases here are built and published by NHA.

@@ -16,7 +16,7 @@ jobs:
           node-version: '20'
 
       - name: Install Coax CLI
-        run: npm install --global @melodicdev/coax-cli
+        run: npm install --global @nhaschools/coax-cli
 
       - name: Run API smoke tests
         # Secrets declared in a .env.json file are looked up via env vars:

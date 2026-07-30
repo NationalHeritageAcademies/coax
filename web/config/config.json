@@ -7,13 +7,13 @@
     },
     "links": {
         "downloads": {
-            "macos": "https://github.com/MelodicDevelopment/coax/releases/latest/download/Coax-1.3.2-universal.dmg",
-            "windows": "https://github.com/MelodicDevelopment/coax/releases/latest/download/Coax-Setup-1.3.2.exe",
-            "linux_appimage": "https://github.com/MelodicDevelopment/coax/releases/latest/download/Coax-1.3.2.AppImage",
-            "linux_appimage_arm64": "https://github.com/MelodicDevelopment/coax/releases/latest/download/Coax-1.3.2-arm64.AppImage"
+            "macos": "https://github.com/NationalHeritageAcademies/coax/releases/latest/download/Coax-1.3.2-universal.dmg",
+            "windows": "https://github.com/NationalHeritageAcademies/coax/releases/latest/download/Coax-Setup-1.3.2.exe",
+            "linux_appimage": "https://github.com/NationalHeritageAcademies/coax/releases/latest/download/Coax-1.3.2.AppImage",
+            "linux_appimage_arm64": "https://github.com/NationalHeritageAcademies/coax/releases/latest/download/Coax-1.3.2-arm64.AppImage"
         },
-        "github": "https://github.com/MelodicDevelopment/coax",
-        "releases": "https://github.com/MelodicDevelopment/coax/releases",
-        "support_email": "support@melodic.dev"
+        "github": "https://github.com/NationalHeritageAcademies/coax",
+        "releases": "https://github.com/NationalHeritageAcademies/coax/releases",
+        "support_email": "rhopkins@nhaschools.com"
     }
 }

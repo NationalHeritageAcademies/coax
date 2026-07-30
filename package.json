@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MelodicDevelopment/coax.git"
+    "url": "https://github.com/NationalHeritageAcademies/coax.git"
   },
   "type": "module",
   "main": "out/main/index.js",

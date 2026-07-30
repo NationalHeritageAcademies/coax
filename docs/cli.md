@@ -9,10 +9,10 @@ Run `.http` files headlessly with inline assertions. Built for CI, smoke tests, 
 **Via npm** (recommended for CI runners):
 
 ```sh
-npm install --global @melodicdev/coax-cli
+npm install --global @nhaschools/coax-cli
 ```
 
-**Standalone binary**: download from [GitHub Releases](https://github.com/MelodicDevelopment/coax/releases) and put the binary on your `PATH`.
+**Standalone binary**: download from [GitHub Releases](https://github.com/NationalHeritageAcademies/coax/releases) and put the binary on your `PATH`.
 
 ## Usage
 
@@ -183,7 +183,7 @@ See `docs/cli-example/.github/workflows/coax.yml` for a complete GitHub Actions 
 ```yaml
 - name: Run API smoke tests
   run: |
-    npx @melodicdev/coax-cli run tests/smoke.http \
+    npx @nhaschools/coax-cli run tests/smoke.http \
       --output junit > coax-results.xml
 ```
 

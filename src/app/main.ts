@@ -23,8 +23,8 @@ ipcMain.handle('httpui:rpc', (_evt, msg: IpcRequest) => dispatch(msg));
 app.setAboutPanelOptions({
   applicationName: 'Coax',
   applicationVersion: app.getVersion(),
-  copyright: '© 2026 Melodic Development',
-  website: 'https://coax.melodic.dev',
+  copyright: '© 2026 Rick Hopkins (Melodic Development)',
+  website: 'https://github.com/NationalHeritageAcademies/coax',
   credits: 'Your API workspace is just a .http file.',
 });
 

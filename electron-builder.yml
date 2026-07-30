@@ -1,4 +1,8 @@
-appId: dev.melodic.coax
+# NOTE: changed from dev.melodic.coax when the NHA fork took over releases.
+# A new appId means existing Melodic-era installs will NOT auto-update into
+# NHA builds (they look like a different app to the OS + electron-updater) —
+# intended, since NHA distributes its own releases from its own repo.
+appId: com.nhaschools.coax
 productName: Coax
 directories:
   output: dist
@@ -6,7 +10,7 @@ directories:
 afterSign: scripts/notarize.cjs
 publish:
   - provider: github
-    owner: MelodicDevelopment
+    owner: NationalHeritageAcademies
     repo: coax
     # Uploads land on a DRAFT release so artifacts can be reviewed (and
     # release notes written) before anything goes live to auto-updaters.
@@ -65,8 +69,8 @@ linux:
         - arm64
   icon: build/icon.png
   category: Development
-  maintainer: Rick Hopkins <support@melodic.dev>
-  vendor: Melodic Development
+  maintainer: Rick Hopkins <rhopkins@nhaschools.com>
+  vendor: National Heritage Academies
 nsis:
   oneClick: false
   allowToChangeInstallationDirectory: true

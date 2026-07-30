@@ -111,7 +111,7 @@ Publishing fires `update-website.yml`, which commits a download-link bump to
 `web/config/config.json` and Railway redeploys. Within a few minutes verify:
 
 ```bash
-curl -s https://coax.melodic.dev/ | grep -o 'Coax-[0-9.]*-universal.dmg' | head -1
+curl -s https://coax.melodic.dev/  # TODO: swap to the NHA-hosted site once a domain exists | grep -o 'Coax-[0-9.]*-universal.dmg' | head -1
 ```
 
 It should show the new version. Report the release URL back to the user.
