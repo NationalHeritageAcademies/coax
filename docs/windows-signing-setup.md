@@ -11,6 +11,12 @@
 > `APPLE_TEAM_ID` / app-specific password secrets from NHA's Apple
 > Developer account (`scripts/notarize.cjs`). Until those exist, CI builds
 > ship unsigned (`SKIP_WIN_SIGN=1`, `mac.notarize: false`).
+>
+> Known so far: **NHA Apple Team ID = `2X78QR5M8K`**. Still needed: a
+> Developer ID Application .p12 from that team (Account Holder role
+> creates it), an Apple ID + app-specific password for notarytool, and
+> the full Azure Trusted Signing setup below re-done under NHA's tenant
+> (start the identity validation first — it's the multi-day step).
 
 Coax's Windows installer is being wired up to Authenticode-sign via **Azure
 Trusted Signing** (Microsoft's cloud KMS signing service, ~$120/yr).
