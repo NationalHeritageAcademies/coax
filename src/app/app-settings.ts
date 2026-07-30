@@ -3,7 +3,7 @@
 // =============================================================================
 //
 // Persists user-facing app preferences that aren't tied to a specific workspace.
-// Same pattern as src/telemetry/storage.ts — a flat JSON file under userData,
+// A flat JSON file under userData,
 // written with `mode: 0o600` so only the current user can read it.
 //
 // Why a sidecar (not SQLite): the active workspace's DB isn't always open

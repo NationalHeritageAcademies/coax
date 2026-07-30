@@ -109,9 +109,6 @@ export type IpcRequest =
       source: { kind: 'file'; path: string } | { kind: 'url'; url: string };
       parentCollectionId?: string;
     }
-  | { kind: 'telemetry:get' }
-  | { kind: 'telemetry:set'; consent: boolean }
-  | { kind: 'telemetry:isAvailable' }
   | { kind: 'app:settings:get' }
   | {
       kind: 'app:settings:set';
@@ -123,18 +120,6 @@ export type IpcRequest =
   | { kind: 'app:quitAndInstall' }
   | { kind: 'app:openExternal'; url: string }
   | { kind: 'app:quit' };
-
-/**
- * Persisted shape of telemetry preferences. `consent` is `null` while the
- * user has not yet been asked (which is what gates the first-run dialog);
- * `true` / `false` after they answer.
- */
-export interface TelemetrySettings {
-  /** Tri-state: null = not-yet-asked, true = consented, false = declined. */
-  consent: boolean | null;
-  /** ISO8601 timestamp of the last user-driven change to consent. */
-  decidedAt: string | null;
-}
 
 /**
  * App-level user preferences. Persisted as a JSON sidecar in userData.
@@ -150,12 +135,6 @@ export interface AppSettings {
   hasSeenWelcome: boolean;
   /** When true, the app checks for updates on launch. Default true. */
   autoUpdate: boolean;
-}
-
-/** Whether a DSN is configured at all — drives whether to show the dialog. */
-export interface TelemetryAvailability {
-  /** True iff the build has a DSN; without one, telemetry can never collect. */
-  configured: boolean;
 }
 
 export interface IpcError {

@@ -10,7 +10,7 @@ import { RendererLifecycleService } from '../store/renderer-lifecycle.service';
  * a known source of spurious change-detection churn in editor-heavy UIs.
  *
  * The initializer starts the renderer lifecycle (menu IPC bridge, workspace
- * bootstrap, telemetry) without awaiting the data load — first paint should
+ * bootstrap) without awaiting the data load — first paint should
  * not block on IPC.
  */
 export const appConfig: ApplicationConfig = {

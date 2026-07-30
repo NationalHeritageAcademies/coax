@@ -6,11 +6,6 @@ import { buildAppMenu } from './menu.js';
 // inside the handler — reading it at module scope crashes any test that
 // imports this file outside a real Electron process.
 import pkg from 'electron-updater';
-import {
-  readTelemetrySettings,
-  writeTelemetrySettings,
-  type TelemetrySettings as TelemetrySettingsT,
-} from '@telemetry/storage';
 import { readAppSettings, writeAppSettings } from './app-settings.js';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -1841,25 +1836,6 @@ export const handlers: Handlers = {
       insecureTLS: readAppSettings(app.getPath('userData')).allowInsecureTLS,
     }),
 
-  // === Telemetry / settings ===
-  // Consent persists to <userData>/telemetry.json rather than the workspace
-  // SQLite — see comment in src/telemetry/storage.ts for why. main.ts reads
-  // the same file synchronously before app.whenReady() to gate Sentry init.
-  'telemetry:get': () => readTelemetrySettings(app.getPath('userData')),
-
-  'telemetry:set': ({ consent }) => {
-    const next: TelemetrySettingsT = { consent, decidedAt: new Date().toISOString() };
-    writeTelemetrySettings(app.getPath('userData'), next);
-    return next;
-  },
-
-  'telemetry:isAvailable': () => ({
-    // The DSN is read from a build-time env var in main.ts; we mirror the
-    // check here so the renderer can show/hide the consent dialog without
-    // a second IPC trip. SENTRY_DSN is not exposed to the renderer.
-    configured: !!process.env.SENTRY_DSN && process.env.SENTRY_DSN.trim() !== '',
-  }),
-
   // App-level settings — see src/app/app-settings.ts. Persists to
   // <userData>/settings.json so the value survives workspace switches and
   // is available pre-workspace at boot.
@@ -1999,13 +1975,4 @@ export function shutdown(): void {
     dbHandle.close();
     dbHandle = undefined;
   }
-}
-
-/**
- * Returns the absolute path to the user's currently-open workspace folder.
- * Used by main.ts to seed the telemetry scrubber's workspace root. Returns
- * undefined if no workspace is open yet (first-launch state).
- */
-export function getCurrentWorkspacePath(): string | undefined {
-  return currentWorkspacePath;
 }

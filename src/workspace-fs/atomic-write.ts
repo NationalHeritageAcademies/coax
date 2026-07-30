@@ -15,8 +15,8 @@
 //   - We `fsync` the file *and* the parent directory. Without the directory
 //     fsync, the rename can survive a crash but the new inode's contents can
 //     be lost on some filesystems. The cost is small (one syscall per write).
-//   - Mode 0o600 on the temp file matches the sidecar convention used by
-//     telemetry storage — owner read+write only.
+//   - Mode 0o600 on the temp file matches the userData sidecar convention
+//     (settings.json) — owner read+write only.
 
 import { existsSync, mkdirSync } from 'node:fs';
 import { open, rename, unlink } from 'node:fs/promises';

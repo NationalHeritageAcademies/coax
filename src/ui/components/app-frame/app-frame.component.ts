@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, computed, i
 import { rpc } from '@ipc/renderer';
 import type { AppSettings } from '@ipc/types';
 import { AppUpdateService } from '../../store/app-update.service';
-import { RendererLifecycleService } from '../../store/renderer-lifecycle.service';
 import { TabsStateService } from '../../store/tabs-state.service';
 import { WorkspaceFacade } from '../../store/workspace.facade';
 import { WorkspaceStateService } from '../../store/workspace-state.service';
@@ -17,7 +16,6 @@ import { SettingsDialogComponent } from '../settings-dialog/settings-dialog.comp
 import { SidebarTreeComponent } from '../sidebar-tree/sidebar-tree.component';
 import { StatusBarComponent } from '../status-bar/status-bar.component';
 import { TabStripComponent } from '../tab-strip/tab-strip.component';
-import { TelemetryConsentComponent } from '../telemetry-consent/telemetry-consent.component';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { showToast } from '../toast';
 import { ButtonComponent, DropdownComponent, DropdownItemComponent, IconComponent } from '../ui';
@@ -40,9 +38,9 @@ const DEFAULT_SIDEBAR = 280;
  * component is destroyed and recreated when the active tab changes —
  * request-tab owns per-tab editor state that must not leak across tabs.
  *
- * The app-level dialogs (env-manager, help, install-cli, settings, welcome,
- * telemetry consent) are hosted here; each uses the native <dialog> top
- * layer, so their DOM position imposes no stacking constraints.
+ * The app-level dialogs (env-manager, help, install-cli, settings, welcome)
+ * are hosted here; each uses the native <dialog> top layer, so their DOM
+ * position imposes no stacking constraints.
  */
 @Component({
 	selector: 'hu-app-frame',
@@ -62,7 +60,6 @@ const DEFAULT_SIDEBAR = 280;
 		SidebarTreeComponent,
 		StatusBarComponent,
 		TabStripComponent,
-		TelemetryConsentComponent,
 		ThemeToggleComponent,
 		WelcomeDialogComponent
 	],
@@ -77,7 +74,6 @@ export class AppFrameComponent {
 	private readonly tabsState = inject(TabsStateService);
 	private readonly facade = inject(WorkspaceFacade);
 	protected readonly appUpdate = inject(AppUpdateService);
-	protected readonly lifecycle = inject(RendererLifecycleService);
 
 	/**
 	 * Tag the host with the OS platform so CSS can branch (mainly: reserve

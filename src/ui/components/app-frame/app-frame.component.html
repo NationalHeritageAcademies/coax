@@ -131,6 +131,3 @@
 <hu-install-cli-dialog />
 <hu-settings-dialog />
 <hu-welcome-dialog />
-@if (lifecycle.showTelemetryConsent()) {
-	<hu-telemetry-consent (finished)="lifecycle.dismissTelemetryConsent()" />
-}

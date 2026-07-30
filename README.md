@@ -75,7 +75,7 @@ Open the app, click the **⬇ Import** button in the header, and pick a `.http` 
 | Response chaining | [docs/user-guide.md#response-chaining](docs/user-guide.md#response-chaining) |
 | Keyboard shortcuts & UI tour | [docs/user-guide.md#interface-tour](docs/user-guide.md#interface-tour) |
 | CLI reference (`coax run` in CI) | [docs/cli.md](docs/cli.md) |
-| Privacy & telemetry details | [docs/privacy.md](docs/privacy.md) |
+| Privacy details | [docs/privacy.md](docs/privacy.md) |
 | Roadmap | [docs/roadmap.md](docs/roadmap.md) |
 | Architecture (for contributors) | [docs/superpowers/specs/2026-05-14-http-ui-design.md](docs/superpowers/specs/2026-05-14-http-ui-design.md) |
 
@@ -137,10 +137,10 @@ git integration.
 
 ## Telemetry
 
-Coax contains optional, **opt-in** Sentry crash reporting. It is entirely
-inert unless (a) a Sentry DSN was baked in at build time and (b) you
-explicitly opt in when asked on first run. Builds from source have no DSN,
-so they never phone home at all.
+None. Coax makes no network calls except the HTTP requests you send and
+the GitHub Releases check for updates (which you can turn off in
+Settings). The upstream project's opt-in Sentry crash reporting was
+removed in the NHA fork.
 
 ## License
 

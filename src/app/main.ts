@@ -8,8 +8,6 @@ import { installAppMenu } from './menu.js';
 import { createDispatcher } from '@ipc/main-bridge';
 import type { IpcRequest } from '@ipc/types';
 import { stopRunner } from '@runner/host';
-import { initMainTelemetry } from '@telemetry/init';
-import { readTelemetrySettings } from '@telemetry/storage';
 import { readAppSettings } from './app-settings.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -26,22 +24,6 @@ app.setAboutPanelOptions({
   copyright: '© 2026 Rick Hopkins (Melodic Development)',
   website: 'https://github.com/NationalHeritageAcademies/coax',
   credits: 'Your API workspace is just a .http file.',
-});
-
-// Initialize Sentry BEFORE `app.whenReady()` fires — the Electron SDK installs
-// Crashpad and unhandled-exception listeners during the boot window, and
-// throws "Sentry SDK should be initialized before the Electron app 'ready'
-// event is fired" if we do it any later. Consent comes from a sidecar JSON
-// rather than the workspace SQLite so it's readable synchronously here.
-// `app.getPath('userData')` works pre-ready (returns the default path based
-// on the app name), and `initMainTelemetry` no-ops when DSN or consent is
-// missing — so this is a safe unconditional call.
-const initialUserData = app.getPath('userData');
-const initialTelemetry = readTelemetrySettings(initialUserData);
-initMainTelemetry({
-  consent: initialTelemetry.consent === true,
-  workspaceRoot: initialUserData,
-  appVersion: app.getVersion(),
 });
 
 async function createWindow(): Promise<void> {

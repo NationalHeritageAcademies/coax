@@ -16,7 +16,6 @@
       "@app/*": ["src/app/*"],
       "@ui/*": ["src/ui/*"],
       "@importer/*": ["src/importer/*"],
-      "@telemetry/*": ["src/telemetry/*"],
       "@workspace-fs/*": ["src/workspace-fs/*"]
     }
   },

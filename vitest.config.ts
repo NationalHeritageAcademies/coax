@@ -17,7 +17,6 @@ const alias = {
   '@app': resolve(__dirname, 'src/app'),
   '@ui': resolve(__dirname, 'src/ui'),
   '@importer': resolve(__dirname, 'src/importer'),
-  '@telemetry': resolve(__dirname, 'src/telemetry'),
   '@workspace-fs': resolve(__dirname, 'src/workspace-fs'),
 };
 

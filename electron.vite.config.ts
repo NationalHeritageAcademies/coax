@@ -2,19 +2,10 @@ import { defineConfig, externalizeDepsPlugin } from 'electron-vite';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
-import { loadEnv, type Plugin } from 'vite';
+import { type Plugin } from 'vite';
 import angular from '@analogjs/vite-plugin-angular';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
-// Load env (.env, .env.local, etc) so we can bake the values into the main
-// bundle at build time. We use a blank prefix so both `SENTRY_DSN` (consumed
-// by the main process via `process.env.SENTRY_DSN`) and `VITE_SENTRY_DSN`
-// (consumed by the renderer via `import.meta.env.VITE_SENTRY_DSN`) get
-// picked up. Falls back to whatever's already on the parent shell.
-const env = loadEnv('', __dirname, '');
-const SENTRY_DSN = env.SENTRY_DSN ?? '';
-const VITE_SENTRY_DSN = env.VITE_SENTRY_DSN ?? '';
 
 // Strip `crossorigin` from the emitted <script>/<link> tags in index.html.
 // The attribute is only meaningful for HTTP CORS; under file:// (the packaged
@@ -42,7 +33,6 @@ const alias = {
   '@app': resolve(__dirname, 'src/app'),
   '@ui': resolve(__dirname, 'src/ui'),
   '@importer': resolve(__dirname, 'src/importer'),
-  '@telemetry': resolve(__dirname, 'src/telemetry'),
   '@workspace-fs': resolve(__dirname, 'src/workspace-fs'),
 };
 
@@ -70,14 +60,6 @@ export default defineConfig({
       }),
     ],
     resolve: { alias },
-    // Bake the build-time env into the main bundle so `process.env.SENTRY_DSN`
-    // resolves to a string literal at runtime — the bundled main has no
-    // access to the developer's shell environment when launched as a
-    // packaged .app/.exe. JSON.stringify('') yields '""', which our telemetry
-    // init reads as "no DSN, skip everything" (the intended no-op default).
-    define: {
-      'process.env.SENTRY_DSN': JSON.stringify(SENTRY_DSN),
-    },
     build: { rollupOptions: { input: { index: resolve(__dirname, 'src/app/main.ts') } } },
   },
   preload: {
@@ -93,14 +75,6 @@ export default defineConfig({
     // elsewhere. tokens.css is served straight out of src/ui/public (Vite's
     // default publicDir for this root) and copied verbatim into the bundle.
     plugins: [angular(), stripCrossOriginPlugin],
-    // Same bake-in pattern as main: the renderer reads
-    // `import.meta.env.VITE_SENTRY_DSN`. Vite normally resolves VITE_*
-    // automatically from the renderer's `envDir`, but electron-vite's
-    // working-dir nesting can confuse that lookup — defining it explicitly
-    // here is a single source of truth that works in both dev and packaged.
-    define: {
-      'import.meta.env.VITE_SENTRY_DSN': JSON.stringify(VITE_SENTRY_DSN),
-    },
     build: { rollupOptions: { input: { index: resolve(__dirname, 'src/ui/index.html') } } },
   },
 });

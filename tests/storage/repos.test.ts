@@ -684,17 +684,17 @@ describe('NOT_FOUND errors', () => {
 describe('AppSettings', () => {
   it('returns fallback when key is absent', () => {
     const db = openDb(':memory:');
-    expect(Repos.AppSettings.get(db, 'telemetry.crashReports', { fallback: true })).toEqual({
+    expect(Repos.AppSettings.get(db, 'ui.sidebarWidth', { fallback: true })).toEqual({
       fallback: true,
     });
   });
 
   it('round-trips JSON values', () => {
     const db = openDb(':memory:');
-    Repos.AppSettings.set(db, 'telemetry.crashReports', { consent: true, decidedAt: '2026-05-20' });
-    expect(Repos.AppSettings.get(db, 'telemetry.crashReports', null)).toEqual({
-      consent: true,
-      decidedAt: '2026-05-20',
+    Repos.AppSettings.set(db, 'ui.sidebarWidth', { width: 280, unit: 'px' });
+    expect(Repos.AppSettings.get(db, 'ui.sidebarWidth', null)).toEqual({
+      width: 280,
+      unit: 'px',
     });
   });
 
