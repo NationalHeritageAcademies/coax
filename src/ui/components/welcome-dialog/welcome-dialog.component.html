@@ -1,0 +1,28 @@
+<hu-dialog maxWidth="560px">
+	<div slot="dialog-header" class="dialog-header-row">
+		<strong>Welcome to Coax</strong>
+		<button hu-button variant="ghost" size="sm" title="Close (Esc)" (click)="dismiss()">
+			<hu-icon name="x" size="sm" />
+		</button>
+	</div>
+
+	<div class="body">
+		<p>Coax runs <code>.http</code> files — your API requests as plain text, version-controlled, runnable from the desktop and the CLI.</p>
+
+		<div class="actions">
+			<button hu-button variant="primary" size="md" (click)="handleOpenFolder()">
+				<hu-icon name="folder-open" />
+				Open a folder
+			</button>
+			<button hu-button variant="secondary" size="md" (click)="handleTryExamples()">
+				<hu-icon name="sparkle" />
+				Try with examples
+			</button>
+		</div>
+
+		<p class="tip">
+			"Try with examples" creates a small <code>Coax Examples</code>
+			folder with a working collection so you can click Send and see a real response immediately.
+		</p>
+	</div>
+</hu-dialog>

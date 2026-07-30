@@ -1,0 +1,24 @@
+:host {
+	display: inline-flex;
+}
+
+.badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-family: var(--hu-font-mono);
+	font-size: 10px;
+	font-weight: 700;
+	padding: 3px 7px;
+	border-radius: var(--hu-radius-sm);
+	color: var(--badge-color);
+	background: color-mix(in srgb, var(--badge-color) 14%, transparent);
+	box-shadow:
+		inset 0 0 0 1px color-mix(in srgb, var(--badge-color) 22%, transparent),
+		var(--hu-highlight-inset);
+	letter-spacing: 0.06em;
+	line-height: 1;
+	min-width: 48px;
+	flex-shrink: 0;
+	font-feature-settings: 'tnum', 'ss01';
+}

@@ -1,0 +1,33 @@
+<hu-dialog maxWidth="640px">
+	<div slot="dialog-header" class="dialog-header-row">
+		<strong>Install the Coax CLI</strong>
+		<button hu-button variant="ghost" size="sm" title="Close (Esc)" (click)="close()">
+			<hu-icon name="x" size="sm" />
+		</button>
+	</div>
+
+	<div class="body">
+		<p>
+			The Coax CLI runs your <code>.http</code> files headlessly — for CI pipelines, smoke tests, contract verification, and synthetic monitoring. Same
+			file format as the desktop app.
+		</p>
+
+		<h4>1. Install via npm</h4>
+		<p class="tip">Requires Node 18+ on your machine.</p>
+		<div class="copy-block">
+			<pre>{{ installCmd }}</pre>
+			<button type="button" class="copy-btn" title="Copy to clipboard" (click)="copy(installCmd, $event.currentTarget)">Copy</button>
+		</div>
+
+		<h4>2. Run a file</h4>
+		<div class="copy-block">
+			<pre>{{ sampleCmd }}</pre>
+			<button type="button" class="copy-btn" title="Copy to clipboard" (click)="copy(sampleCmd, $event.currentTarget)">Copy</button>
+		</div>
+
+		<p class="links">
+			Full reference, assertion syntax, CI examples →
+			<a [href]="docsUrl" target="_blank" rel="noreferrer">{{ docsUrl }}</a>
+		</p>
+	</div>
+</hu-dialog>

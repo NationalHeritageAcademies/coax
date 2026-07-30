@@ -1,0 +1,359 @@
+:host {
+	display: grid;
+	grid-template-columns: var(--hu-sidebar-width, 280px) 4px 1fr;
+	grid-template-rows: 48px 1fr 24px;
+	height: 100vh;
+	overflow: hidden;
+}
+
+/* Header ------------------------------------------------------------- */
+.header {
+	grid-column: 1 / -1;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 0 16px;
+	background: var(--hu-bg-elevated);
+	border-bottom: 1px solid var(--hu-border);
+	box-shadow: var(--hu-shadow-xs);
+	min-width: 0;
+	position: relative;
+	z-index: 1;
+	/* The OS title bar is hidden (see src/app/main.ts) so the header
+	   doubles as the window's drag region. Interactive children below
+	   opt out via -webkit-app-region: no-drag. */
+	-webkit-app-region: drag;
+}
+
+/* Reserve room for the macOS traffic-light buttons (top-left). The
+   buttons sit on top of the window so without this padding the brand
+   mark collides with them. Win/Linux draw min/max/close in the top-
+   right via Electron's titleBarOverlay, so no left padding needed. */
+:host([data-platform='darwin']) .header {
+	padding-left: 80px;
+}
+
+/* Win/Linux titleBarOverlay reserves the right ~120px for system
+   buttons; keep our header-actions away from that strip. */
+:host(:not([data-platform='darwin'])) .header {
+	padding-right: 144px;
+}
+
+/* Every interactive surface in the header has to opt out of the drag
+   region or clicks get swallowed by the window-drag handler. */
+.header button,
+.header hu-dropdown,
+.header hu-dropdown-item,
+.header .header-actions,
+.header .env-switcher,
+.header hu-theme-toggle,
+.header a,
+.header input,
+.header [role='button'] {
+	-webkit-app-region: no-drag;
+}
+
+/* .tab-strip stays draggable as a whole so the empty area beside the
+   last tab works as a drag handle / dblclick-to-zoom target. The
+   individual .tab elements inside the strip opt back out (see
+   tab-strip.component.scss) so clicking a tab still selects it. */
+.brand {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-width: 0;
+	flex-shrink: 0;
+	padding: 4px 6px 4px 4px;
+	margin-right: 4px;
+	border-radius: 8px;
+}
+
+/* On Win/Linux the brand is the application-menu trigger: opt out of the
+   window-drag region so the click registers, and give it button affordance
+   (pointer + hover). On macOS it stays part of the drag handle. */
+:host(:not([data-platform='darwin'])) .brand {
+	-webkit-app-region: no-drag;
+	cursor: pointer;
+}
+
+:host(:not([data-platform='darwin'])) .brand:hover {
+	background: var(--hu-bg-hover, rgb(255 255 255 / 0.06));
+}
+
+.brand-caret {
+	color: var(--hu-text-secondary);
+	margin-left: -2px;
+	flex-shrink: 0;
+}
+
+/* Header brand mark — visually matches the app icon and the empty-state
+   mark: a dark navy card with a subtle vertical gradient + top highlight
+   + faint border, holding the brand-gradient glyph. Keeping these
+   three surfaces in sync is the easiest way for "the app icon" to feel
+   like the same object as the in-app branding. */
+.brand-mark {
+	width: 28px;
+	height: 28px;
+	border-radius: 8px;
+	background: linear-gradient(180deg, #1a2238 0%, #0a1020 100%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	box-shadow:
+		inset 0 1px 0 rgb(255 255 255 / 0.1),
+		inset 0 0 0 1px rgb(255 255 255 / 0.06),
+		var(--hu-shadow-sm);
+	position: relative;
+}
+
+.brand-mark::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background: linear-gradient(180deg, rgb(255 255 255 / 0.08) 0%, transparent 50%);
+	pointer-events: none;
+}
+
+.brand-mark svg {
+	width: 22px;
+	height: 22px;
+	display: block;
+	position: relative;
+	z-index: 1;
+}
+
+.brand-name {
+	font-size: 14px;
+	font-weight: 600;
+	letter-spacing: -0.015em;
+	color: var(--hu-text-primary);
+}
+
+.env-switcher {
+	flex-shrink: 0;
+}
+
+.tab-strip {
+	flex: 1;
+	min-width: 0;
+	height: 100%;
+}
+
+.header-actions {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	flex-shrink: 0;
+	margin-left: auto;
+}
+
+/* "Restart to update" pill — only rendered while electron-updater
+   has a staged update waiting. Click swaps the binary via
+   app:quitAndInstall. */
+.update-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	color: var(--hu-accent-on, white);
+	background: var(--hu-accent);
+	border: none;
+	border-radius: var(--hu-radius-md);
+	cursor: pointer;
+	font-family: inherit;
+	transition: filter 120ms ease;
+}
+
+.update-pill:hover {
+	filter: brightness(1.08);
+}
+
+/* Sidebar + splitter ------------------------------------------------- */
+.sidebar-pane {
+	grid-column: 1;
+	grid-row: 2;
+	overflow: hidden;
+	min-width: 0;
+}
+
+.splitter {
+	grid-column: 2;
+	grid-row: 2;
+	background: var(--hu-border);
+	cursor: col-resize;
+	transition: background var(--hu-motion-base) var(--hu-ease-out);
+}
+
+.splitter:hover {
+	background: var(--hu-accent);
+}
+
+/* Main pane ---------------------------------------------------------- */
+.main {
+	grid-column: 3;
+	grid-row: 2;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	min-width: 0;
+	background: var(--hu-bg-base);
+}
+
+.request-tab {
+	flex: 1;
+	height: 100%;
+}
+
+/* Empty state -------------------------------------------------------- */
+.empty-state {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 48px 32px;
+	background: radial-gradient(ellipse 60% 50% at 50% 30%, var(--hu-accent-subtle) 0%, transparent 70%), var(--hu-bg-base);
+}
+
+/* Empty-state mark — same dark card aesthetic as the app icon and
+   header brand mark, in light and dark mode. We hard-code the dark
+   palette here rather than using --hu-bg-elevated so the mark always
+   presents the same way the OS icon does. */
+.empty-mark {
+	width: 80px;
+	height: 80px;
+	border-radius: 20px;
+	background: linear-gradient(180deg, #1a2238 0%, #0a1020 100%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 24px;
+	box-shadow:
+		inset 0 1px 0 rgb(255 255 255 / 0.1),
+		inset 0 0 0 1px rgb(255 255 255 / 0.06),
+		var(--hu-shadow-lg);
+	position: relative;
+	animation: hu-mark-float 4s var(--hu-ease-in-out) infinite;
+}
+
+.empty-mark::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background: linear-gradient(180deg, rgb(255 255 255 / 0.08) 0%, transparent 50%);
+	pointer-events: none;
+}
+
+.empty-mark svg {
+	width: 56px;
+	height: 56px;
+	position: relative;
+	z-index: 1;
+}
+
+@keyframes hu-mark-float {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-3px);
+	}
+}
+
+.empty-title {
+	margin: 0 0 8px 0;
+	font-size: 24px;
+	font-weight: 600;
+	letter-spacing: -0.02em;
+	text-align: center;
+	color: var(--hu-text-primary);
+	background: var(--hu-gradient-brand);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.empty-msg {
+	margin: 0 0 24px 0;
+	max-width: 420px;
+	font-size: 14px;
+	line-height: 1.6;
+	text-align: center;
+	color: var(--hu-text-secondary);
+}
+
+.empty-msg code,
+.empty-title code {
+	font-family: var(--hu-font-mono);
+	font-size: 12px;
+	padding: 1px 6px;
+	background: var(--hu-bg-elevated);
+	border: 1px solid var(--hu-border);
+	border-radius: var(--hu-radius-sm);
+	color: var(--hu-accent);
+	-webkit-text-fill-color: var(--hu-accent);
+}
+
+.empty-actions {
+	display: flex;
+	gap: 12px;
+	margin-bottom: 36px;
+}
+
+.empty-shortcuts {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	color: var(--hu-text-muted);
+	font-size: 12px;
+}
+
+.empty-shortcuts kbd {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 18px;
+	height: 18px;
+	padding: 0 4px;
+	margin-right: 2px;
+	background: var(--hu-bg-elevated);
+	border: 1px solid var(--hu-border);
+	border-bottom-width: 2px;
+	border-radius: var(--hu-radius-sm);
+	font-family: var(--hu-font-mono);
+	font-size: 10px;
+	color: var(--hu-text-secondary);
+}
+
+.empty-shortcuts .dot {
+	opacity: 0.5;
+}
+
+.empty-shortcuts .text-link {
+	color: var(--hu-text-link, #3b82f6);
+	text-decoration: none;
+	font-size: 12px;
+}
+
+.empty-shortcuts .text-link:hover {
+	text-decoration: underline;
+}
+
+/* Status bar --------------------------------------------------------- */
+.status-bar {
+	grid-column: 1 / -1;
+	grid-row: 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.empty-mark {
+		animation: none;
+	}
+}

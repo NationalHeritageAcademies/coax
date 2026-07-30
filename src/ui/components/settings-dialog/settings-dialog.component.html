@@ -1,0 +1,42 @@
+<hu-dialog maxWidth="560px">
+	<div slot="dialog-header" class="dialog-header-row">
+		<strong>Settings</strong>
+		<button hu-button variant="ghost" size="sm" title="Close (Esc)" (click)="close()">
+			<hu-icon name="x" size="sm" />
+		</button>
+	</div>
+
+	<div class="body">
+		<section>
+			<h4>Network</h4>
+
+			<label class="row">
+				<input type="checkbox" [checked]="allowInsecureTLS()" (change)="setInsecureTLS($any($event.target).checked)" />
+				<div class="row-text">
+					<div class="row-label">Allow insecure TLS certificates</div>
+					<div class="row-status">{{ allowInsecureTLS() ? 'On — cert validation skipped' : 'Off — validation enforced' }}</div>
+					<div class="row-help">
+						Skip certificate validation for every request. Use only for self-signed dev servers (mkcert, ASP.NET dev-certs, etc.) — production
+						traffic over an unverified TLS connection can be silently MITM'd. Off by default.
+					</div>
+				</div>
+			</label>
+		</section>
+
+		<section>
+			<h4>Updates</h4>
+
+			<label class="row">
+				<input type="checkbox" [checked]="autoUpdate()" (change)="setAutoUpdate($any($event.target).checked)" />
+				<div class="row-text">
+					<div class="row-label">Check for updates automatically</div>
+					<div class="row-status">{{ autoUpdate() ? 'On — checks on launch, prompts before installing' : 'Off — stay on the current version' }}</div>
+					<div class="row-help">
+						When enabled, Coax checks for newer builds shortly after launch and downloads them in the background. You'll see a "Restart to install"
+						prompt when one is ready — installs never happen without your click.
+					</div>
+				</div>
+			</label>
+		</section>
+	</div>
+</hu-dialog>

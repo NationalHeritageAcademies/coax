@@ -51,6 +51,12 @@ export default defineConfig({
     plugins: [
       externalizeDepsPlugin(),
       viteStaticCopy({
+        // electron-vite builds the main process as an SSR (node) build, which
+        // Vite 6 runs in the environment named 'ssr'. vite-plugin-static-copy
+        // defaults to only copying in the 'client' environment, so without
+        // this the copy silently no-ops and out/main/migrations goes missing
+        // (workspace:open then fails with ENOENT at runtime).
+        environment: 'ssr',
         targets: [
           {
             src: resolve(__dirname, 'src/storage/migrations/*'),

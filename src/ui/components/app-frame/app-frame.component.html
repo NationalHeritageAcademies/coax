@@ -1,0 +1,136 @@
+<div class="header" (dblclick)="handleHeaderDblClick($event)">
+	<div class="brand" [title]="showMenuButton ? 'Application menu' : 'Coax — coax a response'" (click)="handleBrandClick($event)">
+		<div class="brand-mark" aria-hidden="true">
+			<svg viewBox="0 0 32 32">
+				<defs>
+					<linearGradient id="hu-mark-grad" x1="0" y1="0" x2="1" y2="1">
+						<stop offset="0%" stop-color="#3b82f6" />
+						<stop offset="100%" stop-color="#22d3ee" />
+					</linearGradient>
+				</defs>
+				<circle cx="16" cy="16" r="12" fill="none" stroke="url(#hu-mark-grad)" stroke-width="3.5" />
+				<circle cx="16" cy="16" r="7" fill="none" stroke="url(#hu-mark-grad)" stroke-width="1.4" />
+				<circle cx="16" cy="16" r="2.2" fill="url(#hu-mark-grad)" />
+			</svg>
+		</div>
+		<span class="brand-name">Coax</span>
+		@if (showMenuButton) {
+			<hu-icon class="brand-caret" name="caret-down" size="sm" />
+		}
+	</div>
+	<hu-env-switcher class="env-switcher" />
+	<hu-tab-strip class="tab-strip" />
+	<div class="header-actions">
+		<hu-dropdown placement="bottom-end" (itemSelect)="handleImportSelect($event)">
+			<button hu-button slot="trigger" variant="ghost" size="sm" title="Import…">
+				<hu-icon name="download-simple" size="sm" />
+			</button>
+			<hu-dropdown-item value="import-http" icon="download-simple">Import .http…</hu-dropdown-item>
+			<hu-dropdown-item value="import-swagger-url" icon="globe">Import Swagger from URL…</hu-dropdown-item>
+			<hu-dropdown-item value="import-swagger-file" icon="file-arrow-down">Import Swagger from file…</hu-dropdown-item>
+		</hu-dropdown>
+		<button hu-button variant="ghost" size="sm" title="Export collection" (click)="exportHttp()">
+			<hu-icon name="upload-simple" size="sm" />
+		</button>
+		<button hu-button variant="ghost" size="sm" title="Quick reference — variables, chaining, overrides…" (click)="openHelp()">
+			<hu-icon name="question" size="sm" />
+		</button>
+		<button hu-button variant="ghost" size="sm" title="Settings" (click)="openSettings()">
+			<hu-icon name="gear" size="sm" />
+		</button>
+		@if (appUpdate.isReady()) {
+			<button
+				type="button"
+				class="update-pill"
+				title="A new Coax version has been downloaded. Click to restart and install."
+				(click)="handleRestartForUpdate()"
+			>
+				Restart to update
+			</button>
+		}
+		<hu-theme-toggle />
+	</div>
+</div>
+
+<div class="sidebar-pane">
+	<hu-sidebar-tree />
+</div>
+
+<div class="splitter" (mousedown)="handleSplitterDown($event)"></div>
+
+<main class="main">
+	@for (tab of activeTabAsList(); track tab.id) {
+		<hu-request-tab class="request-tab" [tabId]="tab.id" [requestId]="tab.requestId" />
+	} @empty {
+		<div class="empty-state">
+			<div class="empty-mark" aria-hidden="true">
+				<svg viewBox="0 0 64 64">
+					<defs>
+						<linearGradient id="hu-empty-grad" x1="0" y1="0" x2="1" y2="1">
+							<stop offset="0%" stop-color="#3b82f6" />
+							<stop offset="100%" stop-color="#22d3ee" />
+						</linearGradient>
+					</defs>
+					<circle cx="32" cy="32" r="25" fill="none" stroke="url(#hu-empty-grad)" stroke-width="7" />
+					<circle cx="32" cy="32" r="15" fill="none" stroke="url(#hu-empty-grad)" stroke-width="2" />
+					<circle cx="32" cy="32" r="8" fill="none" stroke="url(#hu-empty-grad)" stroke-width="2" />
+					<circle cx="32" cy="32" r="4" fill="url(#hu-empty-grad)" />
+				</svg>
+			</div>
+			@if (!hasWorkspace()) {
+				<h1 class="empty-title">Open a workspace folder</h1>
+				<p class="empty-msg">
+					A Coax workspace is just a folder of <code>.http</code> files. Pick a folder to get started — Coax will adopt any existing
+					<code>.http</code> files it finds.
+				</p>
+				<div class="empty-actions">
+					<button hu-button variant="primary" size="md" (click)="handlePickFolder()">
+						<hu-icon name="folder-open" />
+						Open Workspace Folder…
+					</button>
+				</div>
+			} @else {
+				<h1 class="empty-title">Your API workspace is just a <code>.http</code> file.</h1>
+				<p class="empty-msg">Open a <code>.http</code> file, import a Swagger / OpenAPI spec, or pick a request from the sidebar to get started.</p>
+				<div class="empty-actions">
+					<hu-dropdown placement="bottom-start" (itemSelect)="handleImportSelect($event)">
+						<button hu-button slot="trigger" variant="primary" size="md">
+							<hu-icon name="download-simple" />
+							Import…
+						</button>
+						<hu-dropdown-item value="import-http" icon="download-simple">Import .http…</hu-dropdown-item>
+						<hu-dropdown-item value="import-swagger-url" icon="globe">Import Swagger from URL…</hu-dropdown-item>
+						<hu-dropdown-item value="import-swagger-file" icon="file-arrow-down">Import Swagger from file…</hu-dropdown-item>
+					</hu-dropdown>
+					<button hu-button variant="ghost" size="md" (click)="openHelp()">
+						<hu-icon name="question" />
+						Quick reference
+					</button>
+				</div>
+				<div class="empty-shortcuts">
+					<span><kbd>⌘</kbd><kbd>/</kbd> help</span>
+					<span class="dot">·</span>
+					<a class="text-link" href="#" (click)="handleSwitchWorkspace($event)">Switch workspace folder</a>
+					<span class="dot">·</span>
+					<a class="text-link" href="https://github.com/NationalHeritageAcademies/coax/blob/main/docs/cli.md" target="_blank" rel="noreferrer"
+						>Run <code>.http</code> files in CI →</a
+					>
+				</div>
+			}
+		</div>
+	}
+</main>
+
+<hu-status-bar class="status-bar" />
+
+<!-- App-level dialogs. All use the native <dialog> top layer, so their DOM
+     position here imposes no stacking constraints. Each opens itself off a
+     document-level hu:open-* event. -->
+<hu-env-manager />
+<hu-help-dialog />
+<hu-install-cli-dialog />
+<hu-settings-dialog />
+<hu-welcome-dialog />
+@if (lifecycle.showTelemetryConsent()) {
+	<hu-telemetry-consent (finished)="lifecycle.dismissTelemetryConsent()" />
+}

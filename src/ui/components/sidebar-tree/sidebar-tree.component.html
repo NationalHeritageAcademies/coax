@@ -1,0 +1,79 @@
+@if (!hasCollections()) {
+	<div class="empty">
+		<div class="empty-title">No collections yet</div>
+		<div class="empty-hint">Click <strong>Import</strong> to load a .http file or Swagger / OpenAPI spec</div>
+	</div>
+} @else {
+	<div
+		class="tree"
+		(dragstart)="handleDragStart($event)"
+		(dragover)="handleDragOver($event)"
+		(dragleave)="handleDragLeave($event)"
+		(drop)="handleDrop($event)"
+	>
+		<div class="group-header">
+			<span>Collections</span>
+			<hu-dropdown placement="bottom-end" class="group-add" (itemSelect)="handleMenuSelect($event)">
+				<button hu-button slot="trigger" variant="ghost" size="sm" title="Add collection">
+					<hu-icon name="plus" size="xs" />
+				</button>
+				<hu-dropdown-item value="new-collection" icon="folder-plus">New collection</hu-dropdown-item>
+				<hu-dropdown-item value="new-folder-top" icon="folder-plus">New folder</hu-dropdown-item>
+				<hu-dropdown-item value="workspace-manage-envs" icon="gear">Manage envs (workspace)…</hu-dropdown-item>
+				<hu-dropdown-item value="import-http-top" icon="download-simple">Import .http…</hu-dropdown-item>
+				<hu-dropdown-item value="import-swagger-url" icon="globe">Import Swagger from URL…</hu-dropdown-item>
+				<hu-dropdown-item value="import-swagger-file" icon="file-arrow-down">Import Swagger from file…</hu-dropdown-item>
+			</hu-dropdown>
+		</div>
+
+		@for (node of nodes(); track node.key) {
+			<div
+				class="row"
+				draggable="true"
+				[title]="node.kind === 'request' ? node.label : null"
+				[attr.data-active]="node.active"
+				[attr.data-collection-id]="node.dragCollectionId"
+				[attr.data-directory-id]="node.dragDirectoryId"
+				[attr.data-request-id]="node.dragRequestId"
+				[attr.data-drop-target-folder-id]="node.dropTargetFolderId"
+				[attr.data-drop-target-collection-id]="node.dropTargetCollectionId"
+				[attr.data-drop-target-directory-id]="node.dropTargetDirectoryId"
+				[style.padding]="'6px 8px 6px ' + (14 + node.depth * 12) + 'px'"
+				(click)="toggle(node)"
+			>
+				@if (node.kind === 'request') {
+					<hu-method-badge [method]="node.method" />
+					<span class="label label-13">{{ node.label }}</span>
+				} @else {
+					<span class="chev"><hu-icon [name]="node.open ? 'caret-down' : 'caret-right'" size="xs" /></span>
+					<!-- Directories (real on-disk folders) and collections (.http files
+					     holding multiple requests) read differently in the sidebar. -->
+					<hu-icon [name]="node.kind === 'directory' ? 'folder' : 'cards-three'" size="md" />
+					<span class="label label-bold">{{ node.label }}</span>
+					<span class="count">{{ node.count }}</span>
+				}
+				<hu-dropdown
+					#menu
+					placement="bottom-end"
+					class="row-menu"
+					[class.menu-open]="menu.isOpen()"
+					(click)="$event.stopPropagation()"
+					(itemSelect)="handleMenuSelect($event)"
+				>
+					<button hu-button slot="trigger" variant="ghost" size="sm" title="Actions">
+						<hu-icon name="dots-three-vertical" size="xs" />
+					</button>
+					@for (it of node.menu; track $index) {
+						@if (it.separator) {
+							<hu-dropdown-separator />
+						} @else {
+							<hu-dropdown-item [value]="it.value ?? ''" [icon]="it.icon ?? ''" [danger]="it.destructive ?? false">{{
+								it.label
+							}}</hu-dropdown-item>
+						}
+					}
+				</hu-dropdown>
+			</div>
+		}
+	</div>
+}

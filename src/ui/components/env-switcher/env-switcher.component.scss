@@ -1,0 +1,40 @@
+:host {
+	display: inline-flex;
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 12px;
+	color: var(--hu-text-secondary);
+	flex-wrap: wrap;
+}
+
+.label {
+	font-weight: 500;
+}
+
+.new-name {
+	width: 200px;
+}
+
+.folder-label {
+	font-weight: 500;
+	color: var(--hu-text-muted);
+	font-size: 11px;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.select {
+	padding: 4px 8px;
+	border: 1px solid var(--hu-border-strong);
+	border-radius: var(--hu-radius-sm);
+	background: var(--hu-bg-base);
+	color: var(--hu-text-primary);
+	font-size: 12px;
+	font-family: var(--hu-font-sans);
+	cursor: pointer;
+	min-width: 120px;
+}

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AppFrameComponent } from '../components/app-frame/app-frame.component';
 
 /**
  * Root of the renderer. Deliberately thin — it exists so `index.html` has a
@@ -7,8 +8,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
  */
 @Component({
 	selector: 'hu-root',
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss'],
+	template: '<hu-app-frame />',
+	imports: [AppFrameComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class -- Angular components are classes even when template-only
 export class AppComponent {}

@@ -1,0 +1,15 @@
+@if (workspace.activeWorkspace(); as ws) {
+	<span class="left">
+		<span class="dot"></span>
+		<span class="name">{{ ws.name }}</span>
+		<span class="sep">·</span>
+		<span class="path" [title]="ws.path">{{ ws.path }}</span>
+	</span>
+	<span></span>
+} @else {
+	<span class="left">
+		<span class="dot dot--muted"></span>
+		<span>No workspace</span>
+	</span>
+	<span></span>
+}

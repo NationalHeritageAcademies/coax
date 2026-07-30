@@ -1,0 +1,42 @@
+:host {
+	display: contents;
+}
+
+.dialog-header-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	font-size: 14px;
+}
+
+.body {
+	font-size: 13.5px;
+	line-height: 1.55;
+	color: var(--hu-text-secondary);
+}
+
+.body p {
+	margin: 8px 0;
+}
+
+.body code {
+	font-family: var(--hu-font-mono, monospace);
+	font-size: 12.5px;
+	background: var(--hu-bg-elevated);
+	padding: 1px 5px;
+	border-radius: 3px;
+}
+
+.actions {
+	display: flex;
+	gap: 10px;
+	margin: 16px 0 12px;
+	flex-wrap: wrap;
+}
+
+.tip {
+	font-size: 12px;
+	opacity: 0.75;
+	margin-top: 10px;
+}

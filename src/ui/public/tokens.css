@@ -41,7 +41,7 @@
 	--ml-shadow-xs: 0 1px 2px 0 rgb(15 23 42 / 0.05);
 	--ml-shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.06);
 	--ml-shadow-md: 0 2px 4px -2px rgb(15 23 42 / 0.05), 0 4px 10px -2px rgb(15 23 42 / 0.08);
-	--ml-shadow-lg: 0 4px 6px -2px rgb(15 23 42 / 0.04), 0 12px 20px -4px rgb(15 23 42 / 0.10);
+	--ml-shadow-lg: 0 4px 6px -2px rgb(15 23 42 / 0.04), 0 12px 20px -4px rgb(15 23 42 / 0.1);
 	--ml-shadow-xl: 0 8px 12px -4px rgb(15 23 42 / 0.04), 0 20px 30px -6px rgb(15 23 42 / 0.12);
 }
 
@@ -185,21 +185,17 @@
 	   "premium developer tool" feel. */
 	--hu-shadow-xs: 0 1px 2px 0 rgb(15 23 42 / 0.05);
 	--hu-shadow-sm: 0 1px 3px rgb(15 23 42 / 0.06), 0 1px 2px rgb(15 23 42 / 0.04);
-	--hu-shadow-md: 0 4px 12px -2px rgb(15 23 42 / 0.10), 0 2px 4px -2px rgb(15 23 42 / 0.06);
+	--hu-shadow-md: 0 4px 12px -2px rgb(15 23 42 / 0.1), 0 2px 4px -2px rgb(15 23 42 / 0.06);
 	--hu-shadow-lg: 0 12px 28px -6px rgb(15 23 42 / 0.16), 0 4px 12px -4px rgb(15 23 42 / 0.08);
 	--hu-shadow-brand-glow: 0 0 0 4px var(--hu-accent-glow);
 
 	/* Fonts */
-	--hu-font-sans:
-		'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-	--hu-font-mono:
-		'JetBrains Mono', 'SF Mono', Monaco, Consolas, 'Courier New', monospace;
+	--hu-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+	--hu-font-mono: 'JetBrains Mono', 'SF Mono', Monaco, Consolas, 'Courier New', monospace;
 
 	/* Override Melodic's font stack so all components inherit Inter. */
-	--ml-font-sans:
-		'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-	--ml-font-mono:
-		'JetBrains Mono', 'SF Mono', Monaco, Consolas, 'Courier New', monospace;
+	--ml-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+	--ml-font-mono: 'JetBrains Mono', 'SF Mono', Monaco, Consolas, 'Courier New', monospace;
 }
 
 [data-theme='dark'] {

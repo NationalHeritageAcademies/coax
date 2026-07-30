@@ -14,4 +14,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class -- Angular components are classes even when template-only
 export class DropdownSeparatorComponent {}

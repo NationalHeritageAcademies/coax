@@ -1,4 +1,5 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { RendererLifecycleService } from '../store/renderer-lifecycle.service';
 
 /**
  * Renderer-wide providers.
@@ -7,7 +8,17 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessC
  * `src/ui/store`), so there is nothing for zone.js to usefully patch. Dropping
  * it also keeps Monaco's own async work from being wrapped in a zone, which is
  * a known source of spurious change-detection churn in editor-heavy UIs.
+ *
+ * The initializer starts the renderer lifecycle (menu IPC bridge, workspace
+ * bootstrap, telemetry) without awaiting the data load — first paint should
+ * not block on IPC.
  */
 export const appConfig: ApplicationConfig = {
-	providers: [provideBrowserGlobalErrorListeners(), provideZonelessChangeDetection()]
+	providers: [
+		provideBrowserGlobalErrorListeners(),
+		provideZonelessChangeDetection(),
+		provideAppInitializer(() => {
+			inject(RendererLifecycleService).start();
+		})
+	]
 };

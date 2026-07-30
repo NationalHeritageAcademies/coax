@@ -1,0 +1,23 @@
+@if (visible()) {
+	@if (creating()) {
+		<div class="row">
+			<span class="label">New env in {{ createTargetName() }}:</span>
+			<input #newName class="hu-input hu-input--sm new-name" type="text" placeholder="env name…" (keydown)="handleNewNameKeyDown($event)" />
+			<button hu-button variant="primary" size="sm" (click)="createEnv()">Create</button>
+			<button hu-button variant="ghost" size="sm" (click)="cancelCreate()">Cancel</button>
+		</div>
+	} @else {
+		<div class="row">
+			@for (step of chain(); track step.folderId) {
+				<span class="folder-label" [title]="'Folder: ' + step.folderName">{{ step.folderName }}</span>
+				<select class="select" [value]="step.env?.id ?? ''" (change)="handleChange(step.folderId, $any($event.target).value)">
+					<option value="">— none —</option>
+					@for (e of step.envs; track e.id) {
+						<option [value]="e.id" [selected]="e.id === step.env?.id">{{ e.name }}</option>
+					}
+				</select>
+				<button hu-button variant="ghost" size="sm" [title]="'New env in ' + step.folderName" (click)="startCreateFor(step.folderId)">+</button>
+			}
+		</div>
+	}
+}

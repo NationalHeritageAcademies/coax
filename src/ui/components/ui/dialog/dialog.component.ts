@@ -24,7 +24,7 @@ export class DialogComponent {
 	readonly maxWidth = input<string>('560px');
 
 	/** Emitted whenever the dialog closes, including via Esc or backdrop click. */
-	readonly closed = output<void>();
+	readonly closed = output();
 
 	private readonly dialogRef = viewChild.required<ElementRef<HTMLDialogElement>>('dlg');
 	private readonly _isOpen = signal(false);

@@ -1,0 +1,156 @@
+:host {
+	display: block;
+	height: 100%;
+}
+
+.strip {
+	display: flex;
+	align-items: stretch;
+	height: 100%;
+	overflow-x: auto;
+	/* overflow-x: auto reserves space for a horizontal scrollbar, which
+	   eats a few pixels of vertical room; tabs with height:100% then push
+	   past the available height and the browser flips on a vertical
+	   scrollbar too. Pin overflow-y so it can't happen. */
+	overflow-y: hidden;
+	scrollbar-width: thin;
+}
+
+.empty {
+	padding: 0 12px;
+	color: var(--hu-text-muted);
+	font-size: 12px;
+	display: flex;
+	align-items: center;
+	height: 100%;
+	font-style: italic;
+	opacity: 0.7;
+}
+
+.tab {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 0 12px;
+	height: 100%;
+	cursor: pointer;
+	max-width: 240px;
+	flex-shrink: 0;
+	color: var(--hu-text-secondary);
+	position: relative;
+	/* The strip host inherits -webkit-app-region:drag from .header so its
+	   empty area can be grabbed/dblclicked to move/zoom the window. Tabs
+	   themselves must opt back out so clicks select them. */
+	-webkit-app-region: no-drag;
+	transition:
+		background var(--hu-motion-fast) var(--hu-ease-out),
+		color var(--hu-motion-fast) var(--hu-ease-out);
+}
+
+/* Inset bottom indicator strip — sits behind content, only the active
+   tab reveals it. Inset spacing (left/right) gives the strip a
+   "tucked-in" feel rather than running full width. */
+.tab::after {
+	content: '';
+	position: absolute;
+	left: 8px;
+	right: 8px;
+	bottom: 0;
+	height: 2px;
+	border-radius: 2px 2px 0 0;
+	background: var(--hu-accent);
+	transform: scaleX(0);
+	transform-origin: center;
+	transition: transform var(--hu-motion-base) var(--hu-ease-out);
+}
+
+.tab:hover {
+	background: var(--hu-bg-hover);
+	color: var(--hu-text-primary);
+}
+
+.tab[data-active='true'] {
+	background: var(--hu-bg-base);
+	color: var(--hu-text-primary);
+}
+
+.tab[data-active='true']::after {
+	transform: scaleX(1);
+}
+
+.label {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 13px;
+	font-weight: 500;
+	letter-spacing: -0.005em;
+}
+
+.close {
+	opacity: 0.5;
+	width: 18px;
+	height: 18px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: var(--hu-radius-sm);
+	font-size: 14px;
+	line-height: 1;
+	transition:
+		background var(--hu-motion-fast) var(--hu-ease-out),
+		opacity var(--hu-motion-fast) var(--hu-ease-out);
+}
+
+.close:hover {
+	opacity: 1;
+	background: var(--hu-bg-active);
+}
+
+.tab[data-active='true'] .close {
+	opacity: 0.7;
+}
+
+/* Context menu — fixed-positioned at cursor coordinates. A backdrop
+   captures any outside click and dismisses the menu. */
+.ctx-backdrop {
+	position: fixed;
+	inset: 0;
+	z-index: 99;
+	/* No background — invisible, just a hit target for outside-clicks. */
+}
+
+.ctx-menu {
+	position: fixed;
+	z-index: 100;
+	min-width: 180px;
+	padding: 4px;
+	background: var(--hu-bg-elevated);
+	border: 1px solid var(--hu-border);
+	border-radius: var(--hu-radius-md);
+	box-shadow: var(--hu-shadow-lg);
+	display: flex;
+	flex-direction: column;
+	font-size: 13px;
+	color: var(--hu-text-primary);
+	/* Must opt out of the drag region or clicks never reach the items. */
+	-webkit-app-region: no-drag;
+}
+
+.ctx-item {
+	padding: 6px 10px;
+	border-radius: var(--hu-radius-sm);
+	cursor: pointer;
+	user-select: none;
+}
+
+.ctx-item[data-disabled='true'] {
+	color: var(--hu-text-muted);
+	cursor: default;
+}
+
+.ctx-item:not([data-disabled='true']):hover {
+	background: var(--hu-bg-hover);
+}

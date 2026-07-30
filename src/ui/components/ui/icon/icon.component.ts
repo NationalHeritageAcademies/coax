@@ -24,6 +24,7 @@ export type IconSize = keyof typeof PIXEL_SIZE;
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IconComponent {
+	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents -- IconName documents intent; string keeps data-driven callers compiling
 	readonly name = input<IconName | string>('');
 	readonly size = input<IconSize>('md');
 

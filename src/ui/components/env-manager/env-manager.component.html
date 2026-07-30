@@ -1,0 +1,169 @@
+<hu-dialog maxWidth="1100px" (closed)="handleDialogClosed()">
+	<div slot="dialog-header" class="dialog-header-row">
+		<strong>Environments</strong>
+		<button hu-button variant="ghost" size="sm" title="Close (Esc)" (click)="close()">
+			<hu-icon name="x" size="sm" />
+		</button>
+	</div>
+
+	<div class="modal-grid">
+		<aside class="env-list">
+			@for (section of sections(); track section.collapseKey) {
+				<div class="section-head" [style.padding-left.px]="8 + section.depth * 14">
+					<button
+						hu-button
+						class="chev-btn"
+						variant="ghost"
+						size="sm"
+						[title]="section.collapsed ? 'Expand' : 'Collapse'"
+						(click)="toggleCollapse(section.collapseKey)"
+					>
+						<hu-icon [name]="section.collapsed ? 'caret-right' : 'caret-down'" size="xs" />
+					</button>
+					<span class="section-head-label">{{ section.label }}</span>
+					<button hu-button variant="ghost" size="sm" title="Create env in this folder" (click)="handleAddEnv(section)">+</button>
+				</div>
+				@if (!section.collapsed) {
+					@if (section.envs.length === 0) {
+						<div class="no-envs" [style.padding-left.px]="26 + section.depth * 14">No envs</div>
+					} @else {
+						@for (e of section.envs; track e.id) {
+							<div
+								class="env-row"
+								[attr.data-selected]="e.id === selectedEnvId()"
+								[style.padding-left.px]="26 + section.depth * 14"
+								(click)="selectEnv(e.id)"
+							>
+								<span class="active-dot" [attr.data-active]="e.isActive"></span>
+								<span class="env-row-name">{{ e.name }}</span>
+							</div>
+						}
+					}
+				}
+			}
+		</aside>
+
+		<section class="env-detail">
+			@if (selectedEnv(); as env) {
+				<div>
+					<div class="detail-header">
+						<strong class="detail-name">{{ env.name }}</strong>
+						@if (env.isActive) {
+							<span class="active-pill">ACTIVE</span>
+						} @else {
+							<button hu-button variant="outline" size="sm" (click)="handleActivate(env.id)">Activate</button>
+						}
+						<span class="detail-actions">
+							<button hu-button variant="ghost" size="sm" title="Rename env" (click)="handleRenameEnv(env.id)">
+								<hu-icon name="pencil-simple" size="sm" />
+							</button>
+							<button hu-button variant="ghost" size="sm" title="Delete env" (click)="handleDeleteEnv(env.id)">
+								<hu-icon name="trash" size="sm" />
+							</button>
+						</span>
+					</div>
+					<div class="scope-label">{{ selectedScopeLabel() }}</div>
+
+					@if (envVars(); as vars) {
+						<table class="vars-table">
+							<thead>
+								<tr>
+									<th class="key-cell">Key</th>
+									<th>Value</th>
+									<th class="var-actions"></th>
+								</tr>
+							</thead>
+							<tbody>
+								@for (v of vars; track v.id) {
+									<tr>
+										<td class="key-cell">{{ v.key }}</td>
+										<td>
+											@if (v.isSecret) {
+												<span class="secret-label">[secret]</span>
+											} @else {
+												<input
+													class="hu-input hu-input--sm var-value"
+													type="text"
+													[value]="v.valuePlain ?? ''"
+													(blur)="handleVarBlur(v, $any($event.target).value)"
+												/>
+											}
+										</td>
+										<td class="var-actions">
+											@if (!v.isSecret) {
+												<button hu-button variant="outline" size="sm" title="Mark as secret" (click)="startSetSecret(v.id)">
+													<hu-icon name="lock" size="xs" />
+												</button>
+											}
+											<button hu-button variant="ghost" size="sm" title="Delete variable" (click)="handleDeleteVar(v.id)">
+												<hu-icon name="x" size="xs" />
+											</button>
+										</td>
+									</tr>
+									@if (settingSecretForVarId() === v.id) {
+										<tr class="secret-row">
+											<td colspan="3">
+												<div class="secret-row-inner">
+													<span class="secret-row-label">Set secret value:</span>
+													<input
+														#secretValue
+														class="hu-input hu-input--sm secret-input"
+														type="password"
+														placeholder="value"
+														(keydown)="handleSecretKeyDown($event)"
+													/>
+													<button hu-button variant="primary" size="sm" (click)="handleConfirmSecret(v.id)">Save</button>
+													<button hu-button variant="ghost" size="sm" (click)="cancelSetSecret()">Cancel</button>
+												</div>
+											</td>
+										</tr>
+									}
+								}
+								@if (addingVar()) {
+									<tr>
+										<td>
+											<input
+												#newKey
+												class="hu-input hu-input--sm new-key"
+												type="text"
+												placeholder="key"
+												(keydown)="handleAddVarKeyDown($event)"
+											/>
+										</td>
+										<td>
+											<input
+												#newValue
+												class="hu-input hu-input--sm new-value"
+												type="text"
+												placeholder="value"
+												(keydown)="handleAddVarKeyDown($event)"
+											/>
+										</td>
+										<td class="add-var-actions">
+											<button hu-button variant="primary" size="sm" (click)="handleConfirmAddVar()">Add</button>
+											<button hu-button variant="ghost" size="sm" (click)="cancelAddVar()">Cancel</button>
+										</td>
+									</tr>
+								} @else {
+									<tr>
+										<td colspan="3">
+											<button hu-button variant="ghost" size="sm" (click)="startAddVar()">+ Add variable</button>
+										</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					} @else {
+						<div class="loading">Loading…</div>
+					}
+				</div>
+			} @else {
+				<div class="empty-detail">
+					<hu-icon name="folder" size="lg" class="empty-icon" />
+					<div class="empty-title">Select an environment to view its variables</div>
+					<div class="empty-hint">or click <strong>+</strong> next to a scope to create one.</div>
+				</div>
+			}
+		</section>
+	</div>
+</hu-dialog>

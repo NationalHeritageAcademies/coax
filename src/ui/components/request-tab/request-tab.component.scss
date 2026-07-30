@@ -1,0 +1,520 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+	min-width: 0;
+}
+
+.name-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 10px 16px 8px;
+}
+
+.request-name {
+	flex: 1;
+	font-weight: 600;
+}
+
+.chain-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 6px 16px 0;
+	color: var(--hu-text-muted);
+	font-size: 11px;
+	background: var(--hu-bg-elevated);
+	flex-shrink: 0;
+}
+
+.chain-name {
+	flex: 1;
+	max-width: 480px;
+}
+
+.req-bar {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 14px 16px;
+	background: var(--hu-bg-elevated);
+	border-bottom: 1px solid var(--hu-border);
+	flex-shrink: 0;
+	min-width: 0;
+}
+
+.req-bar .method {
+	width: 110px;
+	flex-shrink: 0;
+}
+
+/* Give the URL input visual weight — it's the most important control on
+   the screen, so a slightly bolder font + monospace digits + a soft
+   focus ring make it feel like the central action. */
+.req-bar .url {
+	flex: 1;
+	min-width: 0;
+	font-family: var(--hu-font-mono);
+	font-size: 13px;
+	font-feature-settings: 'cv02', 'cv03', 'tnum';
+	letter-spacing: -0.005em;
+}
+
+.req-bar .send {
+	min-width: 88px;
+}
+
+.request-pane {
+	height: var(--hu-request-pane-height, 360px);
+	min-height: 120px;
+	min-width: 0;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
+}
+
+.splitter {
+	height: 6px;
+	cursor: row-resize;
+	background: var(--hu-border);
+	border-top: 1px solid var(--hu-border);
+	border-bottom: 1px solid var(--hu-border);
+	flex-shrink: 0;
+	transition: background 120ms ease;
+}
+
+.splitter:hover {
+	background: var(--hu-accent);
+}
+
+.response-pane {
+	flex: 1;
+	min-height: 80px;
+	min-width: 0;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+.response-status {
+	display: flex;
+	align-items: center;
+	padding: 10px 16px;
+	border-bottom: 1px solid var(--hu-border);
+	min-height: 36px;
+	background: var(--hu-bg-elevated);
+	flex-shrink: 0;
+	min-width: 0;
+}
+
+.sub-tabs {
+	flex: 1;
+	min-height: 0;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.sub-tab-strip {
+	display: flex;
+	align-items: stretch;
+	border-bottom: 1px solid var(--hu-border);
+	flex-shrink: 0;
+	background: var(--hu-bg-elevated);
+	padding: 0 6px;
+	gap: 2px;
+}
+
+.sub-tab-btn {
+	background: transparent;
+	border: none;
+	color: var(--hu-text-secondary);
+	padding: 10px 14px 9px;
+	font-size: 12px;
+	font-weight: 500;
+	cursor: pointer;
+	font-family: inherit;
+	position: relative;
+	transition:
+		background var(--hu-motion-fast) var(--hu-ease-out),
+		color var(--hu-motion-fast) var(--hu-ease-out);
+}
+
+.sub-tab-btn::after {
+	content: '';
+	position: absolute;
+	left: 10px;
+	right: 10px;
+	bottom: 0;
+	height: 2px;
+	border-radius: 2px 2px 0 0;
+	background: var(--hu-accent);
+	transform: scaleX(0);
+	transform-origin: center;
+	transition: transform var(--hu-motion-base) var(--hu-ease-out);
+}
+
+.sub-tab-btn:hover {
+	color: var(--hu-text-primary);
+	background: var(--hu-bg-hover);
+}
+
+.sub-tab-btn[data-active='true'] {
+	color: var(--hu-text-primary);
+	font-weight: 600;
+}
+
+.sub-tab-btn[data-active='true']::after {
+	transform: scaleX(1);
+}
+
+.sub-tab-btn:focus-visible {
+	outline: 2px solid var(--hu-accent);
+	outline-offset: -2px;
+	border-radius: var(--hu-radius-sm);
+}
+
+.sub-tab-host {
+	flex: 1;
+	min-height: 0;
+	min-width: 0;
+	overflow: hidden;
+	background: var(--hu-bg-base);
+	display: flex;
+	flex-direction: column;
+}
+
+.sub-panel {
+	flex: 1;
+	min-height: 0;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.sub-panel[data-scroll='auto'] {
+	overflow: auto;
+}
+
+.sub-panel[data-scroll='hidden'] {
+	overflow: hidden;
+}
+
+.status-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px;
+	color: white;
+	border-radius: var(--hu-radius-md);
+	font-family: var(--hu-font-mono);
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+	box-shadow: var(--hu-highlight-inset), var(--hu-shadow-xs);
+}
+
+.status-pill--danger {
+	background: var(--hu-danger);
+}
+
+.status-meta {
+	color: var(--hu-text-secondary);
+	margin-left: 14px;
+	font-size: 12px;
+	font-family: var(--hu-font-mono);
+	font-feature-settings: 'tnum';
+}
+
+.status-meta code {
+	font-family: var(--hu-font-mono);
+	background: var(--hu-bg-hover);
+	padding: 1px 4px;
+	border-radius: 3px;
+}
+
+.status-meta .text-link {
+	color: var(--hu-text-link, #3b82f6);
+	text-decoration: none;
+}
+
+.status-meta .text-link:hover {
+	text-decoration: underline;
+}
+
+.no-response {
+	color: var(--hu-text-muted);
+	font-style: italic;
+	font-size: 12px;
+}
+
+.response-empty {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--hu-text-muted);
+	font-size: 13px;
+	font-style: italic;
+}
+
+.editor-wrap {
+	position: relative;
+	flex: 1;
+	min-height: 0;
+	overflow: hidden;
+	border: 1px solid var(--hu-border);
+	border-radius: var(--hu-radius-md);
+}
+
+.editor-wrap hu-monaco-editor {
+	position: absolute;
+	inset: 0;
+	display: block;
+}
+
+.response-editor {
+	display: block;
+	flex: 1;
+	min-height: 0;
+	width: 100%;
+}
+
+.response-text {
+	flex: 1;
+	min-height: 0;
+	min-width: 0;
+	overflow: auto;
+	padding: 12px;
+	font-family: var(--hu-font-mono);
+	font-size: 12px;
+	color: var(--hu-text-primary);
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.kv-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.kv-table thead th {
+	text-align: left;
+	color: var(--hu-text-muted);
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	padding: 8px 10px;
+}
+
+.kv-table td {
+	padding: 2px 10px;
+}
+
+.kv-th-key {
+	width: 35%;
+}
+
+.kv-th-remove {
+	width: 32px;
+}
+
+.kv-remove-cell {
+	text-align: center;
+}
+
+.kv-add-cell {
+	padding: 8px 10px;
+}
+
+.body-panel,
+.auth-panel,
+.params-panel,
+.headers-panel,
+.vars-panel,
+.curl-panel {
+	padding: 12px 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	/* Allow children to shrink below their content's intrinsic min-width;
+	   without this, long unbreakable strings (JWTs) keep the table wider
+	   than the viewport even with table-layout: fixed. */
+	min-width: 0;
+}
+
+.body-panel,
+.curl-panel {
+	flex: 1;
+	min-height: 0;
+	box-sizing: border-box;
+}
+
+.body-kind {
+	width: 200px;
+}
+
+.body-empty {
+	padding: 24px;
+	text-align: center;
+	color: var(--hu-text-muted);
+	font-size: 13px;
+}
+
+.auth-kind-row {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+
+.auth-kind-label {
+	font-size: 13px;
+	color: var(--hu-text-secondary);
+}
+
+.auth-kind {
+	width: 160px;
+}
+
+.no-auth {
+	color: var(--hu-text-muted);
+	padding: 8px;
+}
+
+/* Note block above the Vars table — horizontal padding matches the
+   kv-table cells (10px) so the label and helper text align with the
+   column header row below it. */
+.vars-note {
+	padding: 0 10px;
+	margin-bottom: 8px;
+}
+
+.vars-note-label {
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--hu-text-muted);
+	padding: 8px 0 4px;
+}
+
+.vars-help {
+	color: var(--hu-text-muted);
+	font-size: 11px;
+	line-height: 1.5;
+}
+
+.vars-help code {
+	font-family: var(--hu-font-mono);
+	background: var(--hu-bg-hover);
+	padding: 1px 4px;
+	border-radius: 3px;
+}
+
+.var-section {
+	min-width: 0;
+}
+
+.vars-loading {
+	color: var(--hu-text-secondary);
+}
+
+.empty-envs {
+	padding: 16px;
+	text-align: center;
+	color: var(--hu-text-muted);
+	font-size: 13px;
+}
+
+.empty-envs-title {
+	margin-bottom: 8px;
+}
+
+.empty-envs-hint {
+	font-size: 12px;
+}
+
+.empty-envs strong[data-tone='accent'] {
+	color: var(--hu-accent);
+}
+
+/* The Vars table reuses the .kv-table styling from Headers/Params so all
+   three panels look identical. Only Vars-specific bits live below. */
+.var-section .kv-table {
+	table-layout: fixed;
+}
+
+.var-section .kv-table td {
+	overflow-wrap: anywhere;
+	word-break: break-all;
+	max-width: 0;
+}
+
+.vars-th-key {
+	width: 30%;
+}
+
+.vars-th-from {
+	width: 24%;
+}
+
+.var-from {
+	font-size: 11.5px;
+	color: var(--hu-text-secondary);
+}
+
+.var-from-row {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.overridden-pill {
+	display: inline-block;
+	font-size: 10px;
+	padding: 2px 6px;
+	border-radius: 3px;
+	background: var(--hu-bg-active);
+	color: var(--hu-text-secondary);
+	letter-spacing: 0.02em;
+}
+
+.var-source {
+	font-family: var(--hu-font-mono);
+}
+
+.orphans {
+	margin-top: 16px;
+}
+
+.orphans-title {
+	font-size: 0.85em;
+	color: var(--hu-text-secondary);
+	margin-bottom: 4px;
+}
+
+.orphan-key {
+	font-family: var(--hu-font-mono);
+}
+
+.secret-label {
+	color: var(--hu-text-muted);
+	font-style: italic;
+}
+
+.curl-header-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-shrink: 0;
+}
+
+.curl-title {
+	color: var(--hu-text-secondary);
+	font-size: 0.9em;
+}

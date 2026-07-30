@@ -40,7 +40,9 @@ export class ThemeService {
 	constructor() {
 		const media = window.matchMedia(DARK_QUERY);
 		this._systemPrefersDark.set(media.matches);
-		media.addEventListener('change', (e) => this._systemPrefersDark.set(e.matches));
+		media.addEventListener('change', (e) => {
+			this._systemPrefersDark.set(e.matches);
+		});
 
 		effect(() => {
 			document.documentElement.setAttribute('data-theme', this.resolved());

@@ -1,16 +1,18 @@
 <!doctype html>
 <html data-theme="system">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self'" />
-    <title>Coax</title>
-    <!-- tokens.css is injected from bootstrap-styles.ts so Vite's HTML plugin
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			http-equiv="Content-Security-Policy"
+			content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self'"
+		/>
+		<title>Coax</title>
+		<!-- tokens.css is injected from bootstrap-styles.ts so Vite's HTML plugin
          doesn't rewrite its href. See the comment in that file for the
          production failure mode this avoids. -->
-  </head>
-  <body>
-    <hu-root></hu-root>
-    <script type="module" src="/main.ts"></script>
-  </body>
+	</head>
+	<body>
+		<hu-root></hu-root>
+		<script type="module" src="/main.ts"></script>
+	</body>
 </html>

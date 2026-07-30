@@ -42,6 +42,16 @@ export class WorkspaceFacade {
 		await this.loadWorkspaceData(opened.id);
 	}
 
+	/**
+	 * Opens a known folder path as a workspace (no picker). Used by flows that
+	 * already have a path in hand — e.g. the welcome dialog's sample workspace.
+	 */
+	async openWorkspaceAtPath(folderPath: string): Promise<void> {
+		const opened = await rpc<Workspace>({ kind: 'workspace:open', folderPath });
+		this.state.setActiveWorkspace(opened);
+		await this.loadWorkspaceData(opened.id);
+	}
+
 	/** Closes the workspace and clears in-memory state back to the empty view. */
 	async closeCurrentWorkspace(): Promise<void> {
 		await rpc({ kind: 'workspace:close' });
@@ -61,7 +71,10 @@ export class WorkspaceFacade {
 		const allFolders: Folder[] = [];
 		const allRequests: RequestRow[] = [];
 		for (const c of cols) {
-			const [fs, rs] = await Promise.all([rpc<Folder[]>({ kind: 'folder:list', collectionId: c.id }), rpc<RequestRow[]>({ kind: 'request:list', collectionId: c.id })]);
+			const [fs, rs] = await Promise.all([
+				rpc<Folder[]>({ kind: 'folder:list', collectionId: c.id }),
+				rpc<RequestRow[]>({ kind: 'request:list', collectionId: c.id })
+			]);
 			allFolders.push(...fs);
 			allRequests.push(...rs);
 		}

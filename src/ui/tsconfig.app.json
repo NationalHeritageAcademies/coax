@@ -1,31 +1,31 @@
 {
-	"extends": "../../tsconfig.base.json",
-	"compilerOptions": {
-		// "node" is required because the shared IPC bridge types in src/ipc
-		// reference NodeJS.Platform, even though this is a browser context.
-		"types": ["node", "vite/client"],
-		"baseUrl": "../..",
-		"paths": {
-			"@parser/*": ["src/parser/*"],
-			"@resolver/*": ["src/resolver/*"],
-			"@assertions/*": ["src/assertions/*"],
-			"@storage/*": ["src/storage/*"],
-			"@secrets/*": ["src/secrets/*"],
-			"@runner/*": ["src/runner/*"],
-			"@ipc/*": ["src/ipc/*"],
-			"@app/*": ["src/app/*"],
-			"@ui/*": ["src/ui/*"],
-			"@importer/*": ["src/importer/*"],
-			"@telemetry/*": ["src/telemetry/*"],
-			"@workspace-fs/*": ["src/workspace-fs/*"]
-		}
-	},
-	"include": ["**/*.ts"],
-	"exclude": ["**/*.spec.ts"],
-	"angularCompilerOptions": {
-		"strictTemplates": true,
-		"strictInjectionParameters": true,
-		"strictInputAccessModifiers": true,
-		"typeCheckHostBindings": true
-	}
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // "node" is required because the shared IPC bridge types in src/ipc
+    // reference NodeJS.Platform, even though this is a browser context.
+    "types": ["node", "vite/client"],
+    "baseUrl": "../..",
+    "paths": {
+      "@parser/*": ["src/parser/*"],
+      "@resolver/*": ["src/resolver/*"],
+      "@assertions/*": ["src/assertions/*"],
+      "@storage/*": ["src/storage/*"],
+      "@secrets/*": ["src/secrets/*"],
+      "@runner/*": ["src/runner/*"],
+      "@ipc/*": ["src/ipc/*"],
+      "@app/*": ["src/app/*"],
+      "@ui/*": ["src/ui/*"],
+      "@importer/*": ["src/importer/*"],
+      "@telemetry/*": ["src/telemetry/*"],
+      "@workspace-fs/*": ["src/workspace-fs/*"]
+    }
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["**/*.spec.ts"],
+  "angularCompilerOptions": {
+    "strictTemplates": true,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "typeCheckHostBindings": true
+  }
 }

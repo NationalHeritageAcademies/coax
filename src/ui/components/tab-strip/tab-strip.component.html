@@ -1,0 +1,31 @@
+@if (views().length === 0) {
+	<div class="empty">No open tabs</div>
+} @else {
+	<div class="strip">
+		@for (v of views(); track v.tab.id) {
+			<div
+				class="tab"
+				[attr.data-active]="v.tab.id === tabsState.activeTabId()"
+				[title]="v.fullLabel"
+				(click)="activate(v.tab.id)"
+				(contextmenu)="handleContextMenu($event, v.tab.id)"
+			>
+				@if (v.request; as r) {
+					<hu-method-badge [method]="r.method" />
+				}
+				<span class="label">{{ v.truncatedLabel }}{{ v.tab.isDirty ? ' •' : '' }}</span>
+				<span class="close" (click)="$event.stopPropagation(); closeTabs([v.tab.id])">
+					<hu-icon name="x" size="xs" />
+				</span>
+			</div>
+		}
+	</div>
+	@if (contextMenu(); as menu) {
+		<div class="ctx-backdrop" (mousedown)="closeContextMenu()" (contextmenu)="$event.preventDefault(); closeContextMenu()"></div>
+		<div class="ctx-menu" [style.left.px]="menu.x" [style.top.px]="menu.y">
+			@for (item of contextMenuItems(); track item.label) {
+				<div class="ctx-item" [attr.data-disabled]="item.disabled" (click)="handleMenuItem(item, $event)">{{ item.label }}</div>
+			}
+		</div>
+	}
+}

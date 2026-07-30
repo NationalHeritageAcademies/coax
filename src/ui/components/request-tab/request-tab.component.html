@@ -1,0 +1,425 @@
+<div class="name-row">
+	<input class="hu-input request-name" type="text" placeholder="Request name" [value]="draft.name" (input)="onNameInput($any($event.target).value)" />
+</div>
+<div class="chain-row">
+	<span>Chain name:</span>
+	<input
+		class="hu-input hu-input--sm chain-name"
+		type="text"
+		placeholder="e.g. getToken (lets other requests use {{ '{{name.response.body.$.x}}' }})"
+		[value]="draft.chainName ?? ''"
+		(input)="onChainNameInput($any($event.target).value)"
+	/>
+</div>
+
+<div class="req-bar">
+	<select class="hu-select hu-method method" [value]="draft.method" (change)="onMethodChange($any($event.target).value)">
+		@for (m of methodOptions; track m) {
+			<option [value]="m" [selected]="m === draft.method">{{ m }}</option>
+		}
+	</select>
+	<input
+		class="hu-input hu-input--mono hu-url url"
+		type="text"
+		placeholder="https://example.com/path"
+		[value]="draft.url"
+		(input)="onUrlInput($any($event.target).value)"
+	/>
+	<button hu-button variant="primary" class="hu-send-btn send" [disabled]="sendInFlight()" (click)="handleSend()">
+		{{ sendInFlight() ? 'Sending' : 'Send' }}
+	</button>
+</div>
+
+<div class="request-pane">
+	<div class="sub-tabs">
+		<div class="sub-tab-strip">
+			@for (t of requestSubTabs; track t.key) {
+				<button class="sub-tab-btn" [attr.data-active]="subTab() === t.key" (click)="selectSubTab(t.key)">{{ t.label }}</button>
+			}
+		</div>
+		<div class="sub-tab-host">
+			@switch (subTab()) {
+				@case ('params') {
+					<div class="sub-panel" data-scroll="auto">
+						<div class="params-panel">
+							<table class="kv-table">
+								<thead>
+									<tr>
+										<th class="kv-th-key">Key</th>
+										<th>Value</th>
+										<th class="kv-th-remove"></th>
+									</tr>
+								</thead>
+								<tbody>
+									@for (row of paramRows(); track $index) {
+										<tr>
+											<td>
+												<input
+													class="hu-kv-input"
+													type="text"
+													[value]="row.key"
+													(input)="onKvInput('params', $index, 'key', $any($event.target).value)"
+												/>
+											</td>
+											<td>
+												<input
+													class="hu-kv-input"
+													type="text"
+													[value]="row.value"
+													(input)="onKvInput('params', $index, 'value', $any($event.target).value)"
+												/>
+											</td>
+											<td class="kv-remove-cell">
+												<button hu-button variant="ghost" size="sm" title="Remove" (click)="removeKVRow('params', $index)">
+													<hu-icon name="x" size="xs" />
+												</button>
+											</td>
+										</tr>
+									}
+									<tr>
+										<td colspan="3" class="kv-add-cell">
+											<button hu-button variant="ghost" size="sm" (click)="addKVRow('params')">+ Add param</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				}
+				@case ('headers') {
+					<div class="sub-panel" data-scroll="auto">
+						<div class="headers-panel">
+							<table class="kv-table">
+								<thead>
+									<tr>
+										<th class="kv-th-key">Key</th>
+										<th>Value</th>
+										<th class="kv-th-remove"></th>
+									</tr>
+								</thead>
+								<tbody>
+									@for (row of draft.headers; track $index) {
+										<tr>
+											<td>
+												<input
+													class="hu-kv-input"
+													type="text"
+													[value]="row.key"
+													(input)="onKvInput('headers', $index, 'key', $any($event.target).value)"
+												/>
+											</td>
+											<td>
+												<input
+													class="hu-kv-input"
+													type="text"
+													[value]="row.value"
+													(input)="onKvInput('headers', $index, 'value', $any($event.target).value)"
+												/>
+											</td>
+											<td class="kv-remove-cell">
+												<button hu-button variant="ghost" size="sm" title="Remove" (click)="removeKVRow('headers', $index)">
+													<hu-icon name="x" size="xs" />
+												</button>
+											</td>
+										</tr>
+									}
+									<tr>
+										<td colspan="3" class="kv-add-cell">
+											<button hu-button variant="ghost" size="sm" (click)="addKVRow('headers')">+ Add header</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				}
+				@case ('body') {
+					<div class="sub-panel" data-scroll="hidden">
+						<div class="body-panel">
+							<select class="hu-select body-kind" [value]="draft.body?.kind ?? 'none'" (change)="onBodyKindChange($any($event.target).value)">
+								@for (k of bodyKindOptions; track k) {
+									<option [value]="k" [selected]="k === (draft.body?.kind ?? 'none')">{{ k }}</option>
+								}
+							</select>
+							@if (draft.body; as body) {
+								<div class="editor-wrap">
+									<hu-monaco-editor
+										class="body-editor"
+										[language]="bodyKindToLanguage(body.kind)"
+										[value]="body.raw"
+										(valueChange)="onBodyEditorChange($event)"
+									/>
+								</div>
+							} @else {
+								<div class="body-empty">No body</div>
+							}
+						</div>
+					</div>
+				}
+				@case ('auth') {
+					<div class="sub-panel" data-scroll="auto">
+						<div class="auth-panel">
+							<div class="auth-kind-row">
+								<span class="auth-kind-label">Auth kind:</span>
+								<select class="hu-select auth-kind" [value]="draft.auth?.kind ?? 'none'" (change)="onAuthKindChange($any($event.target).value)">
+									@for (k of authKindOptions; track k) {
+										<option [value]="k" [selected]="k === (draft.auth?.kind ?? 'none')">{{ k }}</option>
+									}
+								</select>
+							</div>
+							@switch (draft.auth?.kind ?? 'none') {
+								@case ('bearer') {
+									<label class="hu-label">Token</label>
+									<input
+										class="hu-input"
+										type="text"
+										[value]="draft.auth?.data?.['token'] ?? ''"
+										(input)="onAuthFieldInput('token', $any($event.target).value)"
+									/>
+								}
+								@case ('basic') {
+									<label class="hu-label">Username</label>
+									<input
+										class="hu-input"
+										type="text"
+										[value]="draft.auth?.data?.['username'] ?? ''"
+										(input)="onAuthFieldInput('username', $any($event.target).value)"
+									/>
+									<label class="hu-label">Password</label>
+									<input
+										class="hu-input"
+										type="password"
+										[value]="draft.auth?.data?.['password'] ?? ''"
+										(input)="onAuthFieldInput('password', $any($event.target).value)"
+									/>
+								}
+								@case ('api-key') {
+									<label class="hu-label">Header name</label>
+									<input
+										class="hu-input"
+										type="text"
+										[value]="draft.auth?.data?.['header'] ?? 'X-API-Key'"
+										(input)="onAuthFieldInput('header', $any($event.target).value)"
+									/>
+									<label class="hu-label">Value</label>
+									<input
+										class="hu-input"
+										type="text"
+										[value]="draft.auth?.data?.['value'] ?? ''"
+										(input)="onAuthFieldInput('value', $any($event.target).value)"
+									/>
+								}
+								@default {
+									<div class="no-auth">No auth</div>
+								}
+							}
+						</div>
+					</div>
+				}
+				@case ('vars') {
+					<div class="sub-panel" data-scroll="auto">
+						<div class="vars-panel">
+							<div class="vars-note">
+								<div class="vars-note-label">Note</div>
+								<div class="vars-help">
+									Use
+									<code ngNonBindable>{{ name.response.body.$.field }}</code>
+									to reference another named request's last response. Set the chain name on a request via the field above its URL bar.
+								</div>
+							</div>
+							@if (varsView(); as view) {
+								@if (view.rows.length === 0 && envVars()?.length === 0) {
+									<section class="var-section">
+										<div class="empty-envs">
+											<div class="empty-envs-title">No active environment in this request's chain.</div>
+											<div class="empty-envs-hint">
+												Open this folder's <strong data-tone="accent">Manage envs</strong> action to create one.
+											</div>
+										</div>
+									</section>
+								} @else {
+									<section class="var-section">
+										<table class="kv-table">
+											<thead>
+												<tr>
+													<th class="vars-th-key">Key</th>
+													<th>Value</th>
+													<th class="vars-th-from">From</th>
+												</tr>
+											</thead>
+											<tbody>
+												@for (r of view.rows; track r.key) {
+													<tr [attr.data-var-key]="r.key">
+														<td><input class="hu-kv-input" type="text" [value]="r.key" disabled /></td>
+														<td>
+															@if (r.kind === 'chain' || r.kind === 'builtin') {
+																<input class="hu-kv-input" type="text" [value]="r.value" disabled />
+															} @else if (r.kind === 'unresolved') {
+																<input
+																	class="hu-kv-input"
+																	type="text"
+																	[value]="r.value"
+																	placeholder="unresolved — type a value to override"
+																	(change)="saveVarOverride(r.key, 'plain', $any($event.target).value)"
+																/>
+															} @else if (r.isSecret) {
+																<input
+																	class="hu-kv-input"
+																	type="password"
+																	[placeholder]="r.overridden ? '••• overridden' : '••• secret (type to override)'"
+																	(change)="saveVarOverride(r.key, 'secret', $any($event.target).value)"
+																/>
+															} @else {
+																<input
+																	class="hu-kv-input"
+																	type="text"
+																	[value]="r.value"
+																	(change)="saveVarOverride(r.key, 'plain', $any($event.target).value)"
+																/>
+															}
+														</td>
+														<td class="var-from">
+															@if (r.overridden) {
+																<span class="var-from-row">
+																	<span class="overridden-pill">overridden</span>
+																	<button
+																		hu-button
+																		variant="ghost"
+																		size="xs"
+																		title="Clear override and revert to the env value"
+																		(click)="clearOverride(r.key)"
+																	>
+																		<hu-icon name="x" size="xs" />
+																	</button>
+																</span>
+															} @else {
+																<span class="var-source">{{ r.source }}</span>
+															}
+														</td>
+													</tr>
+												}
+											</tbody>
+										</table>
+										@if (view.orphans.length > 0) {
+											<div class="orphans">
+												<div class="orphans-title">Overrides without a matching env var</div>
+												<table class="kv-table">
+													<thead>
+														<tr>
+															<th class="vars-th-key">Key</th>
+															<th>Value</th>
+															<th class="kv-th-remove"></th>
+														</tr>
+													</thead>
+													<tbody>
+														@for (o of view.orphans; track o.key) {
+															<tr>
+																<td class="orphan-key">{{ o.key }}</td>
+																<td>
+																	@if (o.isSecret) {
+																		<span class="secret-label">[secret]</span>
+																	} @else {
+																		<span>{{ o.valuePlain ?? '' }}</span>
+																	}
+																</td>
+																<td class="kv-remove-cell">
+																	<button
+																		hu-button
+																		variant="ghost"
+																		size="sm"
+																		title="Delete override"
+																		(click)="clearOverride(o.key)"
+																	>
+																		<hu-icon name="x" size="xs" />
+																	</button>
+																</td>
+															</tr>
+														}
+													</tbody>
+												</table>
+											</div>
+										}
+									</section>
+								}
+							} @else {
+								<section class="var-section">
+									<div class="vars-loading">Loading…</div>
+								</section>
+							}
+						</div>
+					</div>
+				}
+				@case ('curl') {
+					<div class="sub-panel" data-scroll="hidden">
+						<div class="curl-panel">
+							<div class="curl-header-row">
+								<span class="curl-title">Equivalent cURL</span>
+								<button hu-button variant="ghost" (click)="handleCopyCurl()">Copy</button>
+							</div>
+							<div class="editor-wrap">
+								<hu-monaco-editor language="shell" [readonly]="true" [value]="curlText()" />
+							</div>
+						</div>
+					</div>
+				}
+			}
+		</div>
+	</div>
+</div>
+
+<div class="splitter" (mousedown)="handleSplitterDown($event)"></div>
+
+<div class="response-pane">
+	<div class="response-status">
+		@if (response(); as r) {
+			@if (r.ok) {
+				<span class="status-pill" [style.background]="statusColor(r.status)">{{ r.status }}</span>
+				<span class="status-meta">{{ r.ms }} ms · {{ formatBytes(r.sizeBytes) }}</span>
+			} @else if (r.category === 'invalid' && unresolvedTokens().length > 0) {
+				<span class="status-pill status-pill--danger">UNRESOLVED VARS</span>
+				<span class="status-meta">
+					@for (u of unresolvedTokens(); track u; let last = $last) {
+						<code>{{ u }}</code>
+						@if (!last) {
+							,
+						}
+					}
+					· open <a href="#" class="text-link" (click)="openEnvManager($event)">Manage Envs</a> to set an active environment
+				</span>
+			} @else {
+				<span class="status-pill status-pill--danger">{{ r.category.toUpperCase() }}</span>
+				<span class="status-meta">{{ r.message }}</span>
+			}
+		} @else {
+			<span class="no-response">No response yet</span>
+		}
+	</div>
+	<div class="sub-tabs">
+		<div class="sub-tab-strip">
+			@for (t of responseSubTabs; track t) {
+				<button class="sub-tab-btn" [attr.data-active]="respSubTab() === t" (click)="selectRespSubTab(t)">
+					{{ t.charAt(0).toUpperCase() + t.slice(1) }}
+				</button>
+			}
+		</div>
+		<div class="sub-tab-host">
+			@if (response(); as r) {
+				@switch (respSubTab()) {
+					@case ('body') {
+						<div class="sub-panel" data-scroll="hidden">
+							<hu-monaco-editor class="response-editor" [language]="responseBodyLanguage()" [readonly]="true" [value]="responseBodyPreview()" />
+						</div>
+					}
+					@case ('headers') {
+						<div class="response-text">{{ responseHeadersText() }}</div>
+					}
+					@case ('raw') {
+						<div class="response-text">{{ responseRawText() }}</div>
+					}
+				}
+			} @else {
+				<div class="response-empty">No response yet — click Send to make a request.</div>
+			}
+		</div>
+	</div>
+</div>
