@@ -252,6 +252,50 @@
 	font-size: 12px;
 }
 
+/* In-flight indicator — status row + response body while a send runs. */
+.sending {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	color: var(--hu-text-secondary);
+	font-size: 12px;
+}
+
+.spinner {
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	border: 2px solid color-mix(in srgb, var(--hu-accent) 25%, transparent);
+	border-top-color: var(--hu-accent);
+	animation: hu-spin 0.8s linear infinite;
+	flex-shrink: 0;
+}
+
+.spinner--lg {
+	width: 22px;
+	height: 22px;
+	border-width: 2.5px;
+}
+
+.response-loading {
+	flex-direction: column;
+	gap: 12px;
+	font-style: normal;
+	color: var(--hu-text-secondary);
+}
+
+@keyframes hu-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.spinner {
+		animation-duration: 1.6s;
+	}
+}
+
 .response-empty {
 	flex: 1;
 	display: flex;

@@ -88,9 +88,13 @@ const DEFAULT_REQUEST_PANE = 360;
  * template reads it directly, but mutating fields like draft.url doesn't
  * trigger change detection. That preserves focus while the user types in the
  * URL or KV inputs. When we DO want a refresh after a draft mutation (body
- * kind change, headers add/remove, etc.) we bump the `draftVersion` signal;
- * the host binds it as a data attribute, so bumping re-evaluates every
- * template binding.
+ * kind change, headers add/remove, async draft load) we bump the
+ * `draftVersion` signal, which the TEMPLATE consumes via a data attribute on
+ * its first element. It must be a template binding, not a host binding:
+ * zoneless fine-grained reactivity only marks the views that actually read a
+ * signal dirty, and a host-binding consumer would refresh the host attribute
+ * without re-evaluating the template (the draft.* reads below are plain
+ * properties, invisible to the reactivity graph).
  *
  * The splitter drag intentionally bypasses the template — it sets a CSS
  * custom property on the host directly. A drag-triggered re-render would
@@ -101,10 +105,7 @@ const DEFAULT_REQUEST_PANE = 360;
 	templateUrl: './request-tab.component.html',
 	styleUrls: ['./request-tab.component.scss'],
 	imports: [ButtonComponent, IconComponent, MonacoEditorComponent],
-	changeDetection: ChangeDetectionStrategy.OnPush,
-	host: {
-		'[attr.data-draft-version]': 'draftVersion()'
-	}
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RequestTabComponent implements OnInit, OnDestroy {
 	readonly tabId = input.required<string>();

@@ -1,4 +1,8 @@
-<div class="name-row">
+<!-- data-draft-version is how the template subscribes to draft mutations:
+     draft.* reads below are plain properties, so without a template-level
+     consumer of the signal, bumpDraft() would never re-render this view.
+     (A host binding is NOT enough — see the class doc comment.) -->
+<div class="name-row" [attr.data-draft-version]="draftVersion()">
 	<input class="hu-input request-name" type="text" placeholder="Request name" [value]="draft.name" (input)="onNameInput($any($event.target).value)" />
 </div>
 <div class="chain-row">
@@ -371,7 +375,12 @@
 
 <div class="response-pane">
 	<div class="response-status">
-		@if (response(); as r) {
+		@if (sendInFlight()) {
+			<span class="sending">
+				<span class="spinner" aria-hidden="true"></span>
+				Sending…
+			</span>
+		} @else if (response(); as r) {
 			@if (r.ok) {
 				<span class="status-pill" [style.background]="statusColor(r.status)">{{ r.status }}</span>
 				<span class="status-meta">{{ r.ms }} ms · {{ formatBytes(r.sizeBytes) }}</span>
@@ -403,7 +412,12 @@
 			}
 		</div>
 		<div class="sub-tab-host">
-			@if (response(); as r) {
+			@if (sendInFlight()) {
+				<div class="response-empty response-loading">
+					<span class="spinner spinner--lg" aria-hidden="true"></span>
+					Sending request…
+				</div>
+			} @else if (response(); as r) {
 				@switch (respSubTab()) {
 					@case ('body') {
 						<div class="sub-panel" data-scroll="hidden">
