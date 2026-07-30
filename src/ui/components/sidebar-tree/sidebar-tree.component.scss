@@ -1,4 +1,8 @@
 :host {
+	/* border-box, or the 24px of vertical padding stacks on top of the 100%
+	   height and the pane's overflow:hidden clips the bottom padding — the
+	   last request row ends up flush against the status bar. */
+	box-sizing: border-box;
 	display: block;
 	background: var(--hu-bg-elevated);
 	border-right: 1px solid var(--hu-border);
