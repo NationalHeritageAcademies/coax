@@ -76,7 +76,7 @@ Open the app, click the **⬇ Import** button in the header, and pick a `.http` 
 | Keyboard shortcuts & UI tour | [docs/user-guide.md#interface-tour](docs/user-guide.md#interface-tour) |
 | CLI reference (`coax run` in CI) | [docs/cli.md](docs/cli.md) |
 | Privacy details | [docs/privacy.md](docs/privacy.md) |
-| Roadmap | [docs/roadmap.md](docs/roadmap.md) |
+| Feature design docs | [docs/plans/](docs/plans/) |
 | Architecture (for contributors) | [docs/superpowers/specs/2026-05-14-http-ui-design.md](docs/superpowers/specs/2026-05-14-http-ui-design.md) |
 
 ## Project layout
@@ -131,9 +131,9 @@ opening a public issue.
 
 ## Roadmap
 
-See [docs/roadmap.md](docs/roadmap.md) — highlights: pre-request scripts,
-Postman/Insomnia/Bruno importers, GraphQL/WebSocket/SSE support, and deeper
-git integration.
+Feature design docs for likely future work live in
+[docs/plans/](docs/plans/) — pre-request scripts, Postman/Insomnia/Bruno
+importers, GraphQL/WebSocket/SSE support, and deeper git integration.
 
 ## Telemetry
 

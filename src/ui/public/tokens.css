@@ -1,19 +1,20 @@
 /* =============================================================================
    Coax Design Tokens
    -----------------------------------------------------------------------------
-   Layered on top of @melodicdev/components tokens (`--ml-*`). This file:
+   The single source of truth for the app's visual system. This file:
 
      1. Loads the Coax brand fonts (Inter + JetBrains Mono).
-     2. Overrides a small set of Melodic semantic tokens to express the Coax
-        brand identity (primary, focus ring, shadows).
-     3. Defines the Coax-specific surface vocabulary (`--hu-*`) that powers
-        the request panel, sidebar tree, status bar, and method badges.
-        These map onto Melodic primitives whenever possible so the system
-        stays consistent.
+     2. Defines the `--hu-*` token vocabulary (surfaces, text, borders,
+        method colors, motion) consumed by every Angular component style.
+     3. Provides the global utility classes for native form controls
+        (.hu-input / .hu-select) and shared row/tab styling.
 
-   Anything you change here propagates everywhere via `<link melodic-styles>`
-   adoption into every component's Shadow DOM. Avoid raw hex values in
-   component CSS — always reach for a token.
+   Loaded at runtime by bootstrap-styles.ts (file://-safe). Angular's
+   emulated encapsulation is not Shadow DOM, so these globals reach every
+   component template directly. Avoid raw hex values in component CSS —
+   always reach for a token. (The --ml-* remnants below are inherited from
+   the pre-Angular Melodic JS renderer and are kept only where a --hu-*
+   token still aliases one.)
    ============================================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');

@@ -14,7 +14,7 @@ describe('serializeEnvFile', () => {
     const out = serializeEnvFile(VALID);
     expect(out.endsWith('\n')).toBe(true);
     const parsed = JSON.parse(out);
-    expect(parsed.$schema).toBe('https://coax.melodic.dev/schema/env.json');
+    expect(parsed.$schema).toBe('https://raw.githubusercontent.com/NationalHeritageAcademies/coax/main/docs/schema/env.json');
     expect(parsed.name).toBe('dev');
     expect(parsed.vars).toHaveLength(2);
   });
@@ -114,7 +114,7 @@ describe('parseEnvFile', () => {
 
   it('tolerates unknown top-level fields (forward compatibility)', () => {
     const text = JSON.stringify({
-      $schema: 'https://coax.melodic.dev/schema/env.json',
+      $schema: 'https://raw.githubusercontent.com/NationalHeritageAcademies/coax/main/docs/schema/env.json',
       name: 'dev',
       vars: [],
       futureField: { ignored: true },

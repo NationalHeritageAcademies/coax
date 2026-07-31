@@ -1,3 +1,8 @@
+> **Historical note (2026-07):** this is the original design spec. The
+> storage / IPC / runner architecture it describes is still accurate, but
+> the renderer sections describe the Melodic JS implementation that was
+> since ported to Angular 21 — see `src/ui/` for the current structure.
+
 # Coax — Design Spec
 
 **Date:** 2026-05-14

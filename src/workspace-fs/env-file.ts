@@ -8,7 +8,7 @@
 // `scopes` array needed.
 //
 //   {
-//     "$schema": "https://coax.melodic.dev/schema/env.json",
+//     "$schema": "https://raw.githubusercontent.com/NationalHeritageAcademies/coax/main/docs/schema/env.json",
 //     "name": "dev",
 //     "vars": [
 //       { "key": "baseUrl", "valuePlain": "https://dev.example.com" },
@@ -25,7 +25,7 @@
 // surface the error to the UI so the user can fix or remove the bad file
 // without losing the rest of the workspace.
 
-const SCHEMA_URL = 'https://coax.melodic.dev/schema/env.json';
+const SCHEMA_URL = 'https://raw.githubusercontent.com/NationalHeritageAcademies/coax/main/docs/schema/env.json';
 
 // -----------------------------------------------------------------------------
 // Public types
