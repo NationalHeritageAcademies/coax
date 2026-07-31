@@ -1,9 +1,0 @@
-/vendor/
-/storage/cache/*
-/storage/logs/*
-!storage/cache/.gitkeep
-!storage/logs/.gitkeep
-config/config.dev.json
-.phpunit.cache
-.env
-.env.local

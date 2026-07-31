@@ -9,7 +9,7 @@
 
 A free, open-source (MIT), cross-platform desktop client for `.http` files — the format used by VS Code REST Client and JetBrains HTTP Client. Open existing `.http` files, edit them in a polished UI, manage environments and secrets, and execute requests against any HTTP endpoint.
 
-![Coax with a collection sidebar, an HTTP request being edited, and a JSON response](web/public/assets/img/screenshot-hero.png)
+![Coax with a collection sidebar, an HTTP request being edited, and a JSON response](docs/assets/screenshot-hero.png)
 
 Built with Electron + TypeScript and an [Angular](https://angular.dev) renderer.
 

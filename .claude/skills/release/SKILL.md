@@ -12,9 +12,7 @@ This repo's release pipeline: pushing a `vX.Y.Z` tag triggers
 `.github/workflows/release.yml`, which builds signed + notarized
 macOS/Windows/Linux installers from a single macOS runner (electron-builder
 cross-builds; Windows signs via jsign + Azure Trusted Signing) and uploads
-them to a **draft** GitHub Release. Publishing the draft then triggers
-`.github/workflows/update-website.yml`, which repoints the marketing site's
-download links and Railway redeploys it. The only manual steps are the ones
+them to a **draft** GitHub Release. The only manual steps are the ones
 this skill automates: bump → verify → tag → publish with real notes.
 
 ## 1. Check the working tree
@@ -105,13 +103,10 @@ EOF
   --draft=false --latest
 ```
 
-## 8. Confirm the website followed
+## 8. Report back
 
-Publishing fires `update-website.yml`, which commits a download-link bump to
-`web/config/config.json` and Railway redeploys. Within a few minutes verify:
-
-```bash
-curl -s https://coax.melodic.dev/  # TODO: swap to the NHA-hosted site once a domain exists | grep -o 'Coax-[0-9.]*-universal.dmg' | head -1
-```
-
-It should show the new version. Report the release URL back to the user.
+Report the release URL back to the user. Users install from the GitHub
+Releases page directly; installed apps pick the new version up via
+electron-updater's release feed. (The marketing website and its
+`update-website.yml` bump workflow were removed from this repo — the site
+was upstream-personal, not part of the NHA fork.)
